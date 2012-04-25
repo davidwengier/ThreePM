@@ -1,0 +1,103 @@
+--- TO DO ---
+Lyrics in the database:
+	- Maybe timing, for karaoke (future)
+		- Overlay the current line onto the top of the screen :)
+Auto-updating
+HTTP server
+	- Proper song refreshing (ajax)
+	- skinnable
+	- any missing tag info
+	- album tracks
+	- port configuration
+Skinning: 
+	Read images from files
+	Make XUL like thing (ie, specify what control goes where, build up any form in any way, specify an Action for buttons etc.)
+	- Start with a SkinnableForm that reads in a seperate XML and build from there
+Ratings
+Proper song ticker for long names, with its own timer and pausing at start/end
+Work out how to get the right GUID for AlbumArt_ display - it may be not possible though, could be in WMP library
+Audioscrobbler plugin
+Get album cover from last.fm/wikipedia/amazon
+Seperate channel volume (
+Crossfading/gapless (may need DSP/3D/EAX)
+
+
+--- ANDREW'S LIST ---
+X	Listen for the delete button in playlist
+X	Move "The" to the end of artist names in the treeview
+X	Drag and drop from the search form to the playlist
+X	Drag and drop from the library to the playlist
+X	Option to hide ignored artists in the treeview
+X	Option to hide ignored artists from everywhere! (Where else is there?)
+X	Artist/Album list in treeview
+X	Unselect selected items in the playlist if the user clicks on a selected item and is not dragging
+X	Timer on the search form, context menu with queue artist/album
+N	Integrated tag editing?
+X	Library info editing - will get overridden if someone updates tags!
+X	Sort library by artist, album, track number
+X	Arrow keys to skip like 5 seconds in the player
+	Would be cool but hard to display some artist info from wikipedia/last.fm/wherever
+X	Skinning (projected for sometime in 2008)
+
+--- ALBUM PANEL ---
+	Make sure the original mode still works
+	Cache and dispose brushes, pens etc
+	Tidy up the code
+X	When the center album is drawn with details, <s>move things out to the left and right and</s> keep scrolling
+	Make scrolling start based on cursor position from the edge of the screen rather than the hovered album
+	It appears to spasm a bit when scrolling to the left
+	Order by Artist, Album with a bit along the top that shows the artists being displayed or something?
+	Search for artists by typing like in the tree
+	More options -> play/queue artist/album/song, download cover art etc
+	Separate out the image scrolling functionality into a control that takes as properties a control to show details and context menus and stuff so that we can put it in StarRez to show scrolling entries and the context menu could be like a rating system and staff could rate the attractiveness of everyone in their system and the control could show their stats eg age, gender, profile items etc.  That would be cool
+
+--- BUGS ---
+X	Can't double-click in the playlist
+	NotifyForm doesnt come back up when you change songs while its on the way down
+	NotifyForm generally gimpy
+
+------------- DONE -----------------------
+Better close buttons in the right hand corner
+Minimize button
+Better progress thing for library scanning
+Bigger font for time label
+Remember which way the time label was (+/-)
+Press "Q" on search form adds to Playlist
+RegistryHelper class for easier registry use - remember more things!
+Repeat button
+Play count on info form
+Album Art form if full info form not required - refactor into album art control on the info form
+Auto-Playlist popular/recent/recently added songs
+playlist saving between sessions (automatic)
+Repeat Entire Playlist = place at end of Playlist when de-Playlistd
+More threading so startup is faster
+Delete watch folder (and files)
+Foreign key for watch folders - kinda
+Make Queue into playlist properly
+Re-implement queuing
+Random Playlist song selection (instead of from the top)
+Tag reading from library
+Libary form
+Tag reading in library
+Device selection - re-init bass
+More tooltips everywhere
+SearchForm using tags from library
+Customizable ToString for SongInfo method (ie, I want "{Artist} - {Title}")
+Search Results as ListView (like library)
+ListView for playlist
+Read AlbumArtist tag
+Custom drawn listview control
+Remove m_watchFolderCriteria completely
+Playlist using SongListView - with dragging and everything
+Cache album art everywhere. AlbumArtPicker to invalidate the cache
+Save last playlist in an m3u file, not the registry
+Ignore field in the library, to ignore anything
+Deleted field in the libray
+Lyrics - from tags and internet
+HttpServer
+	- Album art
+	- lyrics
+More strongly typed GetValue and SetValue routines
+Lyrics in the database:
+	- Allow searching
+	- Allow editting

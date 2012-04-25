@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<skin name="Default">
+  <control type="All">
+    <property name="BackColor" type="Color" value="192,224,255" />
+    <property name="ForeColor" type="Color" value="0,64,128" />
+  </control>
+  <form type="All">
+    <property name="BackColor" type="Color" value="192,224,255" />
+    <property name="ForeColor" type="Color" value="0,64,128" />
+
+	<property name="CaptionTextColor" type="Color" value="192,224,255" />
+
+	<property name="CaptionTextBackColor" type="Color" value="32,96,160" />
+	<property name="CaptionTopColor" type="Color" value="64,128,192" />
+	<property name="CaptionBottomColor" type="Color" value="0,64,128" />
+
+	<property name="CaptionTextBackColorInactive" type="Color" value="0,64,128" />
+	<property name="CaptionTopColorInactive" type="Color" value="32,96,160" />
+	<property name="CaptionBottomColorInactive" type="Color" value="0,32,64" />
+	  
+  </form>
+  <form type="MainForm">
+    <property name="Player" type="Object">
+      <property name="VisColor1" type="Color" value="0,64,128" />
+      <property name="VisColor2" type="Color" value="192,224,255" />
+      <property name="VisColor3" type="Color" value="White" />
+      <property name="VisBackColor" type="Color" value="Gray" />
+    </property>
+  </form>
+  <control type="SongListView">
+    <property name="SelectedColor" type="Color" value="Gray" />
+    <property name="Font" type="Font" value="Arial, 10pt" />
+  </control>
+  <control type="CheckBox">
+    <property name="FlatAppearance" type="Object">
+      <property name="CheckedBackColor" type="Color" value="64,128,192" />
+      <property name="MouseDownBackColor" type="Color" value="192,224,255" />
+      <property name="MouseOverBackColor" type="Color" value="0,64,128" />
+    </property>
+  </control>
+  <control type="Button">
+    <property name="FlatAppearance" type="Object">
+      <property name="CheckedBackColor" type="Color" value="64,128,192" />
+      <property name="MouseDownBackColor" type="Color" value="192,224,255" />
+      <property name="MouseOverBackColor" type="Color" value="0,64,128" />
+    </property>
+  </control>
+  <!-- have to set the tickers because they would have been set wrongly after the type="all" above -->
+  <control name="tckPosition">
+	<property name="ForeColor" type="Color" value="Blue"/>
+  </control>
+  <control name="tckVolume">
+	<property name="ForeColor" type="Color" value="Red"/>
+  </control>
+  <control name="tckBalance">
+  	<property name="ForeColor" type="Color" value="Green"/>
+  </control>
+  <control name="tvwLibrary">
+	<property name="LineColor" type="Color" value="Gray"/>
+  </control>
+</skin>

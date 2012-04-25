@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<skin name="Default">
+  <control type="All">
+    <property name="BackColor" type="Color" value="Green" />
+    <property name="ForeColor" type="Color" value="Orange" />
+  </control>
+  <form type="All">
+    <property name="BackColor" type="Color" value="Green" />
+    <property name="ForeColor" type="Color" value="Orange" />
+
+    <property name="CaptionTextColor" type="Color" value="Orange" />
+    <property name="CaptionTextBackColor" type="Color" value="DarkGreen" />
+    <property name="CaptionTextBackColorInactive" type="Color" value="DarkGreen" />
+    <property name="CaptionTopColor" type="Color" value="Green" />
+    <property name="CaptionBottomColor" type="Color" value="Green" />
+	  <property name="CaptionTopColorInactive" type="Color" value="Green" />
+	  <property name="CaptionBottomColorInactive" type="Color" value="Green" />
+    
+  </form>
+  <control type="SongListView">
+    <property name="SelectedColor" type="Color" value="Red" />
+    <property name="Font" type="Font" value="Tahoma, 9pt" />
+  </control>
+  <control type="CheckBox">
+    <property name="FlatAppearance" type="Object">
+      <property name="CheckedBackColor" type="Color" value="Green" />
+      <property name="MouseDownBackColor" type="Color" value="Purple" />
+      <property name="MouseOverBackColor" type="Color" value="Orange" />
+    </property>
+  </control>
+  <control type="Button">
+    <property name="FlatAppearance" type="Object">
+      <property name="CheckedBackColor" type="Color" value="Green" />
+      <property name="MouseDownBackColor" type="Color" value="Purple" />
+      <property name="MouseOverBackColor" type="Color" value="Orange" />
+    </property>
+  </control>
+</skin>

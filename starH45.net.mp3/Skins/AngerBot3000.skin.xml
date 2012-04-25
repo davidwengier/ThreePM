@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<skin name="Default">
+  <form type="All">
+    <property name="ForeColor" type="Color" value="Black" />
+    <property name="Font" type="Font" value="Tahoma, 8pt" />
+    <property name="BackColor" type="Color" value="238,243,250" />
+
+    <property name="InternalBorderAtTop" type="bool" value="true" />
+    <property name="Sizable" type="bool" value="true" />
+    <property name="RoundedRadius" type="int" value="9" />
+    <property name="RoundedForm" type="bool" value="true" />
+
+    <property name="InternalBorderSize" type="int" value="5" />
+    <property name="InternalBorderColor" type="Color" value="95,105,130" />
+
+    <property name="CaptionTextColor" type="Color" value="Silver" />
+
+    <property name="CaptionTopColor" type="Color" value="7,7,8" />
+    <property name="CaptionTextBackColor" type="Color" value="41,46,56" />
+    <property name="CaptionBottomColor" type="Color" value="95,105,130" />
+
+    <property name="CaptionTopColorInactive" type="Color" value="7,7,8" />
+    <property name="CaptionTextBackColorInactive" type="Color" value="41,46,56" />
+    <property name="CaptionBottomColorInactive" type="Color" value="95,105,130" />
+
+  </form>
+  <control type="All">
+    <property name="ForeColor" type="Color" value="Black" />
+    <property name="Font" type="Font" value="Tahoma, 8pt" />
+    <property name="BackColor" type="Color" value="238,243,250" />
+  </control>
+  <form type="OptionsForm">
+    <control name="chkTheRest">
+      <property name="FlatAppearance" type="Object">
+        <property name="CheckedBackColor" type="Color" value="208,213,220" />
+        <property name="MouseDownBackColor" type="Color" value="208,213,220" />
+        <property name="MouseOverBackColor" type="Color" value="208,213,220" />
+      </property>
+    </control>
+    <control name="chkWatchFolders">
+      <property name="FlatAppearance" type="Object">
+        <property name="CheckedBackColor" type="Color" value="208,213,220" />
+        <property name="MouseDownBackColor" type="Color" value="208,213,220" />
+        <property name="MouseOverBackColor" type="Color" value="208,213,220" />
+      </property>
+    </control>
+    <control name="chkLibrary">
+      <property name="FlatAppearance" type="Object">
+        <property name="CheckedBackColor" type="Color" value="208,213,220" />
+        <property name="MouseDownBackColor" type="Color" value="208,213,220" />
+        <property name="MouseOverBackColor" type="Color" value="208,213,220" />
+      </property>
+    </control>
+  </form>
+  <form type="AlbumArtForm">
+    <property name="BackColor" type="Color" value="Black"/>
+    <control type="AlbumArtBox">
+      <property name="BackColor" type="Color" value="Black"/>
+      <property name="Padding" type="Padding" value="1,1,1,1"/>
+    </control>
+  </form>
+
+	<form type="LibraryForm">
+		<control type="TreeView">
+			<property name="LineColor" type="Color" value="Black" />
+			<property name="ShowLines" type="bool" value="false" />
+			<property name="Font" type="Font" value="Tahoma, 8pt" />
+			<property name="Parent" type="object">
+				<property name="Padding" type="Padding" value="2,2,0,2" />
+			</property>
+		</control>
+		<control type="InfoControl">
+			<property name="Padding" type="Padding" value="00,2,2,2" />
+		</control>
+		<control type="SongListView">
+			<property name="Padding" type="Padding" value="00,2,2,2" />
+		</control>
+	</form>
+
+
+	
+  <form type="MainForm">
+	  
+    <property name="Player" type="Object">
+      <property name="VisColor1" type="Color" value="Black" />
+      <property name="VisColor2" type="Color" value="Red" />
+      <property name="VisColor3" type="Color" value="Blue" />
+      <property name="VisBackColor" type="Color" value="192,192,192" />
+    </property>
+
+	<property name="Sizable" type="bool" value="false" />  
+    <property name="BackColor" type="Color" value="Black"/>
+	<property name="Size" type="Size" value="200, 219"/>
+
+    <control type="All">
+      <property name="ForeColor" type="Color" value="238,243,250" />
+      <property name="BackColor" type="Color" value="Black"/>
+    </control>
+    <control name="chkPlaylist">
+      <property name="Visible" type="bool" value="false"/>
+    </control>
+    <control name="chkInformation">
+      <property name="Visible" type="bool" value="true"/>
+    </control>
+
+	  <control name="chkOnTop">
+		  <property name="Visible" type="bool" value="false"/>
+	  </control>
+	  <control name="btnIgnore">
+		  <property name="Visible" type="bool" value="false"/>
+	  </control>
+	  <control name="chkRepeat">
+		  <property name="Visible" type="bool" value="false"/>
+	  </control>
+	  <control name="chkLibrary">
+		  <property name="Visible" type="bool" value="false"/>
+	  </control>
+
+
+	  <control name="tckBalance">
+		  <property name="Visible" type="bool" value="false"/>
+	  </control>
+	  
+	  <!-- Left eye-brow -->
+	  <control name="tckPosition">
+		  <property name="Location" type="Point" value="30,5"/>
+		  <property name="Size" type="Size" value="50, 10"/>
+		  <property name="BackColor" type="Color" value="Gray"/>
+	  </control>
+	  
+	  <!-- Right eye-brow -->
+	  <control name="tckVolume">
+		  <property name="Location" type="Point" value="110,5"/>
+		  <property name="Size" type="Size" value="50, 10"/>
+		  <property name="BackColor" type="Color" value="Gray"/>
+	  </control>
+	  
+	  <!-- Robot Head -->
+	  <addcontrol name="picbox" type="picture">
+		  <property name="BackColor" type="Color" value="Gray"/>
+		  <property name="Location" type="Point" value="11,0"/>
+		  <property name="Size" type="Size" value="169, 150"/>
+		  <property name="Image" type="image" value="U:\RoboHead.png" />
+	  </addcontrol>
+
+	  <!-- Song name and shoulders -->
+	  <control name="lblArtist">
+		  <property name="Font" type="Font" value="Tahoma, 9pt" />
+		  <property name="Size" type="Size" value="200, 20" />
+		  <property name="Location" type="Point" value="0,150" />
+		  <property name="BackColor" type="Color" value="192,192,192"/>
+		  <property name="ForeColor" type="Color" value="Black" />
+		  <property name="Visible" type="bool" value="true"/>
+	  </control>
+	  <control name="lblTitle">
+		  <property name="Font" type="Font" value="Tahoma, 10pt" />
+		  <property name="Size" type="Size" value="200, 20" />
+		  <property name="Location" type="Point" value="0,170" />
+		  <property name="BackColor" type="Color" value="192,192,192"/>
+		  <property name="ForeColor" type="Color" value="Black" />
+		  <property name="Visible" type="bool" value="true"/>
+	  </control>
+
+	  <!-- Left Eye -->
+	  <control name="btnPlay">
+		  <property name="AutoSize" type="bool" value="false"/>
+		  <property name="Margin" type="Padding" value="0,0,0,0"/>
+		  <property name="Size" type="Size" value="15, 15" />
+		  <property name="Location" type="Point" value="51,24" />
+		  <property name="Image" type="image" value="U:\Robot\media_play_inv2.png" />
+		  <property name="BackColor" type="Color" value="192,192,192"/>
+		  <property name="CheckedBackColor" type="Color" value="192,192,192" />
+		  <property name="ForeColor" type="Color" value="192,192,192" />
+	  </control>
+	  <!-- Nose -->
+	  <control name="btnPause">
+		  <property name="AutoSize" type="bool" value="false"/>
+		  <property name="Margin" type="Padding" value="0,0,0,0"/>
+		  <property name="Size" type="Size" value="15, 15" />
+		  <property name="Location" type="Point" value="87,55" />
+		  <property name="Image" type="image" value="U:\Robot\media_pause_inv2.png" />
+		  <property name="BackColor" type="Color" value="64,64,64"/>
+	  </control>
+	  <!-- Right Eye -->
+	  <control name="btnStop">
+		  <property name="AutoSize" type="bool" value="false"/>
+		  <property name="Margin" type="Padding" value="0,0,0,0"/>
+		  <property name="Size" type="Size" value="15, 15" />
+		  <property name="Location" type="Point" value="126,25" />
+		  <property name="Image" type="image" value="U:\Robot\media_stop_inv.png" />
+		  <property name="BackColor" type="Color" value="192,192,192"/>
+		  <property name="CheckedBackColor" type="Color" value="192,192,192" />
+	  </control>
+
+	  <!-- Left Ear -->
+	  <control name="btnPrevious">
+		  <property name="Location" type="Point" value="0,127" />
+	  </control>
+	  <!-- Right Ear -->
+	  <control name="btnNext">
+		  <property name="Location" type="Point" value="167,127" />
+	  </control>
+
+	  <!-- Mouth -->
+	  <control name="pctSpectrum">
+		  <property name="Location" type="Point" value="51, 91"/>
+		  <property name="Size" type="Size" value="89, 35"/>
+		  <property name="Visible" type="bool" value="true"/>
+		  <property name="BackColor" type="Color" value="196,211,214"/>
+	  </control>
+	  
+	  <control name="lblPosition">
+		  <property name="Visible" type="bool" value="false"/>
+	  </control>
+	  <control name="prgSpin">
+		  <property name="Visible" type="bool" value="false"/>
+	  </control>
+
+	  <control name="lblStatus">
+		  <property name="Location" type="Point" value="141, 90" />
+		  <property name="AutoSize" type="Bool" value="true" />
+	  </control>
+
+
+
+	  
+  </form>
+
+
+	<control type="SongListViewHeader">
+		<property name="LineColor" type="Color" value="212,216,223" />
+		<property name="LineColorLight" type="Color" value="243,246,251" />
+		<property name="ForeColor" type="Color" value="119,121,125" />
+	</control>
+	<control type="SongListViewListPanel">
+		<property name="SelectedColor" type="Color" value="Highlight" />
+		<property name="ForeColor" type="Color" value="Black" />
+		<property name="CurrentSongFont" type="Font" value="Tahoma, 8pt, style=Bold" />
+		<property name="HeaderFont" type="Font" value="Tahoma, 9pt, style=Bold" />
+	</control>
+	<control type="CheckBox">
+		<property name="FlatAppearance" type="Object">
+			<property name="CheckedBackColor" type="Color" value="64,64,64" />
+			<property name="MouseDownBackColor" type="Color" value="Black" />
+			<property name="MouseOverBackColor" type="Color" value="Red" />
+			<property name="BackColor" type="Color" value="Pink" />
+			<property name="BorderColor" type="Color" value="Black" />
+		</property>
+	</control>
+	<control type="Button">
+		<property name="FlatAppearance" type="Object">
+			<property name="CheckedBackColor" type="Color" value="64,64,64" />
+			<property name="MouseDownBackColor" type="Color" value="Black" />
+			<property name="MouseOverBackColor" type="Color" value="Red" />
+			<property name="BackColor" type="Color" value="Pink" />
+			<property name="BorderColor" type="Color" value="Black" />
+		</property>
+	</control>
+	
+</skin>

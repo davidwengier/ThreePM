@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<skin name="Default">
+  <control type="All">
+    <property name="BackColor" type="Color" value="Blue" />
+    <property name="ForeColor" type="Color" value="White" />
+  </control>
+  <form type="All">
+    <property name="BackColor" type="Color" value="Blue" />
+    <property name="ForeColor" type="Color" value="White" />
+  </form>
+  <form type="MainForm">
+    <property name="Player" type="Object">
+      <property name="VisColor1" type="Color" value="White" />
+      <property name="VisColor2" type="Color" value="Green" />
+      <property name="VisColor3" type="Color" value="Purple" />
+      <property name="VisBackColor" type="Color" value="Blue" />
+    </property>
+  </form>
+  <control type="SongListView">
+    <property name="SelectedColor" type="Color" value="Red" />
+    <property name="Font" type="Font" value="Tahoma, 15pt" />
+  </control>
+  <control type="CheckBox">
+    <property name="FlatAppearance" type="Object">
+      <property name="CheckedBackColor" type="Color" value="Green" />
+      <property name="MouseDownBackColor" type="Color" value="Purple" />
+      <property name="MouseOverBackColor" type="Color" value="Orange" />
+    </property>
+  </control>
+  <control type="Button">
+    <property name="FlatAppearance" type="Object">
+      <property name="CheckedBackColor" type="Color" value="Green" />
+      <property name="MouseDownBackColor" type="Color" value="Purple" />
+      <property name="MouseOverBackColor" type="Color" value="Orange" />
+    </property>
+  </control>
+</skin>

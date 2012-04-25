@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<skin name="iPod">
+  <form type="All">
+    <property name="ForeColor" type="Color" value="Black" />
+    <property name="Font" type="Font" value="Tahoma, 8pt" />
+    <property name="BackColor" type="Color" value="238,243,250" />
+
+    <property name="InternalBorderAtTop" type="bool" value="true" />
+    <property name="Sizable" type="bool" value="true" />
+    <property name="RoundedRadius" type="int" value="9" />
+    <property name="RoundedForm" type="bool" value="true" />
+
+    <property name="InternalBorderSize" type="int" value="5" />
+    <property name="InternalBorderColor" type="Color" value="95,105,130" />
+
+    <property name="CaptionTextColor" type="Color" value="Silver" />
+
+    <property name="CaptionTopColor" type="Color" value="7,7,8" />
+    <property name="CaptionTextBackColor" type="Color" value="41,46,56" />
+    <property name="CaptionBottomColor" type="Color" value="95,105,130" />
+
+    <property name="CaptionTopColorInactive" type="Color" value="7,7,8" />
+    <property name="CaptionTextBackColorInactive" type="Color" value="41,46,56" />
+    <property name="CaptionBottomColorInactive" type="Color" value="95,105,130" />
+
+  </form>
+  <control type="All">
+    <property name="ForeColor" type="Color" value="Black" />
+    <property name="Font" type="Font" value="Tahoma, 8pt" />
+    <property name="BackColor" type="Color" value="238,243,250" />
+  </control>
+  <form type="OptionsForm">
+    <control name="chkTheRest">
+      <property name="FlatAppearance" type="Object">
+        <property name="CheckedBackColor" type="Color" value="208,213,220" />
+        <property name="MouseDownBackColor" type="Color" value="208,213,220" />
+        <property name="MouseOverBackColor" type="Color" value="208,213,220" />
+      </property>
+    </control>
+    <control name="chkWatchFolders">
+      <property name="FlatAppearance" type="Object">
+        <property name="CheckedBackColor" type="Color" value="208,213,220" />
+        <property name="MouseDownBackColor" type="Color" value="208,213,220" />
+        <property name="MouseOverBackColor" type="Color" value="208,213,220" />
+      </property>
+    </control>
+    <control name="chkLibrary">
+      <property name="FlatAppearance" type="Object">
+        <property name="CheckedBackColor" type="Color" value="208,213,220" />
+        <property name="MouseDownBackColor" type="Color" value="208,213,220" />
+        <property name="MouseOverBackColor" type="Color" value="208,213,220" />
+      </property>
+    </control>
+  </form>
+  <form type="AlbumArtForm">
+    <property name="BackColor" type="Color" value="Black"/>
+    <control type="AlbumArtBox">
+      <property name="BackColor" type="Color" value="Black"/>
+      <property name="Padding" type="Padding" value="1,1,1,1"/>
+    </control>
+  </form>
+
+  <form type="MainForm">
+    <property name="CaptionTopColor" type="Color" value="Black" />
+    <property name="CaptionTextBackColor" type="Color" value="Black" />
+    <property name="CaptionBottomColor" type="Color" value="Black" />
+    <property name="CaptionTopColorInactive" type="Color" value="Black" />
+    <property name="CaptionTextBackColorInactive" type="Color" value="Black" />
+    <property name="CaptionBottomColorInactive" type="Color" value="Black" />
+    <property name="BackColor" type="Color" value="Black"/>
+    <property name="InternalBorderAtTop" type="bool" value="false" />
+    <property name="Caption" type="string" value=" " />
+    <property name="Sizable" type="bool" value="false" />
+    <property name="RoundedRadius" type="int" value="9" />
+    <property name="RoundedForm" type="bool" value="true" />
+    <property name="InternalBorderSize" type="int" value="0" />
+    <property name="InternalBorderColor" type="Color" value="Black" />
+
+    <property name="Size" type="Size" value="158,350" />
+
+    <control type="All">
+      <property name="Visible" type="bool" value="false" />
+    </control>
+
+    <control name="ControlsPanel">
+      <property name="Visible" type="bool" value="true" />
+    </control>
+    
+    <control name="btnPrevious">
+      <property name="Visible" type="bool" value="true" />
+      <property name="ZOrder" type="" value="0" />
+      <property name="Location" type="point" value="23, 206"/>
+      <property name="AutoSize" type="bool" value="false" />
+      <property name="Size" type="size" value="19,19" />
+      <property name="image" type="Image" value="{skindir}\ipod_prev_track.png" />
+    </control>
+
+    <control name="btnNext">
+      <property name="Visible" type="bool" value="true" />
+      <property name="ZOrder" type="" value="0" />
+      <property name="Location" type="point" value="112, 206"/>
+      <property name="AutoSize" type="bool" value="false" />
+      <property name="Size" type="size" value="19,19" />
+      <property name="Image" type="Image" value="{skindir}\ipod_next_track.png" />
+    </control>
+
+    <control name="btnPlay">
+      <property name="Visible" type="bool" value="true" />
+      <property name="ZOrder" type="" value="0" />
+      <property name="Location" type="point" value="65, 253"/>
+      <property name="AutoSize" type="bool" value="false" />
+      <property name="Size" type="size" value="26,19" />
+      <property name="Image" type="Image" value="{skindir}\ipod_play_pause.png" />
+    </control>
+
+    <control name="chkLibrary">
+      <property name="Visible" type="bool" value="true" />
+      <property name="ZOrder" type="" value="0" />
+      <property name="Location" type="point" value="62,158"/>
+      <property name="AutoSize" type="bool" value="false" />
+      <property name="Size" type="size" value="34,15" />
+      <property name="Image" type="Image" value="{skindir}\ipod_menu.png" />
+    </control>
+
+    <property name="Player" type="Object">
+      <property name="VisColor1" type="Color" value="Black" />
+      <property name="VisColor2" type="Color" value="Silver" />
+      <property name="VisColor3" type="Color" value="Black" />
+      <property name="VisBackColor" type="Color" value="Black" />
+    </property>
+    
+    <control name="pctSpectrum">
+      <property name="BackColor" type="Color" value="Black" />
+      <property name="Visible" type="bool" value="true" />
+      <property name="ZOrder" type="" value="0" />
+      <property name="Location" type="Point" value="11, 282"/>
+      <property name="Size" type="Size" value="136,50"/>
+    </control>
+    
+    <control name="tckPosition">
+      <property name="Visible" type="bool" value="true" />
+      <property name="ZOrder" type="" value="0" />
+      <property name="Location" type="point" value="24, 70"/>
+      <property name="Size" type="size" value="110,15" />
+    </control>
+
+    <control name="prgSpin">
+      <property name="BackColor" type="Color" value="Black" />
+      <property name="InactiveSegmentColour" type="Color" value="Black" />
+      <property name="ActiveSegmentColour" type="Color" value="Silver" />
+      <property name="TransistionSegmentColour" type="Color" value="White" />
+      <property name="Visible" type="bool" value="true" />
+      <property name="ZOrder" type="" value="0" />
+      <property name="Location" type="point" value="18,105"/>
+    </control>
+
+    <addcontrol name="background" type="picture">
+      <property name="Image" type="Image" value="{skindir}\ipod_background.png" />
+      <property name="Location" type="Point" value="0, 0" />
+      <property name="SizeMode" type="SizeMode" value="AutoSize" />
+    </addcontrol>
+
+    <addcontrol name="albumart" type="albumartbox" bringtofront="true">
+      <property name="Song" type="Binding" value="Player.CurrentSong" />
+      <property name="Location" type="point" value="24, 22"/>
+      <property name="Size" type="size" value="40,40" />
+    </addcontrol>
+
+    <addcontrol name="lblArtist" type="label" bringtofront="true">
+      <property name="Text" type="Binding" value="Player.CurrentSong.Title" />
+      <property name="Location" type="point" value="66, 22"/>
+      <property name="Size" type="size" value="70,15" />
+      <property name="Font" type="Font" value="Tahoma, 7pt" />
+    </addcontrol>
+
+    <addcontrol name="lblAlbum" type="label" bringtofront="true">
+      <property name="Text" type="Binding" value="Player.CurrentSong.Artist" />
+      <property name="Location" type="point" value="66, 35"/>
+      <property name="Size" type="size" value="70,15" />
+      <property name="Font" type="Font" value="Tahoma, 7pt" />
+    </addcontrol>
+
+    <addcontrol name="lblTitle" type="label" bringtofront="true">
+      <property name="Text" type="Binding" value="Player.CurrentSong.Album" />
+      <property name="Location" type="point" value="66, 48"/>
+      <property name="Size" type="size" value="70,15" />
+      <property name="Font" type="Font" value="Tahoma, 7pt" />
+    </addcontrol>
+
+    <addcontrol name="lblRemaining" type="label" bringtofront="true">
+      <property name="Text" type="Binding" value="Player.RemainingDescription" />
+      <property name="Location" type="point" value="110, 83"/>
+      <property name="AutoSize" type="bool" value="true" />
+      <property name="Font" type="Font" value="Tahoma, 7pt" />
+    </addcontrol>
+
+
+    <addcontrol name="lblDuration" type="label" bringtofront="true">
+      <property name="Text" type="Binding" value="Player.CurrentSong.DurationDescription" />
+      <property name="Location" type="point" value="24, 83"/>
+      <property name="AutoSize" type="bool" value="true" />
+      <property name="Font" type="Font" value="Tahoma, 7pt" />
+    </addcontrol>
+  </form>
+  <form type="LibraryForm">
+    <control type="TreeView">
+      <property name="LineColor" type="Color" value="Black" />
+      <property name="ShowLines" type="bool" value="false" />
+      <property name="Font" type="Font" value="Tahoma, 8pt" />
+      <property name="Parent" type="object">
+        <property name="Padding" type="Padding" value="2,2,0,2" />
+      </property>
+    </control>
+    <control type="InfoControl">
+      <property name="Padding" type="Padding" value="00,2,2,2" />
+    </control>
+    <control type="SongListView">
+      <property name="Padding" type="Padding" value="00,2,2,2" />
+    </control>
+  </form>
+  <control type="SongListViewHeader">
+    <property name="LineColor" type="Color" value="212,216,223" />
+    <property name="LineColorLight" type="Color" value="243,246,251" />
+    <property name="ForeColor" type="Color" value="119,121,125" />
+  </control>
+  <control type="SongListViewListPanel">
+    <property name="SelectedColor" type="Color" value="Highlight" />
+    <property name="ForeColor" type="Color" value="Black" />
+    <property name="CurrentSongFont" type="Font" value="Tahoma, 8pt, style=Bold" />
+    <property name="HeaderFont" type="Font" value="Tahoma, 9pt, style=Bold" />
+  </control>
+  <control type="CheckBox">
+    <property name="FlatAppearance" type="Object">
+      <property name="CheckedBackColor" type="Color" value="64,64,64" />
+      <property name="MouseDownBackColor" type="Color" value="Black" />
+      <property name="MouseOverBackColor" type="Color" value="64,64,64" />
+      <property name="BackColor" type="Color" value="Black" />
+      <property name="BorderColor" type="Color" value="Black" />
+    </property>
+  </control>
+  <control type="Button">
+    <property name="FlatAppearance" type="Object">
+      <property name="CheckedBackColor" type="Color" value="64,64,64" />
+      <property name="MouseDownBackColor" type="Color" value="Black" />
+      <property name="MouseOverBackColor" type="Color" value="64,64,64" />
+      <property name="BackColor" type="Color" value="Black" />
+      <property name="BorderColor" type="Color" value="Black" />
+    </property>
+  </control>
+</skin>

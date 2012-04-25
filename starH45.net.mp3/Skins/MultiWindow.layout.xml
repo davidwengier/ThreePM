@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <form name="DynamicForm">
+    <property name="BackColor" type="Color" value="Black" />
+    <property name="ForeColor" type="Color" value="White" />
+    <property name="Font" type="Font" value="Tahoma, 8pt" />
+    <property name="Size" type="Size" value="200,200" />
+    <property name="Opacity" type="float" value="0.8" />
+    <property name="Caption" type="string" value="SuperHappyMP3" />
+
+    <property name="InternalBorderAtTop" type="bool" value="false" />
+    <property name="Sizable" type="bool" value="true" />
+    <property name="RoundedRadius" type="int" value="9" />
+    <property name="RoundedForm" type="bool" value="true" />
+
+    <property name="InternalBorderSize" type="int" value="4" />
+    <property name="InternalBorderColor" type="Color" value="95,105,130" />
+
+    <property name="CaptionTextColor" type="Color" value="Silver" />
+
+    <property name="CaptionTopColor" type="Color" value="7,7,8" />
+    <property name="CaptionTextBackColor" type="Color" value="41,46,56" />
+    <property name="CaptionBottomColor" type="Color" value="Black" />
+
+    <property name="CaptionTopColorInactive" type="Color" value="7,7,8" />
+    <property name="CaptionTextBackColorInactive" type="Color" value="41,46,56" />
+    <property name="CaptionBottomColorInactive" type="Color" value="Black" />
+
+    <control type="Label">
+      <property name="AutoSize" type="bool" value="true" />
+      <property name="Anchor" type="Anchor" value="Top, Left" />
+      <property name="Location" type="Point" value="10,25" />
+      <property name="Text" type="Binding" value="Player.CurrentSong.Title" />
+      <property name="BackColor" type="Color" value="Transparent" />
+    </control>
+    <control type="Label">
+      <property name="AutoSize" type="bool" value="true" />
+      <property name="Anchor" type="Anchor" value="Top, Left" />
+      <property name="Location" type="Point" value="10,37" />
+      <property name="Text" type="Binding" value="Player.CurrentSong.Artist" />
+    </control>
+    <control type="Label">
+      <property name="AutoSize" type="bool" value="true" />
+      <property name="Anchor" type="Anchor" value="Top, Left" />
+      <property name="Location" type="Point" value="10,49" />
+      <property name="Text" type="Binding" value="Player.CurrentSong.Album" />
+    </control>
+    <control type="Label">
+      <property name="Location" type="Point" value="110,20" />
+      <property name="AutoSize" type="bool" value="true" />
+      <property name="Anchor" type="Anchor" value="Top, Right" />
+      <property name="Text" type="Binding" value="Player.PositionDescription" />
+      <property name="TextAlign" type="textalign" value="MiddleRight" />
+    </control>
+    <control type="Label">
+      <property name="Location" type="Point" value="145,20" />
+      <property name="AutoSize" type="bool" value="true" />
+      <property name="Anchor" type="Anchor" value="Top, Right" />
+      <property name="Text" type="string" value=" / " />
+      <property name="TextAlign" type="textalign" value="MiddleRight" />
+    </control>
+    <control type="Label">
+      <property name="Location" type="Point" value="157,20" />
+      <property name="AutoSize" type="bool" value="true" />
+      <property name="Anchor" type="Anchor" value="Top, Right" />
+      <property name="Text" type="Binding" value="Player.RemainingDescription" />
+      <property name="TextAlign" type="textalign" value="MiddleRight" />
+    </control>
+
+    <control type="AlbumArtBox">
+      <property name="Location" type="Point" value="10, 65" />
+      <property name="Size" type="Size" value="100,100" />
+      <property name="Song" type="Binding" value="Player.CurrentSong" />
+      <property name="Anchor" type="Anchor" value="Top, Left" />
+    </control>
+
+    <control type="PlayPauseButton">
+      <property name="Location" type="Point" value="160, 160" />
+      <property name="Anchor" type="Anchor" value="Bottom, Right" />
+    </control>
+	  <control type="PlayPauseButton">
+		  <property name="Location" type="Point" value="140, 160" />
+		  <property name="Anchor" type="Anchor" value="Bottom, Right" />
+	  </control>
+	  <control type="PlayPauseButton">
+		  <property name="Location" type="Point" value="120, 160" />
+		  <property name="Anchor" type="Anchor" value="Bottom, Right" />
+	  </control>
+	  <control type="PlayPauseButton">
+		  <property name="Location" type="Point" value="100, 160" />
+		  <property name="Anchor" type="Anchor" value="Bottom, Right" />
+	  </control>
+  </form>
+</layout>

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<skin name="Default">
+  <control type="All">
+    <property name="BackColor" type="Color" value="Pink" />
+    <property name="ForeColor" type="Color" value="Purple" />
+  </control>
+  <form type="All">
+    <property name="BackColor" type="Color" value="Pink" />
+    <property name="ForeColor" type="Color" value="Purple" />
+
+    <property name="CaptionTextColor" type="Color" value="White" />
+	  
+    <property name="CaptionTextBackColor" type="Color" value="HotPink" />
+    <property name="CaptionTextBackColorInactive" type="Color" value="HotPink" />
+    <property name="CaptionTopColor" type="Color" value="Violet" />
+    <property name="CaptionBottomColor" type="Color" value="LightPink" />
+	  <property name="CaptionTopColorInactive" type="Color" value="Violet" />
+	  <property name="CaptionBottomColorInactive" type="Color" value="LightPink" />
+	  
+  </form>
+  <form type="MainForm">
+    <property name="Player" type="Object">
+      <property name="VisColor1" type="Color" value="DeepPink" />
+      <property name="VisColor2" type="Color" value="Purple" />
+      <property name="VisColor3" type="Color" value="White" />
+      <property name="VisBackColor" type="Color" value="Pink" />
+    </property>
+  </form>
+  <control type="SongListView">
+    <property name="SelectedColor" type="Color" value="White" />
+    <property name="Font" type="Font" value="Tahoma, 9pt" />
+    <property name="CurrentSongFont" type="Font" value="Tahoma, 9pt, style=Bold" />
+    <property name="HeaderFont" type="Font" value="Tahoma, 10pt, style=Bold" />
+  </control>
+  <control type="CheckBox">
+    <property name="FlatAppearance" type="Object">
+      <property name="CheckedBackColor" type="Color" value="Violet" />
+      <property name="MouseDownBackColor" type="Color" value="White" />
+      <property name="MouseOverBackColor" type="Color" value="HotPink" />
+    </property>
+  </control>
+  <control type="Button">
+    <property name="FlatAppearance" type="Object">
+      <property name="CheckedBackColor" type="Color" value="Violet" />
+      <property name="MouseDownBackColor" type="Color" value="White" />
+      <property name="MouseOverBackColor" type="Color" value="HotPink" />
+    </property>
+  </control>
+  <!-- have to set the tickers because they would have been set wrongly after the type="all" above -->
+  <control name="tckVolume">
+    <property name="ForeColor" type="Color" value="Blue"/>
+  </control>
+  <control name="tckBalance">
+    <property name="ForeColor" type="Color" value="Green"/>
+  </control>
+</skin>
