@@ -150,13 +150,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ThreePM.Library\ThreePM.Library.csproj">
+    <ProjectReference Include="..\ThreePM.MusicLibrary\ThreePM.MusicLibrary.csproj">
       <Project>{C1158BAA-FE05-47D9-8111-D7EAF71FB618}</Project>
-      <Name>ThreePM.Library</Name>
+      <Name>ThreePM.MusicLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ThreePM.Player\ThreePM.Player.csproj">
+    <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj">
       <Project>{CB5E87C5-43CB-4037-B9AF-C61530707DA7}</Project>
-      <Name>ThreePM.Player</Name>
+      <Name>ThreePM.MusicPlayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThreePM.Utilities\ThreePM.Utilities.csproj">
       <Project>{21C56029-5715-4254-91FE-9785A6A5560B}</Project>

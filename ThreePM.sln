@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.28309.60
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePM", "ThreePM\ThreePM.csproj", "{68C3103E-61B7-4D3A-A897-B50A0CF67F01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePM.Player", "ThreePM.Player\ThreePM.Player.csproj", "{CB5E87C5-43CB-4037-B9AF-C61530707DA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePM.MusicPlayer", "ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj", "{CB5E87C5-43CB-4037-B9AF-C61530707DA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePM.Library", "ThreePM.Library\ThreePM.Library.csproj", "{C1158BAA-FE05-47D9-8111-D7EAF71FB618}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePM.MusicLibrary", "ThreePM.MusicLibrary\ThreePM.MusicLibrary.csproj", "{C1158BAA-FE05-47D9-8111-D7EAF71FB618}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePM.UI", "ThreePM.UI\ThreePM.UI.csproj", "{D3B8234C-2002-4A31-BCA1-37794EB47DCB}"
 EndProject
