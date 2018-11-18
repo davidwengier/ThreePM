@@ -54,7 +54,6 @@ namespace ThreePM
         private bool m_showRemaining ;
 		private Keys m_ignoreAndNextKey = (Keys.Z | Keys.Control | Keys.Shift);
 
-		private NotifyForm m_notifyForm;
 		private ToasterForm m_toasterForm;
 
         #endregion
@@ -121,7 +120,6 @@ namespace ThreePM
 				ThreePM.Engine.Main.Start();
 
 				ShowToasterForm = Convert.ToBoolean(Registry.GetValue("MainForm.ShowToasterForm", true));
-				ShowNotifyForm = Convert.ToBoolean(Registry.GetValue("MainForm.ShowNotifyForm", false));
 				m_showRemaining = Convert.ToBoolean(Registry.GetValue("MainForm.ShowRemaining", false));
 				m_visualizationNumber = Convert.ToInt32(Registry.GetValue("MainForm.VisualizationNumber", 1));
 				m_visualizationHighQuality = Convert.ToBoolean(Registry.GetValue("MainForm.VisualizationHighQuality", true));
@@ -250,36 +248,6 @@ namespace ThreePM
 						m_toasterForm.Close();
 						m_toasterForm.Dispose();
 						m_toasterForm = null;
-					}
-				}
-			}
-		}
-
-		public bool ShowNotifyForm
-		{
-			get { return m_notifyForm != null; }
-			set
-			{
-				Registry.SetValue("MainForm.ShowNotifyForm", value);
-				if (value)
-				{
-					m_notifyForm = new NotifyForm();
-					m_notifyForm.NextSong += new EventHandler(NotifyForm_NextSong);
-					m_notifyForm.ShowPlayer += new EventHandler(NotifyForm_ShowPlayer);
-					if (Player != null && Player.CurrentSong != null)
-					{
-						m_notifyForm.Show(Player.CurrentSong);
-					}
-				}
-				else
-				{
-					if (m_notifyForm != null)
-					{
-						m_notifyForm.NextSong -= new EventHandler(NotifyForm_NextSong);
-						m_notifyForm.ShowPlayer -= new EventHandler(NotifyForm_ShowPlayer);
-						m_notifyForm.Close();
-						m_notifyForm.Dispose();
-						m_notifyForm = null;
 					}
 				}
 			}
@@ -427,10 +395,6 @@ namespace ThreePM
 			lblTitle.Text = e.Song.Title;
 			lblArtist.Text = e.Song.Artist;
 			tckPosition.Duration = e.Song.Duration;
-			if (m_notifyForm != null)
-			{
-				m_notifyForm.Show(e.Song);
-			}
 		}
 
         private void player_StateChanged(object sender, EventArgs e)

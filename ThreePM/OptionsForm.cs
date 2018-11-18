@@ -92,7 +92,6 @@ namespace ThreePM
 			chkFullSpectrum.Checked = frmMain.VisualizationFullSpectrum;
 			txtVisualizationSpeed.Text = frmMain.VisualizationSpeed.ToString();
 
-			chkNotificationForm.Checked = frmMain.ShowNotifyForm;
 			chkToaster.Checked = frmMain.ShowToasterForm;
 			txtToasterStayDelay.Text = Registry.GetValue("ToasterForm.StayDelay", 2000).ToString();
 			txtToasterFadeDelay.Text = Registry.GetValue("ToasterForm.FadeDelay", 50).ToString();
@@ -234,12 +233,6 @@ namespace ThreePM
 		{
 			if (m_initialising) return;
 			frmMain.ShowToasterForm = chkToaster.Checked;
-		}
-
-		private void chkNotificationForm_CheckedChanged(object sender, EventArgs e)
-		{
-			if (m_initialising) return;
-			frmMain.ShowNotifyForm = chkNotificationForm.Checked;
 		}
 
 		private void txtFormatString_TextChanged(object sender, EventArgs e)

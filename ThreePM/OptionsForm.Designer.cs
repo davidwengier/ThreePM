@@ -97,7 +97,6 @@
 			this.pnlWatchFolders = new System.Windows.Forms.Panel();
 			this.pnlLibrary = new System.Windows.Forms.Panel();
 			this.label17 = new System.Windows.Forms.Label();
-			this.chkNotificationForm = new System.Windows.Forms.CheckBox();
 			this.chkContributing = new System.Windows.Forms.CheckBox();
 			this.chkToaster = new System.Windows.Forms.CheckBox();
 			this.label12 = new System.Windows.Forms.Label();
@@ -902,7 +901,6 @@
 			// pnlLibrary
 			// 
 			this.pnlLibrary.Controls.Add(this.label17);
-			this.pnlLibrary.Controls.Add(this.chkNotificationForm);
 			this.pnlLibrary.Controls.Add(this.chkContributing);
 			this.pnlLibrary.Controls.Add(this.chkToaster);
 			this.pnlLibrary.Controls.Add(this.label12);
@@ -941,18 +939,6 @@
 			this.label17.Size = new System.Drawing.Size(205, 14);
 			this.label17.TabIndex = 25;
 			this.label17.Text = "songs in Top/Recent Played/Added:";
-			// 
-			// chkNotificationForm
-			// 
-			this.chkNotificationForm.AutoSize = true;
-			this.chkNotificationForm.ForeColor = System.Drawing.Color.Red;
-			this.chkNotificationForm.Location = new System.Drawing.Point(153, 144);
-			this.chkNotificationForm.Name = "chkNotificationForm";
-			this.chkNotificationForm.Size = new System.Drawing.Size(153, 18);
-			this.chkNotificationForm.TabIndex = 24;
-			this.chkNotificationForm.Text = "Show Notification Form";
-			this.chkNotificationForm.UseVisualStyleBackColor = true;
-			this.chkNotificationForm.CheckedChanged += new System.EventHandler(this.chkNotificationForm_CheckedChanged);
 			// 
 			// chkContributing
 			// 
@@ -1228,7 +1214,6 @@
 		private System.Windows.Forms.Panel pnlTabs;
 		private System.Windows.Forms.Panel pnlFuckKnows;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-		private System.Windows.Forms.CheckBox chkNotificationForm;
 		private System.Windows.Forms.CheckBox chkToaster;
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.Label label6;
