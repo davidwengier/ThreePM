@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePM.UI", "ThreePM.UI\Th
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePM.Utilities", "ThreePM.Utilities\ThreePM.Utilities.csproj", "{21C56029-5715-4254-91FE-9785A6A5560B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePM.Engine", "ThreePM.Main\ThreePM.Engine.csproj", "{396DF2A5-DED2-444F-AB18-36EF83216908}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePM.Engine", "ThreePM.Engine\ThreePM.Engine.csproj", "{396DF2A5-DED2-444F-AB18-36EF83216908}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
