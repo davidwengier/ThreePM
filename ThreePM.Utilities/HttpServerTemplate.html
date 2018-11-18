@@ -1,0 +1,309 @@
+<html>
+<head>
+    <title>{Title} - {Artist} - ThreePM</title>
+    <style type="text/css">
+	table
+	   { margin-top:0px;
+	     padding-top:0px;
+	     border-style:solid;
+	     border-color:#DDDDDD;
+	     border-left-width:1px;
+	     border-bottom-width:1px;
+	     border-top-width:1px;
+	     border-right-width:1px; }
+	table.noborder
+	   { border-width:0px; }
+	td
+	   { color:#FFFFEC; 
+	     vertical-align:top;
+	     margin:0px; 
+	     padding:0px;
+	     border:0px;
+	     font-family:Verdana; 
+	     font-size:8pt; }
+	tr.alternate  > td
+	{
+	    background-color:#D8D8D8;
+	    color: #000000;
+	}
+	td.label
+	{
+	    padding-right: 5px;
+	}
+	button 
+	{
+	    font-family:Verdana; 
+	    font-size:8pt; 
+	}
+	td.head
+	   { color:#000000; 
+	     font-family:Segoe UI, Verdana, Arial, sans-serif; 
+	     font-size:8pt;
+	     padding:3px;
+	     border-bottom-width:0px;
+	     border-top-width:1px;
+	     border-left-width:1px;
+	     border-right-width:0px;
+	     border-style:solid;
+	     background-color:#BFBEC2;
+	     border-color:#EEEEEE; 
+	     }
+    </style>
+
+    <script language="JavaScript" type="text/javascript">
+            var lastSong = '';
+            var songPosition = 0;
+            var songDuration = 0;
+    			
+			function getDataFromServer(parameter)
+			{
+				var req;
+				if (window.XMLHttpRequest) 
+				{
+					req = new XMLHttpRequest(); //Not IE
+				} 
+				else if(window.ActiveXObject) 
+				{
+					req = new ActiveXObject("Microsoft.XMLHTTP"); //IE
+				} 
+				else
+				{
+					//Display your error message here. 
+					alert("Your browser doesn't support the XmlHttpRequest object.  Better upgrade to Firefox.");
+					return '';
+				}
+				if (req.readyState == 4 || req.readyState == 0)
+				{
+					req.open("GET", parameter, false);
+					req.send(null);
+					return req.responseText;
+				}			
+			}
+
+			function getSearchResults(query)
+    		{
+                if (query == "")
+                {
+                    alert("Please enter something to search for");
+                }
+
+                document.getElementById('SearchResults').innerHTML = getDataFromServer('/search/' + escape(query));
+			}		
+			
+			function getLyricsSearchResults(query)
+    		{
+                if (query == "")
+                {
+                    alert("Please enter something to search for");
+                }
+
+                document.getElementById('SearchResults').innerHTML = getDataFromServer('/lyricssearch/' + escape(query));
+			}
+			
+			function showPlaylist()
+			{
+			    document.getElementById('Playlist').innerHTML = getDataFromServer('/viewqueue');
+			}
+			
+			function showSongDetails()
+			{
+			    var song = getDataFromServer('/songtitle');
+   			    songPosition = getDataFromServer('/position') * 1;
+				if (song != lastSong)
+				{
+				    songDuration = getDataFromServer('/duration') * 1;
+				    document.getElementById('songtitle').innerHTML = song;
+				    document.title = song + ' - ThreePM';
+   					document.getElementById('songdetails').innerHTML = getDataFromServer('/details');
+				    document.getElementById('albumart').src = '/albumart/' + (new Date()).getTime();
+				    document.getElementById('lyricsframe').src = '/lyrics/' + (new Date()).getTime();
+				    lastSong = song;
+				}
+			}
+			
+			function updateProgress()
+			{
+			    songPosition = songPosition + 500;
+
+                var percentage = Math.round(songPosition / songDuration * 300);
+			    document.getElementById('prgBar').style.width = percentage + 'px';
+			    if (songPosition > songDuration)
+			    {
+			        showSongDetails();
+			    }
+			}
+
+			function doAction(action)
+			{
+			    getDataFromServer('/' + escape(action));
+				showSongDetails();
+				showPlaylist();
+			}
+			
+			function doSearchResultsAction(action)
+			{
+			    doAction(action);	
+			    document.getElementById('SearchResults').innerHTML = "";
+			}
+			
+			function init()
+			{
+			    showSongDetails();
+			    showPlaylist();
+			    setInterval("showPlaylist()", 30000);
+			    setInterval("showSongDetails()", 10000);
+			    setInterval("updateProgress()", 500);
+			}
+			
+    </script>
+
+</head>
+<body bgcolor="#706F77" text="#FFFFEC" onload="init();">
+    <table>
+        <tr>
+            <td class="head" colspan="2">
+                <center>
+                    <b style="font-size: 10pt;">ThreePM Status</b></center>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td class="head" colspan="2">
+                            <center>
+                                <b><font size="+1"><span id="songtitle">{Artist} - {Title}</span></font></b></center>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <br />
+                        </td>
+                    </tr>
+                    <tr class="head">
+                        <td class="head" colspan="2" style="word-spacing: 5px;">
+                            <center>
+                                D E T A I L S</center>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div id="songdetails"><table>
+											<tr><td nowrap class="label">Filename</td><td>{Filename}</td></tr>
+											<tr><td class="label">Title</td><td>{Title}</td></tr>
+											<tr><td class="label">Artist</td><td>{Artist}</td></tr>
+											<tr><td class="label">Duration</td><td>{Duration}</td></tr>
+											<tr><td class="label">Album</td><td>{Album}</td></tr>
+											<tr><td class="label">Year</td><td>{Year}</td></tr>
+											<tr><td class="label">Track</td><td>{Track}</td></tr>
+											<tr><td class="label">Play Count</td><td>{PlayCount}</td></tr>
+										  </table>
+                                        </div>
+                                        <table cellpadding="0" cellspacing="0" width="300" style="background-color:Black">
+                                            <tr>
+                                                <td><div id="prgBar" style="height: 20px; width:0px;background-color: Green;">&nbsp;</div></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <img id="albumart" src="/albumart" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="head" colspan="2" style="word-spacing: 5px;">
+                            <center>
+                                C O N T R O L S</center>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <button onclick="doAction('previous');">
+                                Previous</button>
+                            <button onclick="doAction('play');">
+                                Play</button>
+                            <button onclick="doAction('pause');">
+                                Pause</button>
+                            <button onclick="doAction('stop');">
+                                Stop</button>
+                            <button onclick="doAction('next');">
+                                Next</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="head" colspan="2" style="word-spacing: 5px;">
+                            <center>
+                                S E A R C H &nbsp; L I B R A R Y</center>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            Song Search:
+                            <input type="text" id="search" name="search" size="50" onkeypress="if (event.keyCode == 13) { getSearchResults(this.value); }" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            Lyrics Search:
+                            <input type="text" id="lyricssearch" name="lyricssearch" size="50" onkeypress="if (event.keyCode == 13) { getLyricsSearchResults(this.value); }" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div id="SearchResults">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td class="head" colspan="2" style="word-spacing: 5px;">
+                            <center>
+                                L Y R I C S</center>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <iframe id="lyricsframe" height="400" width="400" src="/lyrics"></iframe>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="head" colspan="2" style="word-spacing: 5px;">
+                            <center>
+                                P L A Y L I S T</center>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div id="Playlist">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
