@@ -87,8 +87,8 @@
     <control name="tckPosition">
 	  <property name="Visible" type="bool" value="true"/>
       <property name="ForeColor" type="Color" value="Red"/>
-	  <property name="Location" type="Point" value="30,15"/>
-	  <property name="Size" type="Size" value="50, 10"/>
+	  <property name="Location" type="Point" value="0,120"/>
+	  <property name="Size" type="Size" value="281, 10"/>
     </control>
 	<control name="tckBalance">
 	  <property name="Visible" type="bool" value="true"/>
