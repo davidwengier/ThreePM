@@ -1,21 +1,21 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ThreePM.MusicPlayer
 {
-	public class FileEventArgs : EventArgs
-	{
-		private string m_filename;
+    public class FileEventArgs : EventArgs
+    {
+        private readonly string _filename;
 
-		public string Filename
-		{
-			get { return m_filename; }
-		}
+        public string Filename
+        {
+            get { return _filename; }
+        }
 
         public FileEventArgs(string filename)
-		{
-            m_filename = filename;
-		}
-	}
+        {
+            _filename = filename;
+        }
+    }
 }

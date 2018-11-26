@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
@@ -6,10 +6,10 @@ using System.Data.SQLite;
 
 namespace ThreePM.MusicLibrary
 {
-	public static class SQLiteHelper
-	{
-		public static DataSet ExecuteDataSet(string connString, string commandText)
-		{
+    public static class SQLiteHelper
+    {
+        public static DataSet ExecuteDataSet(string connString, string commandText)
+        {
             using (SQLiteConnection conn = new SQLiteConnection(connString))
             {
                 conn.Open();
@@ -24,15 +24,15 @@ namespace ThreePM.MusicLibrary
                 conn.Close();
                 return result;
             }
-		}
+        }
 
-		public static object ExecuteScalar(string conn, string commandText)
-		{
-			return ExecuteScalar(conn, commandText, null);
-		}
+        public static object ExecuteScalar(string conn, string commandText)
+        {
+            return ExecuteScalar(conn, commandText, null);
+        }
 
-		public static object ExecuteScalar(string connString, string commandText, SQLiteParameter[] parameters)
-		{
+        public static object ExecuteScalar(string connString, string commandText, SQLiteParameter[] parameters)
+        {
             using (SQLiteConnection conn = new SQLiteConnection(connString))
             {
                 conn.Open();
@@ -49,15 +49,15 @@ namespace ThreePM.MusicLibrary
                 conn.Close();
                 return result;
             }
-		}
+        }
 
-		public static int ExecuteNonQuery(string conn, string commandText)
-		{
-			return ExecuteNonQuery(conn, commandText, null);
-		}
+        public static int ExecuteNonQuery(string conn, string commandText)
+        {
+            return ExecuteNonQuery(conn, commandText, null);
+        }
 
-		public static int ExecuteNonQuery(string connString, string commandText, SQLiteParameter[] parameters)
-		{
+        public static int ExecuteNonQuery(string connString, string commandText, SQLiteParameter[] parameters)
+        {
             using (SQLiteConnection conn = new SQLiteConnection(connString))
             {
                 conn.Open();
@@ -74,7 +74,7 @@ namespace ThreePM.MusicLibrary
                 conn.Close();
                 return result;
             }
-		}
+        }
 
         public static SQLiteDataReader ExecuteReader(string connString, string commandText)
         {

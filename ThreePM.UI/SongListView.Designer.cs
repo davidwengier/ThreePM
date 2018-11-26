@@ -42,7 +42,7 @@ namespace ThreePM.UI
 			this.list.MouseMove += new System.Windows.Forms.MouseEventHandler(this.SongListView_MouseMove);
 			this.list.DragDrop += new System.Windows.Forms.DragEventHandler(this.list_DragDrop);
 			this.list.DragEnter += new System.Windows.Forms.DragEventHandler(this.list_DragEnter);
-			this.list.Scroll += new System.Windows.Forms.ScrollEventHandler(this.list_Scroll);
+			this.list.Scroll += new System.Windows.Forms.ScrollEventHandler(this.List_Scroll);
 			this.list.MouseUp += new System.Windows.Forms.MouseEventHandler(this.SongListView_MouseUp);
 			this.list.ItemsMeasured += new System.EventHandler(this.list_ItemsMeasured);
 			this.list.DragLeave += new System.EventHandler(this.list_DragLeave);

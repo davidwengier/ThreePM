@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -61,13 +61,13 @@ namespace ThreePM
 			if (this.Opacity <= 0)
 			{
 				this.Opacity = 0;
-				Caption = "";
+                this.Caption = "";
 				tmrFadeOut.Stop();
 				this.Hide();
 			}
 		}
 
-		void Player_SongOpened(object sender, ThreePM.MusicPlayer.SongEventArgs e)
+        private void Player_SongOpened(object sender, ThreePM.MusicPlayer.SongEventArgs e)
 		{
 			// Set the display controls
 			lblArtist.Text = e.Song.Artist;

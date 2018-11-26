@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,16 +6,16 @@ namespace ThreePM.MusicLibrary
 {
     public class LibraryEntryEventArgs : EventArgs
     {
-		private LibraryEntry m_libraryEntry;
+        private readonly LibraryEntry _libraryEntry;
 
-		public LibraryEntry LibraryEntry
+        public LibraryEntry LibraryEntry
         {
-			get { return m_libraryEntry; }
+            get { return _libraryEntry; }
         }
 
-		public LibraryEntryEventArgs(LibraryEntry libraryEntry)
+        public LibraryEntryEventArgs(LibraryEntry libraryEntry)
         {
-			m_libraryEntry = libraryEntry;
+            _libraryEntry = libraryEntry;
         }
     }
 }

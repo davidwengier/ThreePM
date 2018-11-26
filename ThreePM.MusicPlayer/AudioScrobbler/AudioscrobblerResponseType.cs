@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2006 Monsur Hossain
 
  * Permission is hereby granted, free of charge, to any person obtaining a 
@@ -23,18 +23,18 @@
 
 namespace ThreePM.MusicPlayer
 {
-	/// <summary>
-	/// The various types of responses that can be 
-	/// returned by the audioscrobbler servers
-	/// </summary>
-	internal enum AudioscrobblerResponseType
-	{
-		UNKNOWN,
-		UPTODATE,
-		UPDATE,
-		FAILED,
-		BADUSER,
-		BADAUTH,
-		OK
-	}
+    /// <summary>
+    /// The various types of responses that can be 
+    /// returned by the audioscrobbler servers
+    /// </summary>
+    internal enum AudioscrobblerResponseType
+    {
+        UNKNOWN,
+        UPTODATE,
+        UPDATE,
+        FAILED,
+        BADUSER,
+        BADAUTH,
+        OK
+    }
 }

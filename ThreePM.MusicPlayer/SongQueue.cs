@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Specialized;
 using System.Collections;
 using System.ComponentModel;
@@ -9,8 +9,8 @@ namespace ThreePM.player
     {
         #region Declarations
 
-        private ISynchronizeInvoke m_synchronizingObject;
-        private StringCollection songs = new StringCollection();
+        private ISynchronizeInvoke _synchronizingObject;
+        private readonly StringCollection _songs = new StringCollection();
 
         #region Events
 
@@ -26,11 +26,11 @@ namespace ThreePM.player
         {
             get
             {
-                return m_synchronizingObject;
+                return _synchronizingObject;
             }
             set
             {
-                m_synchronizingObject = value;
+                _synchronizingObject = value;
             }
         }
 
@@ -50,7 +50,7 @@ namespace ThreePM.player
         {
             get
             {
-                return songs.Count;
+                return _songs.Count;
             }
         }
 
@@ -60,43 +60,43 @@ namespace ThreePM.player
 
         public void AddToStart(string filename)
         {
-            songs.Insert(0, filename);
+            _songs.Insert(0, filename);
             OnQueueChanged();
         }
 
         public void AddToEnd(string filename)
         {
-            songs.Add(filename);
+            _songs.Add(filename);
             OnQueueChanged();
         }
 
         public void Clear()
         {
-            songs.Clear();
+            _songs.Clear();
             OnQueueChanged();
         }
 
         public void MoveUp(int index)
         {
             if (index == 0) return;
-            string temp = songs[index];
-            songs[index] = songs[index - 1];
-            songs[index - 1] = temp;
+            string temp = _songs[index];
+            _songs[index] = _songs[index - 1];
+            _songs[index - 1] = temp;
             OnQueueChanged();
         }
 
         public void MoveDown(int index)
         {
             if (index == (Count - 1)) return;
-            string temp = songs[index];
-            songs[index] = songs[index + 1];
-            songs[index + 1] = temp;
+            string temp = _songs[index];
+            _songs[index] = _songs[index + 1];
+            _songs[index + 1] = temp;
             OnQueueChanged();
         }
 
         public void Remove(int index)
         {
-            songs.RemoveAt(index);
+            _songs.RemoveAt(index);
             OnQueueChanged();
         }
 
@@ -110,9 +110,9 @@ namespace ThreePM.player
             if (handler != null)
             {
                 EventArgs e = EventArgs.Empty;
-                if ((m_synchronizingObject != null) && m_synchronizingObject.InvokeRequired)
+                if ((_synchronizingObject != null) && _synchronizingObject.InvokeRequired)
                 {
-                    m_synchronizingObject.BeginInvoke(handler, new object[] { this, e });
+                    _synchronizingObject.BeginInvoke(handler, new object[] { this, e });
                 }
                 else
                 {
@@ -128,10 +128,10 @@ namespace ThreePM.player
         internal string GetNext()
         {
             string result;
-            lock (songs)
+            lock (_songs)
             {
-                result = songs[0];
-                songs.RemoveAt(0);
+                result = _songs[0];
+                _songs.RemoveAt(0);
                 OnQueueChanged();
             }
             return result;
@@ -143,7 +143,7 @@ namespace ThreePM.player
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            foreach (string s in songs)
+            foreach (string s in _songs)
             {
                 yield return s;
             }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,16 +6,16 @@ namespace ThreePM.MusicPlayer
 {
     public class SongEventArgs : EventArgs
     {
-        private SongInfo m_song;
+        private readonly SongInfo _song;
 
         public SongInfo Song
         {
-            get { return m_song; }
+            get { return _song; }
         }
 
         public SongEventArgs(SongInfo song)
         {
-            m_song = song;
+            _song = song;
         }
     }
 }

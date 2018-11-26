@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -10,50 +10,51 @@ using System.IO;
 
 namespace ThreePM.UI
 {
-	public partial class StatisticsControl : UserControl
-	{
-		private MusicPlayer.Player m_player;
-		private MusicLibrary.Library m_library;
+    public partial class StatisticsControl : UserControl
+    {
+        private Player _player;
+        private MusicLibrary.Library _library;
+        private DataSet _statistics;
 
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public MusicPlayer.Player Player
-		{
-			get { return m_player; }
-			set
-			{
-				m_player = value;
-			}
-		}
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Player Player
+        {
+            get { return _player; }
+            set
+            {
+                _player = value;
+            }
+        }
 
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public MusicLibrary.Library Library
-		{
-			get { return m_library; }
-			set
-			{
-				m_library = value;
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public MusicLibrary.Library Library
+        {
+            get { return _library; }
+            set
+            {
+                _library = value;
                 ShowStats();
-			}
-		}
+            }
+        }
 
         public StatisticsControl()
-		{
-			InitializeComponent();
-		}
+        {
+            InitializeComponent();
+        }
 
         public void ShowStats()
         {
-			string sql = "";
-			if (Player != null)
-			{
-				sql += @"
-				SELECT 'Songs played this session', '" + Player.HistoryCount + @"';
-				SELECT 'Songs in playlist', '" + Player.Playlist.Count + @"';";
-			}
+            string sql = "";
+            if (this.Player != null)
+            {
+                sql += @"
+				SELECT 'Songs played this session', '" + this.Player.HistoryCount + @"';
+				SELECT 'Songs in playlist', '" + this.Player.Playlist.Count + @"';";
+            }
 
-			sql += @"
+            sql += @"
 				SELECT 'Total Songs', COUNT(LibraryID)  FROM Library;
 				SELECT 'Total Plays', SUM(PlayCount) FROM Library;
 				SELECT 'Total Distinct Songs Played', COUNT(LibraryID), ROUND((COUNT(LibraryID) * 100.0 )/ (SELECT COUNT(LibraryID)  FROM Library) , 2), 'percent' FROM Library WHERE PlayCount > 0;
@@ -105,86 +106,85 @@ namespace ThreePM.UI
 					GROUP BY Library.WatchFolderID;
 				";
 
-			MethodInvoker DoWork = delegate {
-				m_statistics = Library.GetDataSet(sql);
-				if (this.Created) Invoke((MethodInvoker)delegate { DisplayData(); });
-			};
-			DoWork.BeginInvoke(null, null);
+            MethodInvoker DoWork = delegate
+            {
+                _statistics = this.Library.GetDataSet(sql);
+                if (this.Created) Invoke((MethodInvoker)delegate { DisplayData(); });
+            };
+            DoWork.BeginInvoke(null, null);
         }
 
-		protected override void OnHandleCreated(EventArgs e)
-		{
-			base.OnHandleCreated(e);
-			DisplayData();
-		}
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            DisplayData();
+        }
 
-		DataSet m_statistics;
+        private void DisplayData()
+        {
+            lstStatistics.BeginUpdate();
+            lstStatistics.Items.Clear();
 
-		private void DisplayData()
-		{
-			lstStatistics.BeginUpdate();
-			lstStatistics.Items.Clear();
-
-			if (m_statistics != null)
-			{
-				foreach (DataTable dt in m_statistics.Tables)
-				{
-					try
-					{
-						if (dt.Rows.Count > 1)
-						{
-							lstStatistics.Items.Add(dt.Rows[0][0].ToString() + ":");
-							foreach (DataRow dr in dt.Rows)
-							{
-								string s = "            " + dr[1].ToString();
-								if (dr.ItemArray.Length == 4)
-								{
-									if (dr[3].ToString() == "secs")
-									{
-										s += " (" + ThreePM.MusicPlayer.Player.GetPositionDescription(Convert.ToSingle(dr[2])) + " " + dr[3].ToString() + ")";
-									}
+            if (_statistics != null)
+            {
+                foreach (DataTable dt in _statistics.Tables)
+                {
+                    try
+                    {
+                        if (dt.Rows.Count > 1)
+                        {
+                            lstStatistics.Items.Add(dt.Rows[0][0].ToString() + ":");
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                string s = "            " + dr[1].ToString();
+                                if (dr.ItemArray.Length == 4)
+                                {
+                                    if (dr[3].ToString() == "secs")
+                                    {
+                                        s += " (" + ThreePM.MusicPlayer.Player.GetPositionDescription(Convert.ToSingle(dr[2])) + " " + dr[3].ToString() + ")";
+                                    }
                                     else if (dr[3].ToString() == "percent")
                                     {
                                         s += " (" + dr[2].ToString() + "%)";
                                     }
-									else
-									{
-										s += " (" + dr[2].ToString() + " " + dr[3].ToString() + ")";
-									}
-								}
-								lstStatistics.Items.Add(s);
-							}
-						}
-						else if (dt.Rows.Count == 1)
-						{
-							DataRow dr = dt.Rows[0];
-							string s = dr[0].ToString() + ": " + dr[1].ToString();
-							if (dr.ItemArray.Length == 4)
-							{
-								if (dr[3].ToString() == "secs")
-								{
-									s += " (" + ThreePM.MusicPlayer.Player.GetPositionDescription(Convert.ToSingle(dr[2])) + " " + dr[3].ToString() + ")";
-								}
+                                    else
+                                    {
+                                        s += " (" + dr[2].ToString() + " " + dr[3].ToString() + ")";
+                                    }
+                                }
+                                lstStatistics.Items.Add(s);
+                            }
+                        }
+                        else if (dt.Rows.Count == 1)
+                        {
+                            DataRow dr = dt.Rows[0];
+                            string s = dr[0].ToString() + ": " + dr[1].ToString();
+                            if (dr.ItemArray.Length == 4)
+                            {
+                                if (dr[3].ToString() == "secs")
+                                {
+                                    s += " (" + ThreePM.MusicPlayer.Player.GetPositionDescription(Convert.ToSingle(dr[2])) + " " + dr[3].ToString() + ")";
+                                }
                                 else if (dr[3].ToString() == "percent")
                                 {
                                     s += " (" + dr[2].ToString() + "%)";
                                 }
-								else
-								{
-									s += " (" + dr[2].ToString() + " " + dr[3].ToString() + ")";
-								}
-							}
-							if (s.Trim().Equals(":")) s = "";
-							lstStatistics.Items.Add(s);
-						}
-					}
-					catch
-					{
-						// lol
-					}
-				}
-			}
-			lstStatistics.EndUpdate();
-		}
-	}
+                                else
+                                {
+                                    s += " (" + dr[2].ToString() + " " + dr[3].ToString() + ")";
+                                }
+                            }
+                            if (s.Trim().Equals(":")) s = "";
+                            lstStatistics.Items.Add(s);
+                        }
+                    }
+                    catch
+                    {
+                        // lol
+                    }
+                }
+            }
+            lstStatistics.EndUpdate();
+        }
+    }
 }

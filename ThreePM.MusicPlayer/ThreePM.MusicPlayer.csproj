@@ -47,9 +47,6 @@
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.109.2" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System.Web" />
   </ItemGroup>
 </Project>
