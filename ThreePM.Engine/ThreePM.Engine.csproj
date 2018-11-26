@@ -3,7 +3,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>ThreePM.Engine</RootNamespace>
     <AssemblyName>ThreePM.Engine</AssemblyName>
-    <TargetFramework>net35</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />

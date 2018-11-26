@@ -3,7 +3,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>ThreePM</RootNamespace>
     <AssemblyName>ThreePM</AssemblyName>
-    <TargetFramework>net35</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
     <Win32Resource>icons.res</Win32Resource>
   </PropertyGroup>
   <ItemGroup>

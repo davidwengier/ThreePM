@@ -3,7 +3,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>ThreePM.Utilities</RootNamespace>
     <AssemblyName>ThreePM.Utilities</AssemblyName>
-    <TargetFramework>net35</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <None Include="HttpServerTemplate.html" />

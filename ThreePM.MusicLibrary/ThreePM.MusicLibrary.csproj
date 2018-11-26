@@ -3,7 +3,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>ThreePM.MusicLibrary</RootNamespace>
     <AssemblyName>ThreePM.MusicLibrary</AssemblyName>
-    <TargetFramework>net35</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj">
