@@ -1,76 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D3B8234C-2002-4A31-BCA1-37794EB47DCB}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ThreePM.UI</RootNamespace>
     <AssemblyName>ThreePM.UI</AssemblyName>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
+    <TargetFramework>net35</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlbumArtBox.cs">
+    <!-- <Compile Include="AlbumArtBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="InfoControl.cs">
@@ -88,7 +27,6 @@
     <Compile Include="ProgressCircle.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -125,10 +63,10 @@
     <Compile Include="Ticker.Designer.cs">
       <DependentUpon>Ticker.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utilities.cs" />
-  </ItemGroup>
+    <Compile Include="Utilities.cs" />-->
+  </ItemGroup> 
   <ItemGroup>
-    <EmbeddedResource Include="PlaylistControl.resx">
+    <!-- <EmbeddedResource Include="PlaylistControl.resx">
       <DependentUpon>PlaylistControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -147,24 +85,18 @@
     <EmbeddedResource Include="Ticker.resx">
       <DependentUpon>Ticker.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
+    </EmbeddedResource> -->
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThreePM.MusicLibrary\ThreePM.MusicLibrary.csproj">
-      <Project>{C1158BAA-FE05-47D9-8111-D7EAF71FB618}</Project>
-      <Name>ThreePM.MusicLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj">
-      <Project>{CB5E87C5-43CB-4037-B9AF-C61530707DA7}</Project>
-      <Name>ThreePM.MusicPlayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThreePM.Utilities\ThreePM.Utilities.csproj">
-      <Project>{21C56029-5715-4254-91FE-9785A6A5560B}</Project>
-      <Name>ThreePM.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="InfoControl.resx">
+    <!-- <EmbeddedResource Include="InfoControl.resx">
       <DependentUpon>InfoControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -172,14 +104,6 @@
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    </EmbeddedResource> -->
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

@@ -51,14 +51,14 @@ namespace ThreePM.UI
 			{
 				if (m_trackNumberColumnWidth == -1)
 				{
-					m_trackNumberColumnWidth = Utilities.GetValue("SongListView.TrackNumberColumnWidth", 25);
+					m_trackNumberColumnWidth = RegistryHelper.GetValue("SongListView.TrackNumberColumnWidth", 25);
 				}
 				return m_trackNumberColumnWidth;
 			}
 			set 
 			{ 
 				m_trackNumberColumnWidth = value;
-				Utilities.SetValue("SongListView.TrackNumberColumnWidth", value);
+                RegistryHelper.SetValue("SongListView.TrackNumberColumnWidth", value);
 			}
 		}
 
@@ -68,14 +68,14 @@ namespace ThreePM.UI
 			{
 				if (m_statusColumnWidth == -1)
 				{
-					m_statusColumnWidth = Utilities.GetValue("SongListView.StatusColumnWidth", 10);
+					m_statusColumnWidth = RegistryHelper.GetValue("SongListView.StatusColumnWidth", 10);
 				}
 				return m_statusColumnWidth;
 			}
 			set 
 			{ 
 				m_statusColumnWidth = value;
-				Utilities.SetValue("SongListView.StatusColumnWidth", value);
+                RegistryHelper.SetValue("SongListView.StatusColumnWidth", value);
 			}
 		}
 
@@ -85,14 +85,14 @@ namespace ThreePM.UI
 			{
 				if (m_titleColumnWidth == -1)
 				{
-					m_titleColumnWidth = Utilities.GetValue("SongListView.TitleColumnWidth", 200);
+					m_titleColumnWidth = RegistryHelper.GetValue("SongListView.TitleColumnWidth", 200);
 				}
 				return m_titleColumnWidth;
 			}
 			set 
 			{ 
 				m_titleColumnWidth = value;
-				Utilities.SetValue("SongListView.TitleColumnWidth", value);
+                RegistryHelper.SetValue("SongListView.TitleColumnWidth", value);
 			}
 		}
 
@@ -102,14 +102,14 @@ namespace ThreePM.UI
 			{
 				if (m_artistColumnWidth == -1)
 				{
-					m_artistColumnWidth = Utilities.GetValue("SongListView.ArtistColumnWidth", 150);
+					m_artistColumnWidth = RegistryHelper.GetValue("SongListView.ArtistColumnWidth", 150);
 				}
 				return m_artistColumnWidth;
 			}
 			set 
 			{ 
 				m_artistColumnWidth = value;
-				Utilities.SetValue("SongListView.ArtistColumnWidth", value);
+                RegistryHelper.SetValue("SongListView.ArtistColumnWidth", value);
 			}
 		}
 
@@ -119,14 +119,14 @@ namespace ThreePM.UI
 			{
 				if (m_albumColumnWidth == -1)
 				{
-					m_albumColumnWidth = Utilities.GetValue("SongListView.AlbumColumnWidth", 150);
+					m_albumColumnWidth = RegistryHelper.GetValue("SongListView.AlbumColumnWidth", 150);
 				}
 				return m_albumColumnWidth;
 			}
 			set 
 			{ 
 				m_albumColumnWidth = value;
-				Utilities.SetValue("SongListView.AlbumColumnWidth", value);
+                RegistryHelper.SetValue("SongListView.AlbumColumnWidth", value);
 			}
 		}
 
@@ -136,14 +136,14 @@ namespace ThreePM.UI
 			{
 				if (m_durationColumnWidth == -1)
 				{
-					m_durationColumnWidth = Utilities.GetValue("SongListView.DurationColumnWidth", 20);
+					m_durationColumnWidth = RegistryHelper.GetValue("SongListView.DurationColumnWidth", 20);
 				}
 				return m_durationColumnWidth;
 			}
 			set
 			{
 				m_durationColumnWidth = value;
-				Utilities.SetValue("SongListView.DurationColumnWidth", value);
+                RegistryHelper.SetValue("SongListView.DurationColumnWidth", value);
 			}
 		}
 
@@ -153,14 +153,14 @@ namespace ThreePM.UI
 			{
 				if (m_playCountColumnWidth == -1)
 				{
-					m_playCountColumnWidth = Utilities.GetValue("SongListView.PlayCountColumnWidth", 20);
+					m_playCountColumnWidth = RegistryHelper.GetValue("SongListView.PlayCountColumnWidth", 20);
 				}
 				return m_playCountColumnWidth;
 			}
 			set 
 			{ 
 				m_playCountColumnWidth = value;
-				Utilities.SetValue("SongListView.PlayCountColumnWidth", value);
+                RegistryHelper.SetValue("SongListView.PlayCountColumnWidth", value);
 			}
 		}
 

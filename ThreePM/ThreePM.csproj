@@ -1,82 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{68C3103E-61B7-4D3A-A897-B50A0CF67F01}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ThreePM</RootNamespace>
     <AssemblyName>ThreePM</AssemblyName>
-    <ApplicationIcon>
-    </ApplicationIcon>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFramework>net35</TargetFramework>
     <Win32Resource>icons.res</Win32Resource>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\Bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlbumArtPicker.cs">
+    <!-- <Compile Include="AlbumArtPicker.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AlbumArtPicker.Designer.cs">
@@ -206,28 +141,18 @@
     <EmbeddedResource Include="BaseForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>BaseForm.cs</DependentUpon>
-    </EmbeddedResource>
+    </EmbeddedResource> -->
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThreePM.MusicLibrary\ThreePM.MusicLibrary.csproj">
-      <Project>{C1158BAA-FE05-47D9-8111-D7EAF71FB618}</Project>
-      <Name>ThreePM.MusicLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThreePM.Engine\ThreePM.Engine.csproj">
-      <Project>{396DF2A5-DED2-444F-AB18-36EF83216908}</Project>
-      <Name>ThreePM.Engine</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj">
-      <Project>{CB5E87C5-43CB-4037-B9AF-C61530707DA7}</Project>
-      <Name>ThreePM.MusicPlayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThreePM.UI\ThreePM.UI.csproj">
-      <Project>{D3B8234C-2002-4A31-BCA1-37794EB47DCB}</Project>
-      <Name>ThreePM.UI</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThreePM.Utilities\ThreePM.Utilities.csproj">
-      <Project>{21C56029-5715-4254-91FE-9785A6A5560B}</Project>
-      <Name>ThreePM.Utilities</Name>
     </ProjectReference>
     <Content Include="Skins\BlueAndWhite.skin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -292,7 +217,7 @@
     <None Include="Default.skin.xml">
     </None>
     <None Include="icons.res" />
-    <EmbeddedResource Include="AlbumListForm.resx">
+    <!-- <EmbeddedResource Include="AlbumListForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>AlbumListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -347,12 +272,11 @@
     <EmbeddedResource Include="ToasterForm.resx">
       <DependentUpon>ToasterForm.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
+    </EmbeddedResource> -->
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.109.2</Version>
     </PackageReference>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,9 +4,9 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace ThreePM
+namespace ThreePM.UI
 {
-	public static class Utilities
+	public static class RegistryHelper
 	{
 		public static bool GetValue(string keyName, bool defaultValue)
 		{
@@ -18,7 +18,7 @@ namespace ThreePM
 			return Convert.ToInt32(GetValue(keyName, defaultValue.ToString()));
 		}
 
-		public static object GetValue(string keyName, object defaultValue)
+		public static string GetValue(string keyName, string defaultValue)
 		{
 			object o = Registry.GetValue(@"HKEY_CURRENT_USER\Software\" + Application.CompanyName + @"\" + Application.ProductName, keyName, defaultValue);
 			if (o == null)
