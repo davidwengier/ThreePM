@@ -118,12 +118,14 @@ namespace ThreePM
 
         private void AddPicture(GISResult s, Image pct)
         {
-            var pic = new PictureBox();
-            pic.Tag = s;
-            pic.SizeMode = PictureBoxSizeMode.AutoSize;
-            pic.BackColor = Color.Black;
-            pic.Padding = new Padding(1);
-            pic.Image = pct;
+            var pic = new PictureBox
+            {
+                Tag = s,
+                SizeMode = PictureBoxSizeMode.AutoSize,
+                BackColor = Color.Black,
+                Padding = new Padding(1),
+                Image = pct
+            };
             pic.MouseDown += new MouseEventHandler(pic_MouseDown);
             toolTip1.SetToolTip(pic, "URL: " + s.OrigURL + "\nThumbnail Size: " + pct.Width + " x " + pct.Height + "\nFull Size: " + s.OrigSize);
             flowLayoutPanel1.BeginInvoke(new MethodInvoker(delegate

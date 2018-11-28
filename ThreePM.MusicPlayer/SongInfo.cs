@@ -119,9 +119,6 @@ namespace ThreePM.MusicPlayer
                     Un4seen.Bass.Bass.BASS_StreamFree(num1);
                 }
 
-                int year = 0;
-                int track = 0;
-
                 if (tag.PictureCount > 0)
                 {
                     for (int i = 0; i < tag.PictureCount; i++)
@@ -135,6 +132,8 @@ namespace ThreePM.MusicPlayer
                 }
 
 
+
+                int track = 0;
                 if (tag.track.IndexOf('/') != -1)
                 {
                     int.TryParse(tag.track.Substring(0, tag.track.IndexOf('/')), out track);
@@ -143,7 +142,7 @@ namespace ThreePM.MusicPlayer
                 {
                     int.TryParse(tag.track, out track);
                 }
-                int.TryParse(tag.year, out year);
+                int.TryParse(tag.year, out int year);
 
                 _albumArtist = tag.albumartist;
                 if (string.IsNullOrEmpty(_albumArtist))

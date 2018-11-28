@@ -71,10 +71,7 @@ namespace ThreePM.UI
         {
             if (songListView1.SelectedItems.Count == 0) return;
             this.Player.PlayFile(songListView1.SelectedItems[0].SongInfo.FileName);
-            if (SongPlayed != null)
-            {
-                SongPlayed(this, EventArgs.Empty);
-            }
+            SongPlayed?.Invoke(this, EventArgs.Empty);
         }
 
         private void btnPlaylist_Click(object sender, System.EventArgs e)
@@ -83,26 +80,17 @@ namespace ThreePM.UI
             {
                 this.Player.Playlist.AddToEnd(s.SongInfo);
             }
-            if (SongQueued != null)
-            {
-                SongQueued(this, EventArgs.Empty);
-            }
+            SongQueued?.Invoke(this, EventArgs.Empty);
         }
 
         private void songListView1_SongQueued(object sender, EventArgs e)
         {
-            if (SongQueued != null)
-            {
-                SongQueued(this, EventArgs.Empty);
-            }
+            SongQueued?.Invoke(this, EventArgs.Empty);
         }
 
         private void songListView1_SongPlayed(object sender, EventArgs e)
         {
-            if (SongPlayed != null)
-            {
-                SongPlayed(this, EventArgs.Empty);
-            }
+            SongPlayed?.Invoke(this, EventArgs.Empty);
         }
 
         #region Search Box Methods

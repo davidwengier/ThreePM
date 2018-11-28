@@ -14,9 +14,9 @@ namespace ThreePM.Utilities
             /*
 
 
-			I'*m Like A Lawyer With The Way I'*m Always Trying To Get You Off \(Me [\+\&(and)]* You\)
+            I'*m Like A Lawyer With The Way I'*m Always Trying To Get You Off \(Me [\+\&(and)]* You\)
 
-			 */
+             */
 
             string regex = song.Title.ToLower();
             regex = regex.Replace("*", "\\*");
@@ -137,10 +137,7 @@ namespace ThreePM.Utilities
             {
                 if (!CheckForLyricsTextFile())
                 {
-                    if (LyricsNotFound != null)
-                    {
-                        LyricsNotFound(this, EventArgs.Empty);
-                    }
+                    LyricsNotFound?.Invoke(this, EventArgs.Empty);
                 }
 
                 return;
@@ -226,10 +223,7 @@ namespace ThreePM.Utilities
             {
                 SetStatus("Not Found");
 
-                if (LyricsNotFound != null)
-                {
-                    LyricsNotFound(this, EventArgs.Empty);
-                }
+                LyricsNotFound?.Invoke(this, EventArgs.Empty);
 
                 return;
             }
@@ -242,19 +236,13 @@ namespace ThreePM.Utilities
         private void SetStatus(string status)
         {
             _status = status;
-            if (StatusChanged != null)
-            {
-                StatusChanged(this, EventArgs.Empty);
-            }
+            StatusChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void SetCurrentURL(string currentURL)
         {
             _currentURL = currentURL;
-            if (CurrentURLChanged != null)
-            {
-                CurrentURLChanged(this, EventArgs.Empty);
-            }
+            CurrentURLChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void CancelLastRequest()
@@ -315,8 +303,7 @@ namespace ThreePM.Utilities
             {
                 case "search":
                 {
-                    string url;
-                    LyricsSearchResults results = _lyricsObjects[_currentLyricsObject].ProcessSearchResults(_song, page, out url);
+                    LyricsSearchResults results = _lyricsObjects[_currentLyricsObject].ProcessSearchResults(_song, page, out string url);
                     if (results == LyricsSearchResults.SearchAgain)
                     {
                         LoadURL(url, "search");
@@ -347,8 +334,7 @@ namespace ThreePM.Utilities
 
         private void LoadLyrics(string page)
         {
-            string lyrics;
-            if (_lyricsObjects[_currentLyricsObject].GetLyrics(page, out lyrics))
+            if (_lyricsObjects[_currentLyricsObject].GetLyrics(page, out string lyrics))
             {
                 lyrics = System.Web.HttpUtility.HtmlDecode(lyrics);
 

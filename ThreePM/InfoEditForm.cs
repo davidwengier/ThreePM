@@ -10,8 +10,8 @@ namespace ThreePM
         /// A collection of all of the genre string values in which the key of
         /// the genre its integer value for ID3v1 encoding.
         /// </summary>
-        private static string[] s_genres = new string[] { "Blues",					// 0
-											 "Classic Rock",
+        private static string[] s_genres = new string[] { "Blues",         // 0
+                                             "Classic Rock",
                                              "Country",
                                              "Dance",
                                              "Disco",
@@ -20,8 +20,8 @@ namespace ThreePM
                                              "Hip-Hop",
                                              "Jazz",
                                              "Metal",
-                                             "New Age",					// 10
-											 "Oldies",
+                                             "New Age",                    // 10
+                                             "Oldies",
                                              "Other",
                                              "Pop",
                                              "R&B",
@@ -30,8 +30,8 @@ namespace ThreePM
                                              "Rock",
                                              "Techno",
                                              "Industrial",
-                                             "Alternative",				// 20
-											 "Ska",
+                                             "Alternative",                // 20
+                                             "Ska",
                                              "Death Metal",
                                              "Pranks",
                                              "Soundtrack",
@@ -40,8 +40,8 @@ namespace ThreePM
                                              "Trip-Hop",
                                              "Vocal",
                                              "Jazz+Funk",
-                                             "Fusion",					// 30
-											 "Trance",
+                                             "Fusion",                    // 30
+                                             "Trance",
                                              "Classical",
                                              "Instrumental",
                                              "Acid",
@@ -50,8 +50,8 @@ namespace ThreePM
                                              "Sound Clip",
                                              "Gospel",
                                              "Noise",
-                                             "AlternRock",				// 40
-											 "Bass",
+                                             "AlternRock",                // 40
+                                             "Bass",
                                              "Soul",
                                              "Punk",
                                              "Space",
@@ -60,8 +60,8 @@ namespace ThreePM
                                              "Instrumental Rock",
                                              "Ethnic",
                                              "Gothic",
-                                             "Darkwave",				// 50
-											 "Techno-Industrial",
+                                             "Darkwave",                // 50
+                                             "Techno-Industrial",
                                              "Electronic",
                                              "Pop-Folk",
                                              "Eurodance",
@@ -70,8 +70,8 @@ namespace ThreePM
                                              "Comedy",
                                              "Cult",
                                              "Gangsta",
-                                             "Top 40",					// 60
-											 "Christian Rap",
+                                             "Top 40",                    // 60
+                                             "Christian Rap",
                                              @"Pop/Funk",
                                              "Jungle",
                                              "Native American",
@@ -80,8 +80,8 @@ namespace ThreePM
                                              "Psychadelic",
                                              "Rave",
                                              "Showtunes",
-                                             "Trailer",					// 70
-											 "Lo-Fi",
+                                             "Trailer",                    // 70
+                                             "Lo-Fi",
                                              "Tribal",
                                              "Acid Punk",
                                              "Acid Jazz",
@@ -90,8 +90,8 @@ namespace ThreePM
                                              "Musical",
                                              "Rock & Roll",
                                              "Hard Rock",
-                                             "Folk",					// 80
-											 "Folk-Rock",
+                                             "Folk",                    // 80
+                                             "Folk-Rock",
                                              "National Folk",
                                              "Swing",
                                              "Fast Fusion",
@@ -100,8 +100,8 @@ namespace ThreePM
                                              "Revival",
                                              "Celtic",
                                              "Bluegrass",
-                                             "Avantgarde",				// 90
-											 "Gothic Rock",
+                                             "Avantgarde",                // 90
+                                             "Gothic Rock",
                                              "Progressive Rock",
                                              "Psychedelic Rock",
                                              "Symphonic Rock",
@@ -110,8 +110,8 @@ namespace ThreePM
                                              "Chorus",
                                              "Easy Listening",
                                              "Acoustic",
-                                             "Humour",					// 100
-											 "Speech",
+                                             "Humour",                    // 100
+                                             "Speech",
                                              "Chanson",
                                              "Opera",
                                              "Chamber Music",
@@ -120,8 +120,8 @@ namespace ThreePM
                                              "Booty Bass",
                                              "Primus",
                                              "Porn Groove",
-                                             "Satire",					// 110
-											 "Slow Jam",
+                                             "Satire",                    // 110
+                                             "Slow Jam",
                                              "Club",
                                              "Tango",
                                              "Samba",
@@ -130,8 +130,8 @@ namespace ThreePM
                                              "Power Ballad",
                                              "Rhythmic Soul",
                                              "Freestyle",
-                                             "Duet",					// 120
-											 "Punk Rock",
+                                             "Duet",                    // 120
+                                             "Punk Rock",
                                              "Drum Solo",
                                              "Acapella",
                                              "Euro-House",
@@ -140,8 +140,8 @@ namespace ThreePM
                                              "Drum & Bass",
                                              "Club-House",
                                              "Hardcore",
-                                             "Terror",					// 130
-											 "Indie",
+                                             "Terror",                    // 130
+                                             "Indie",
                                              "BritPop",
                                              "Negerpunk",
                                              "Polsk Punk",
@@ -150,8 +150,8 @@ namespace ThreePM
                                              "Heavy Metal",
                                              "Black Metal",
                                              "Crossover",
-                                             "Contemporary Christian",	// 140
-											 "Christian Rock",
+                                             "Contemporary Christian",    // 140
+                                             "Christian Rock",
                                              "Merengue",
                                              "Salsa",
                                              "Thrash Metal",

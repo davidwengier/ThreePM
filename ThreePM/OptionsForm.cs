@@ -200,8 +200,7 @@ namespace ThreePM
         private void txtVisualizationSpeed_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int i = 10;
-            int.TryParse(txtVisualizationSpeed.Text, out i);
+            int.TryParse(txtVisualizationSpeed.Text, out int i);
             if (i < 10) i = 10;
             _frmMain.VisualizationSpeed = i;
         }
@@ -245,8 +244,7 @@ namespace ThreePM
         private void txtAlbumArtSize_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int i = 100;
-            int.TryParse(txtAlbumArtSize.Text, out i);
+            int.TryParse(txtAlbumArtSize.Text, out int i);
             if (i < 10) i = 10;
 
             Registry.SetValue("LibraryForm.AlbumArtSize", i);
@@ -299,8 +297,7 @@ namespace ThreePM
         private void txtToasterStayDelay_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int i = 1000;
-            int.TryParse(txtToasterStayDelay.Text, out i);
+            int.TryParse(txtToasterStayDelay.Text, out int i);
             if (i < 10) i = 10;
             Registry.SetValue("ToasterForm.StayDelay", i);
         }
@@ -308,8 +305,7 @@ namespace ThreePM
         private void txtToasterFadeDelay_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int i = 1000;
-            int.TryParse(txtToasterFadeDelay.Text, out i);
+            int.TryParse(txtToasterFadeDelay.Text, out int i);
             if (i < 10) i = 10;
             Registry.SetValue("ToasterForm.FadeDelay", i);
         }
@@ -332,10 +328,10 @@ namespace ThreePM
             if (MessageBox.Show("Are you sure?\n\n" + (sender as Button).Tag.ToString(), "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) return;
             this.Player.Playlist.Clear();
             this.Player.Playlist.AddToEnd(this.Library.QueryLibrary(@"
-					(Artist ISNULL OR Artist = '')
-					OR (Title ISNULL OR Title = '')
-					OR (Album ISNULL OR Album = '')
-					OR (AlbumArtist ISNULL OR AlbumArtist = '')"));
+                    (Artist ISNULL OR Artist = '')
+                    OR (Title ISNULL OR Title = '')
+                    OR (Album ISNULL OR Album = '')
+                    OR (AlbumArtist ISNULL OR AlbumArtist = '')"));
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -348,8 +344,7 @@ namespace ThreePM
         private void txtSecondsBeforeUpdatePlayCount_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int i = 20;
-            int.TryParse(txtSecondsBeforeUpdatePlayCount.Text, out i);
+            int.TryParse(txtSecondsBeforeUpdatePlayCount.Text, out int i);
             if (i < 1) i = 1;
             Registry.SetValue("Player.SecondsBeforeUpdatePlayCount", i);
             ThreePM.MusicPlayer.Player.SecondsBeforeUpdatePlayCount = i;
@@ -365,8 +360,7 @@ namespace ThreePM
         private void txtNumRecent_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int i = 50;
-            int.TryParse(txtNumRecent.Text, out i);
+            int.TryParse(txtNumRecent.Text, out int i);
             if (i < 1) i = 1;
             Registry.SetValue("LibraryForm.SongsToShowInRecentLists", i);
 

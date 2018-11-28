@@ -93,19 +93,19 @@ namespace ThreePM.Utilities
                     case "lyrics":
                     {
                         request.Response = @"<html>
-							<head>
-							<style>
-							body
-							{ color:#FFFFEC; 
-									 vertical-align:top;
-									 margin:0px;
-									 padding:0px;
-									 border:0px;
-									 font-family:Verdana; 
-									 font-size:8pt; }
-							</style>
-							</head>
-							<body bgcolor=""#706F77"" text=""#FFFFEC"">" +
+                            <head>
+                            <style>
+                            body
+                            { color:#FFFFEC; 
+                                     vertical-align:top;
+                                     margin:0px;
+                                     padding:0px;
+                                     border:0px;
+                                     font-family:Verdana; 
+                                     font-size:8pt; }
+                            </style>
+                            </head>
+                            <body bgcolor=""#706F77"" text=""#FFFFEC"">" +
                                     (_lastLyrics == "Loading..." ? "<meta http-equiv=\"refresh\" content=\"5\">" : "") +
                                     _lastLyrics.Replace(Environment.NewLine, "<br />") + "</body></html>";
                         break;
@@ -293,15 +293,15 @@ namespace ThreePM.Utilities
                     case "details":
                     {
                         string response = @"<table>
-											<tr><td nowrap class=""label"">Filename</td><td>{Filename}</td></tr>
-											<tr><td class=""label"">Title</td><td>{Title}</td></tr>
-											<tr><td class=""label"">Artist</td><td>{Artist}</td></tr>
-											<tr><td class=""label"">Duration</td><td>{Duration}</td></tr>
-											<tr><td class=""label"">Album</td><td>{Album}</td></tr>
-											<tr><td class=""label"">Year</td><td>{Year}</td></tr>
-											<tr><td class=""label"">Track</td><td>{Track}</td></tr>
-											<tr><td class=""label"">Play Count</td><td>{PlayCount}</td></tr>
-										  </table>";
+                                            <tr><td nowrap class=""label"">Filename</td><td>{Filename}</td></tr>
+                                            <tr><td class=""label"">Title</td><td>{Title}</td></tr>
+                                            <tr><td class=""label"">Artist</td><td>{Artist}</td></tr>
+                                            <tr><td class=""label"">Duration</td><td>{Duration}</td></tr>
+                                            <tr><td class=""label"">Album</td><td>{Album}</td></tr>
+                                            <tr><td class=""label"">Year</td><td>{Year}</td></tr>
+                                            <tr><td class=""label"">Track</td><td>{Track}</td></tr>
+                                            <tr><td class=""label"">Play Count</td><td>{PlayCount}</td></tr>
+                                          </table>";
 
                         // if we get here, just write out the normal stuff
                         response = response.Replace("{Title}", _player.CurrentSong.Title);

@@ -70,10 +70,7 @@ namespace ThreePM.UI
             if (this._position != position)
             {
                 this.Position = position;
-                if (PositionChanged != null)
-                {
-                    PositionChanged(this, EventArgs.Empty);
-                }
+                PositionChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -139,17 +136,11 @@ namespace ThreePM.UI
             _position = Math.Min(_position, _duration);
             if (raiseEvent)
             {
-                if (PositionChanged != null)
-                {
-                    PositionChanged(this, EventArgs.Empty);
-                }
+                PositionChanged?.Invoke(this, EventArgs.Empty);
             }
             else
             {
-                if (PositionChanging != null)
-                {
-                    PositionChanging(this, EventArgs.Empty);
-                }
+                PositionChanging?.Invoke(this, EventArgs.Empty);
             }
         }
 

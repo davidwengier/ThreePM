@@ -425,17 +425,6 @@ namespace ThreePM
 
         private void frmPlayer_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // stop the player, so the Playlist can't change
-            //Player.Pause();
-            //File.Delete(tempPlayList);
-            //Player.Playlist.SaveToFile(tempPlayList);
-
-            //if (Player.CurrentSong != null)
-            //{
-            //    Utilities.SetValue("Player.CurrentSong", Player.CurrentSong.FileName);
-            //    Utilities.SetValue("Player.Position", Player.Position);
-            //}
-
             UnregisterHotKey(Keys.SelectMedia);
             UnregisterHotKey(Keys.MediaPlayPause);
             UnregisterHotKey(Keys.MediaNextTrack);
@@ -482,62 +471,62 @@ namespace ThreePM
             }
             //else if (m.Msg == Windows7Taskbar.TaskbarButtonCreatedMessage)
             //{
-            //	JumpListManager manager = this.CreateJumpListManager();
-            //	manager.UserRemovedItems += (o, e) =>
-            //	{
-            //		// we have to hook this up, but i dont care
-            //	};
-            //	manager.ClearAllDestinations();
+            //    JumpListManager manager = this.CreateJumpListManager();
+            //    manager.UserRemovedItems += (o, e) =>
+            //    {
+            //        // we have to hook this up, but i dont care
+            //    };
+            //    manager.ClearAllDestinations();
 
-            //	string myExe = System.Reflection.Assembly.GetEntryAssembly().Location;
+            //    string myExe = System.Reflection.Assembly.GetEntryAssembly().Location;
 
-            //	manager.AddCustomDestination(new ShellLink()
-            //	{
-            //		Category = "Controls",
-            //		Path = myExe,
-            //		Title = "Previous",
-            //		IconLocation = myExe,
-            //		IconIndex = 7,
-            //		Arguments = "/prev"
-            //	});
-            //	manager.AddCustomDestination(new ShellLink()
-            //	{
-            //		Category = "Controls",
-            //		Path = myExe,
-            //		Title = "Play",
-            //		IconLocation = myExe,
-            //		IconIndex = 5,
-            //		Arguments = "/play"
-            //	});
-            //	manager.AddCustomDestination(new ShellLink()
-            //	{
-            //		Category = "Controls",
-            //		Path = myExe,
-            //		Title = "Pause",
-            //		IconLocation = myExe,
-            //		IconIndex = 4,
-            //		Arguments = "/pause"
-            //	});
-            //	manager.AddCustomDestination(new ShellLink()
-            //	{
-            //		Category = "Controls",
-            //		Path = myExe,
-            //		Title = "Stop",
-            //		IconLocation = myExe,
-            //		IconIndex = 10,
-            //		Arguments = "/stop"
-            //	});
-            //	manager.AddCustomDestination(new ShellLink()
-            //	{
-            //		Category = "Controls",
-            //		Path = myExe,
-            //		Title = "Next",
-            //		IconLocation = myExe,
-            //		IconIndex = 3,
-            //		Arguments = "/next"
-            //	});
-            //	manager.EnabledAutoDestinationType = ApplicationDestinationType.Recent;
-            //	manager.Refresh();
+            //    manager.AddCustomDestination(new ShellLink()
+            //    {
+            //        Category = "Controls",
+            //        Path = myExe,
+            //        Title = "Previous",
+            //        IconLocation = myExe,
+            //        IconIndex = 7,
+            //        Arguments = "/prev"
+            //    });
+            //    manager.AddCustomDestination(new ShellLink()
+            //    {
+            //        Category = "Controls",
+            //        Path = myExe,
+            //        Title = "Play",
+            //        IconLocation = myExe,
+            //        IconIndex = 5,
+            //        Arguments = "/play"
+            //    });
+            //    manager.AddCustomDestination(new ShellLink()
+            //    {
+            //        Category = "Controls",
+            //        Path = myExe,
+            //        Title = "Pause",
+            //        IconLocation = myExe,
+            //        IconIndex = 4,
+            //        Arguments = "/pause"
+            //    });
+            //    manager.AddCustomDestination(new ShellLink()
+            //    {
+            //        Category = "Controls",
+            //        Path = myExe,
+            //        Title = "Stop",
+            //        IconLocation = myExe,
+            //        IconIndex = 10,
+            //        Arguments = "/stop"
+            //    });
+            //    manager.AddCustomDestination(new ShellLink()
+            //    {
+            //        Category = "Controls",
+            //        Path = myExe,
+            //        Title = "Next",
+            //        IconLocation = myExe,
+            //        IconIndex = 3,
+            //        Arguments = "/next"
+            //    });
+            //    manager.EnabledAutoDestinationType = ApplicationDestinationType.Recent;
+            //    manager.Refresh();
             //}
             else
             {
@@ -705,9 +694,8 @@ namespace ThreePM
             {
                 if (f is SearchForm)
                 {
-                    uint nul;
                     //Attach foreground window thread to our thread
-                    AttachThreadInput(GetWindowThreadProcessId(GetForegroundWindow(), out nul), GetCurrentThreadId(), true);
+                    AttachThreadInput(GetWindowThreadProcessId(GetForegroundWindow(), out uint nul), GetCurrentThreadId(), true);
 
                     //Do our stuff here ;-)
                     SetForegroundWindow(f.Handle);

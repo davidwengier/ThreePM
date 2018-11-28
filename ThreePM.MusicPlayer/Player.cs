@@ -148,8 +148,7 @@ namespace ThreePM.MusicPlayer
 
         private int GetFXHandle(int freq)
         {
-            int handle;
-            if (!_equalizerHandles.TryGetValue(freq, out handle))
+            if (!_equalizerHandles.TryGetValue(freq, out int handle))
             {
                 handle = Bass.BASS_ChannelSetFX(_stream, BASSFXType.BASS_FX_DX8_PARAMEQ, 1);
                 _equalizerHandles[freq] = handle;

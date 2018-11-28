@@ -478,10 +478,7 @@ namespace ThreePM.UI
             list.ReCreateAndMeasure();
             list.DragIndex = -1;
             list.Invalidate();
-            if (ListChanged != null)
-            {
-                ListChanged(this, EventArgs.Empty);
-            }
+            ListChanged?.Invoke(this, EventArgs.Empty);
             this.UseWaitCursor = false;
         }
 
@@ -554,10 +551,7 @@ namespace ThreePM.UI
                     }
                 });
                 this.Player.Playlist.EventsEnabled = true;
-                if (SongQueued != null)
-                {
-                    SongQueued(this, EventArgs.Empty);
-                }
+                SongQueued?.Invoke(this, EventArgs.Empty);
             }
             else if (e.KeyCode == Keys.F)
             {

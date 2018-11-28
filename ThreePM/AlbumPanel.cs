@@ -153,12 +153,14 @@ namespace ThreePM
 
         private void CreateItems()
         {
-            _ticker = new Ticker();
-            _ticker.Width = 100;
-            _ticker.Dock = DockStyle.Bottom;
-            _ticker.ForeColor = Color.Red;
-            _ticker.FireWhileSliding = true;
-            _ticker.Duration = _dataSource.Length - 1;
+            _ticker = new Ticker
+            {
+                Width = 100,
+                Dock = DockStyle.Bottom,
+                ForeColor = Color.Red,
+                FireWhileSliding = true,
+                Duration = _dataSource.Length - 1
+            };
             _ticker.PositionChanged += new EventHandler(Ticker_PositionChanged);
             this.Controls.Add(_ticker);
             Invalidate(true);
@@ -375,41 +377,40 @@ namespace ThreePM
             using (var foreColorBrush = new SolidBrush(this.ForeColor))
             {
                 int centerPosition = (this.ClientSize.Width / 2) + paintOffset;
-                int centerIndex = 0;
-                int[] albumSizes = AlbumSizes(paintOffset, out centerIndex);
+                int[] albumSizes = AlbumSizes(paintOffset, out int centerIndex);
 
                 int x = 0;
 
                 // Start with the center album as it will dictate the positions of the rest of the albums
-                int size = albumSizes[centerIndex];
+                int size = albumSizes[0];
                 x = centerPosition - (size / 2);
                 PaintAlbum(e, _items[_currentIndex], foreColorBrush, x, TopCurveY(centerPosition), size);
 
                 // Start painting albums to the right of the center
-                x = centerPosition + (albumSizes[centerIndex] / 2) + AlbumPanel.SpaceBetweenAlbums;
-                for (int i = 1; i < albumSizes.Length - centerIndex; i++)
+                x = centerPosition + (albumSizes[0] / 2) + AlbumPanel.SpaceBetweenAlbums;
+                for (int i = 1; i < albumSizes.Length - 0; i++)
                 {
                     if (_currentIndex + i >= _items.Count)
                     {
                         break;
                     }
 
-                    size = albumSizes[centerIndex + i];
+                    size = albumSizes[0 + i];
                     int center = x + (size / 2);
                     PaintAlbum(e, _items[_currentIndex + i], foreColorBrush, x, TopCurveY(center), size);
                     x += (size + AlbumPanel.SpaceBetweenAlbums);
                 }
 
                 // Start painting albums to the left of the center
-                x = centerPosition - (albumSizes[centerIndex] / 2) - AlbumPanel.SpaceBetweenAlbums;
-                for (int i = 1; centerIndex - i >= 0; i++)
+                x = centerPosition - (albumSizes[0] / 2) - AlbumPanel.SpaceBetweenAlbums;
+                for (int i = 1; 0 - i >= 0; i++)
                 {
                     if (_currentIndex == 0)
                     {
                         break;
                     }
 
-                    size = albumSizes[centerIndex - i];
+                    size = albumSizes[0 - i];
                     x -= (size + AlbumPanel.SpaceBetweenAlbums);
                     int center = x + (size / 2);
                     if (_currentIndex - i > 0)
@@ -492,8 +493,8 @@ namespace ThreePM
                         new float[] {1, 0, 0, 0, 0},
                         new float[] {0, 1, 0, 0, 0},
                         new float[] {0, 0, 1, 0, 0},
-                        new float[] {0, 0, 0, opacity, 0},	// <---	That's the opacity element right there
-						new float[] {0, 0, 0, 0, 1}};       //		F'd if I know what the rest is
+                        new float[] {0, 0, 0, opacity, 0},  // <--- That's the opacity element right there
+                        new float[] {0, 0, 0, 0, 1}};       //      F'd if I know what the rest is
 
             var matrix = new ColorMatrix(points);
             var atts = new ImageAttributes();
@@ -820,8 +821,7 @@ namespace ThreePM
 
             // Figure out how much the offset is to start with. It should be half the width of the current
             // album + half the width of the next album + the space between albums
-            int centerIndex = 0;
-            int[] albumSizes = AlbumSizes(0, out centerIndex);
+            int[] albumSizes = AlbumSizes(0, out int centerIndex);
             _originalOffset = (albumSizes[centerIndex] / 2) + (albumSizes[centerIndex + direction] / 2);
             _offset = _originalOffset;
 

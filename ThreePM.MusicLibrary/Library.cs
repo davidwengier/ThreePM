@@ -559,15 +559,15 @@ namespace ThreePM.MusicLibrary
                 //}
                 string sql = "" +
                     "UPDATE Library SET " +
-                    "	DateAdded = " + datetimeString + ", " +
-                    "	Artist = @pArtist, " +
-                    "	Title = @pTitle, " +
-                    "	Album = @pAlbum, " +
-                    "	TrackNumber = @pTrackNumber, " +
-                    "	Year = @pYear, " +
-                    "	AlbumArtist = @pAlbumArtist, " +
-                    "	Genre = @pGenre, " +
-                    "	Duration = @pDuration " +
+                    "    DateAdded = " + datetimeString + ", " +
+                    "    Artist = @pArtist, " +
+                    "    Title = @pTitle, " +
+                    "    Album = @pAlbum, " +
+                    "    TrackNumber = @pTrackNumber, " +
+                    "    Year = @pYear, " +
+                    "    AlbumArtist = @pAlbumArtist, " +
+                    "    Genre = @pGenre, " +
+                    "    Duration = @pDuration " +
                     "WHERE Filename = @pFileName ";
                 SQLiteHelper.ExecuteNonQuery(_connectionString, sql, parameters);
             }
@@ -1220,10 +1220,10 @@ namespace ThreePM.MusicLibrary
         private void UpgradeToVersion2()
         {
             //            string sql = @"
-            //				-- Ignored Artists table
-            //				CREATE TABLE IgnoredArtists (IgnoredArtistsID integer primary key, Artist varchar);
-            //				CREATE INDEX IgnoredArtists_Artist ON IgnoredArtists(Artist);
-            //					";
+            //                -- Ignored Artists table
+            //                CREATE TABLE IgnoredArtists (IgnoredArtistsID integer primary key, Artist varchar);
+            //                CREATE INDEX IgnoredArtists_Artist ON IgnoredArtists(Artist);
+            //                    ";
             //            lock (m_dbSyncObject)
             //            {
             //                SQLiteHelper.ExecuteNonQuery(m_connectionString, sql);
@@ -1234,15 +1234,15 @@ namespace ThreePM.MusicLibrary
         private void UpgradeToVersion3()
         {
             string sql = @"
-				-- Add some Library columns and indexes
-				CREATE INDEX Library_Album ON Library(Album);
-				ALTER TABLE Library ADD Genre varchar;
-				ALTER TABLE Library ADD Year int;
-				CREATE INDEX Library_PlayCount ON Library(PlayCount);
-				CREATE INDEX Library_Genre ON Library(Genre);
-				CREATE INDEX Library_Year ON Library(Year);
-				CREATE INDEX Library_DateAdded ON Library(DateAdded);
-					";
+                -- Add some Library columns and indexes
+                CREATE INDEX Library_Album ON Library(Album);
+                ALTER TABLE Library ADD Genre varchar;
+                ALTER TABLE Library ADD Year int;
+                CREATE INDEX Library_PlayCount ON Library(PlayCount);
+                CREATE INDEX Library_Genre ON Library(Genre);
+                CREATE INDEX Library_Year ON Library(Year);
+                CREATE INDEX Library_DateAdded ON Library(DateAdded);
+                    ";
             lock (_dbSyncObject)
             {
                 SQLiteHelper.ExecuteNonQuery(_connectionString, sql);
@@ -1253,10 +1253,10 @@ namespace ThreePM.MusicLibrary
         private void UpgradeToVersion4()
         {
             string sql = @"
-				-- Add AlbumArtist column
-				ALTER TABLE Library ADD AlbumArtist varchar;
-				CREATE INDEX Library_AlbumArtist ON Library(AlbumArtist);
-					";
+                -- Add AlbumArtist column
+                ALTER TABLE Library ADD AlbumArtist varchar;
+                CREATE INDEX Library_AlbumArtist ON Library(AlbumArtist);
+                    ";
             lock (_dbSyncObject)
             {
                 SQLiteHelper.ExecuteNonQuery(_connectionString, sql);
@@ -1267,9 +1267,9 @@ namespace ThreePM.MusicLibrary
         private void UpgradeToVersion5()
         {
             string sql = @"
-				-- Clear library so that AlbumArtist gets set
-				UPDATE Library SET DateAdded = date('1980-01-01');
-					";
+                -- Clear library so that AlbumArtist gets set
+                UPDATE Library SET DateAdded = date('1980-01-01');
+                    ";
             lock (_dbSyncObject)
             {
                 SQLiteHelper.ExecuteNonQuery(_connectionString, sql);
@@ -1280,12 +1280,12 @@ namespace ThreePM.MusicLibrary
         private void UpgradeToVersion6()
         {
             string sql = @"
-				-- Add AlbumArtist column
-				ALTER TABLE Library ADD Duration real;
-				CREATE INDEX Library_Duration ON Library(Duration);
-				-- Clear library so that Duration gets set
-				UPDATE Library SET DateAdded = date('1980-01-01');
-					";
+                -- Add AlbumArtist column
+                ALTER TABLE Library ADD Duration real;
+                CREATE INDEX Library_Duration ON Library(Duration);
+                -- Clear library so that Duration gets set
+                UPDATE Library SET DateAdded = date('1980-01-01');
+                    ";
             lock (_dbSyncObject)
             {
                 SQLiteHelper.ExecuteNonQuery(_connectionString, sql);
@@ -1296,17 +1296,17 @@ namespace ThreePM.MusicLibrary
         private void UpgradeToVersion7()
         {
             string sql = @"
-				-- Add Ignored column
-				ALTER TABLE Library ADD Ignored bit;
-				CREATE INDEX Library_Ignored ON Library(Ignored);
-				-- Clear library
-				UPDATE Library SET Ignored = 0;
-				UPDATE Library SET Ignored = 1 WHERE Artist IN (SELECT Artist FROM IgnoredArtists);
-				UPDATE Library SET Ignored = 1 WHERE AlbumArtist IN (SELECT Artist FROM IgnoredArtists);
-				-- Remove IgnoredArtists Table
-				DELETE FROM IgnoredArtists;
-				DROP TABLE IgnoredArtists;
-					";
+                -- Add Ignored column
+                ALTER TABLE Library ADD Ignored bit;
+                CREATE INDEX Library_Ignored ON Library(Ignored);
+                -- Clear library
+                UPDATE Library SET Ignored = 0;
+                UPDATE Library SET Ignored = 1 WHERE Artist IN (SELECT Artist FROM IgnoredArtists);
+                UPDATE Library SET Ignored = 1 WHERE AlbumArtist IN (SELECT Artist FROM IgnoredArtists);
+                -- Remove IgnoredArtists Table
+                DELETE FROM IgnoredArtists;
+                DROP TABLE IgnoredArtists;
+                    ";
             lock (_dbSyncObject)
             {
                 SQLiteHelper.ExecuteNonQuery(_connectionString, sql);
@@ -1317,12 +1317,12 @@ namespace ThreePM.MusicLibrary
         private void UpgradeToVersion8()
         {
             string sql = @"
-				-- Add Deleted column
-				ALTER TABLE Library ADD Deleted bit;
-				CREATE INDEX Library_Deleted ON Library(Deleted);
-				-- Clear library
-				UPDATE Library SET Deleted = 0;
-					";
+                -- Add Deleted column
+                ALTER TABLE Library ADD Deleted bit;
+                CREATE INDEX Library_Deleted ON Library(Deleted);
+                -- Clear library
+                UPDATE Library SET Deleted = 0;
+                    ";
             lock (_dbSyncObject)
             {
                 SQLiteHelper.ExecuteNonQuery(_connectionString, sql);
@@ -1333,10 +1333,10 @@ namespace ThreePM.MusicLibrary
         private void UpgradeToVersion9()
         {
             string sql = @"
-				-- Fix library
-				UPDATE Library SET Deleted = 0 WHERE Deleted IS NULL;
-				UPDATE Library SET Ignored = 0 WHERE Ignored IS NULL;
-					";
+                -- Fix library
+                UPDATE Library SET Deleted = 0 WHERE Deleted IS NULL;
+                UPDATE Library SET Ignored = 0 WHERE Ignored IS NULL;
+                    ";
             lock (_dbSyncObject)
             {
                 SQLiteHelper.ExecuteNonQuery(_connectionString, sql);
@@ -1347,10 +1347,10 @@ namespace ThreePM.MusicLibrary
         private void UpgradeToVersion10()
         {
             string sql = @"
-				-- Add Lyrics field and index
-				ALTER TABLE Library ADD Lyrics varchar;
-				CREATE INDEX Library_Lyrics ON Library(Lyrics);
-					";
+                -- Add Lyrics field and index
+                ALTER TABLE Library ADD Lyrics varchar;
+                CREATE INDEX Library_Lyrics ON Library(Lyrics);
+                    ";
             lock (_dbSyncObject)
             {
                 SQLiteHelper.ExecuteNonQuery(_connectionString, sql);
@@ -1361,14 +1361,14 @@ namespace ThreePM.MusicLibrary
         private void UpgradeToVersion11()
         {
             string sql = @"
-				-- Add Internet Radio Table
+                -- Add Internet Radio Table
                 CREATE TABLE InternetRadio (InternetRadioID integer primary key, Url varchar(255), DateAdded datetime, DatePlayed datetime, PlayCount integer, Title varchar, Artist varchar);
-				CREATE INDEX InternetRadio_Artist ON InternetRadio(Artist);
-				CREATE INDEX InternetRadio_Title ON InternetRadio(Title);
-				CREATE INDEX InternetRadio_DatePlayed ON InternetRadio(DatePlayed);
+                CREATE INDEX InternetRadio_Artist ON InternetRadio(Artist);
+                CREATE INDEX InternetRadio_Title ON InternetRadio(Title);
+                CREATE INDEX InternetRadio_DatePlayed ON InternetRadio(DatePlayed);
                 CREATE INDEX InternetRadio_Url ON InternetRadio(Url);
                 CREATE INDEX InternetRadio_InternetRadioID ON InternetRadio(InternetRadioID);
-					";
+                    ";
             lock (_dbSyncObject)
             {
                 SQLiteHelper.ExecuteNonQuery(_connectionString, sql);
@@ -1380,19 +1380,19 @@ namespace ThreePM.MusicLibrary
         {
             string sql = @"
                 -- System table
-				CREATE TABLE System (Version integer); 
-				INSERT INTO System (Version) VALUES (1);
+                CREATE TABLE System (Version integer); 
+                INSERT INTO System (Version) VALUES (1);
                 -- Library
                 CREATE TABLE Library (LibraryID integer primary key, WatchFolderID integer, Filename varchar(255), DateAdded datetime, DatePlayed datetime, PlayCount integer, Title varchar, Artist varchar, Album varchar, TrackNumber integer);
-				CREATE INDEX Library_Artist ON Library(Artist);
-				CREATE INDEX Library_Title ON Library(Title);
-				CREATE INDEX Library_DatePlayed ON Library(DatePlayed);
+                CREATE INDEX Library_Artist ON Library(Artist);
+                CREATE INDEX Library_Title ON Library(Title);
+                CREATE INDEX Library_DatePlayed ON Library(DatePlayed);
                 CREATE INDEX Library_Filename ON Library(Filename);
                 CREATE INDEX Library_LibraryID ON Library(LibraryID);
                 CREATE INDEX Library_WatchFolderID ON Library(WatchFolderID);
                 -- WatchFolders
                 CREATE TABLE WatchFolders(WatchFolderID integer primary key, Folder varchar(255));
-				CREATE TABLE IgnoredArtists(Artist varchar);
+                CREATE TABLE IgnoredArtists(Artist varchar);
                     ";
             lock (_dbSyncObject)
             {
