@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace ThreePM
 {
@@ -23,7 +22,7 @@ namespace ThreePM
                 IntPtr hWnd = IntPtr.Zero;
 
                 // find the other instance
-                Process process = Process.GetCurrentProcess();
+                var process = Process.GetCurrentProcess();
                 Process[] processes = Process.GetProcessesByName(process.ProcessName);
                 foreach (Process _process in processes)
                 {

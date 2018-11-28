@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using ThreePM.MusicPlayer;
-using ThreePM.MusicLibrary;
 using System.IO;
+using ThreePM.MusicLibrary;
+using ThreePM.MusicPlayer;
 
 namespace ThreePM.Engine
 {
@@ -12,10 +9,10 @@ namespace ThreePM.Engine
     {
         #region Declarations
 
-        private static string tempPlayList;
-        private static MusicPlayer.Player m_player;
-        private static MusicLibrary.Library m_library;
-        private static ThreePM.Utilities.HttpServer m_server;
+        private static string s_tempPlayList;
+        private static MusicPlayer.Player s_player;
+        private static MusicLibrary.Library s_library;
+        private static ThreePM.Utilities.HttpServer s_server;
 
         #endregion
 
@@ -25,11 +22,11 @@ namespace ThreePM.Engine
         {
             get
             {
-                return m_player;
+                return s_player;
             }
             set
             {
-                m_player = value;
+                s_player = value;
             }
         }
 
@@ -37,11 +34,11 @@ namespace ThreePM.Engine
         {
             get
             {
-                return m_library;
+                return s_library;
             }
             set
             {
-                m_library = value;
+                s_library = value;
             }
         }
 
@@ -49,23 +46,23 @@ namespace ThreePM.Engine
         {
             get
             {
-                return m_server != null;
+                return s_server != null;
             }
             set
             {
                 if (value)
                 {
-                    if (m_server == null)
+                    if (s_server == null)
                     {
-                        m_server = new ThreePM.Utilities.HttpServer(Player, Library);
+                        s_server = new ThreePM.Utilities.HttpServer(Player, Library);
                     }
                 }
                 else
                 {
-                    if (m_server != null)
+                    if (s_server != null)
                     {
-                        m_server.Dispose();
-                        m_server = null;
+                        s_server.Dispose();
+                        s_server = null;
                     }
                 }
             }
@@ -107,7 +104,7 @@ namespace ThreePM.Engine
         /// </summary>
         public static void Start()
         {
-            tempPlayList = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\ThreePM.m3u";
+            s_tempPlayList = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\ThreePM.m3u";
 
 
             Player.Library = Library;
@@ -115,7 +112,7 @@ namespace ThreePM.Engine
 
             // load the last song that was being played
             string file = Utilities.GetValue("Player.CurrentSong", "");
-            if (!String.IsNullOrEmpty(file))
+            if (!string.IsNullOrEmpty(file))
             {
                 // don't count the play since we're just restarting the same song
                 float position = Utilities.GetValue("Player.Position", 0f);
@@ -126,7 +123,7 @@ namespace ThreePM.Engine
                 }
             }
 
-            Player.Playlist.LoadFromFile(tempPlayList);
+            Player.Playlist.LoadFromFile(s_tempPlayList);
 
             HttpServerEnabled = Convert.ToBoolean(Utilities.GetValue("MainForm.HttpServer", false));
         }
@@ -137,19 +134,19 @@ namespace ThreePM.Engine
         public static void End()
         {
             Player.Pause();
-            File.Delete(tempPlayList);
-            Player.Playlist.SaveToFile(tempPlayList);
+            File.Delete(s_tempPlayList);
+            Player.Playlist.SaveToFile(s_tempPlayList);
 
             if (Player.CurrentSong != null)
             {
-                Utilities.SetValue("Player.CurrentSong", (object)Player.CurrentSong.FileName);
-                Utilities.SetValue("Player.Position", (object)Player.Position);
+                Utilities.SetValue("Player.CurrentSong", Player.CurrentSong.FileName);
+                Utilities.SetValue("Player.Position", Player.Position);
             }
 
-            if (m_server != null)
+            if (s_server != null)
             {
-                m_server.Dispose();
-                m_server = null;
+                s_server.Dispose();
+                s_server = null;
             }
             Player.Dispose();
             Library.Dispose();

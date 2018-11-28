@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.Threading;
-using System.Net;
-using System.IO;
-using System.Text.RegularExpressions;
 
 namespace ThreePM
 {
@@ -108,8 +99,7 @@ namespace ThreePM
         private void LoadLyrics(ThreePM.MusicPlayer.SongInfo songInfo)
         {
             _lastSong = songInfo;
-            var entry = this.Library.GetSong(songInfo.FileName) as ThreePM.MusicLibrary.LibraryEntry;
-            if (entry != null && !string.IsNullOrEmpty(entry.Lyrics))
+            if (this.Library.GetSong(songInfo.FileName) is ThreePM.MusicLibrary.LibraryEntry entry && !string.IsNullOrEmpty(entry.Lyrics))
             {
                 _lyricsHelper.CancelLastRequest();
                 SetLyricsTextBox(entry.Lyrics);

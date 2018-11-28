@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Collections.Generic;
 using System.IO;
-using ThreePM.MusicPlayer;
+using System.Windows.Forms;
 using ThreePM.MusicLibrary;
+using ThreePM.MusicPlayer;
 
 namespace ThreePM
 {

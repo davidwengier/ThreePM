@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
 using System.ComponentModel;
-using ThreePM.MusicLibrary;
-using ThreePM.MusicPlayer;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Runtime.InteropServices;
-using System.Xml;
 using System.Reflection;
+using System.Windows.Forms;
+using System.Xml;
+using ThreePM.MusicLibrary;
+using ThreePM.MusicPlayer;
 
 namespace ThreePM
 {
@@ -341,58 +339,58 @@ namespace ThreePM
                 switch (_resizeDirection)
                 {
                     case "N":
-                        {
-                            BackFormY = MouseY;
-                            BackFormHeight = (thisHeight + thisY) - BackFormY;
-                            break;
-                        }
+                    {
+                        BackFormY = MouseY;
+                        BackFormHeight = (thisHeight + thisY) - BackFormY;
+                        break;
+                    }
                     case "NW":
-                        {
-                            BackFormY = MouseY;
-                            BackFormHeight = (thisHeight + thisY) - BackFormY;
-                            BackFormX = MouseX;
-                            BackFormWidth = (thisWidth + thisX) - BackFormX;
-                            break;
-                        }
+                    {
+                        BackFormY = MouseY;
+                        BackFormHeight = (thisHeight + thisY) - BackFormY;
+                        BackFormX = MouseX;
+                        BackFormWidth = (thisWidth + thisX) - BackFormX;
+                        break;
+                    }
                     case "W":
-                        {
-                            BackFormX = MouseX;
-                            BackFormWidth = (thisWidth + thisX) - BackFormX;
-                            break;
-                        }
+                    {
+                        BackFormX = MouseX;
+                        BackFormWidth = (thisWidth + thisX) - BackFormX;
+                        break;
+                    }
                     case "SW":
-                        {
-                            BackFormHeight = MouseY - thisY;
-                            BackFormX = MouseX;
-                            BackFormWidth = (thisWidth + thisX) - BackFormX;
-                            break;
-                        }
+                    {
+                        BackFormHeight = MouseY - thisY;
+                        BackFormX = MouseX;
+                        BackFormWidth = (thisWidth + thisX) - BackFormX;
+                        break;
+                    }
                     case "S":
-                        {
-                            BackFormHeight = MouseY - thisY;
-                            break;
-                        }
+                    {
+                        BackFormHeight = MouseY - thisY;
+                        break;
+                    }
                     case "SE":
-                        {
-                            BackFormHeight = MouseY - thisY;
-                            BackFormWidth = MouseX - thisX;
-                            break;
-                        }
+                    {
+                        BackFormHeight = MouseY - thisY;
+                        BackFormWidth = MouseX - thisX;
+                        break;
+                    }
                     case "E":
-                        {
-                            BackFormWidth = MouseX - thisX;
-                            break;
-                        }
+                    {
+                        BackFormWidth = MouseX - thisX;
+                        break;
+                    }
                     case "NE":
-                        {
-                            BackFormY = MouseY;
-                            BackFormHeight = (thisHeight + thisY) - BackFormY;
-                            BackFormWidth = MouseX - thisX;
-                            break;
-                        }
+                    {
+                        BackFormY = MouseY;
+                        BackFormHeight = (thisHeight + thisY) - BackFormY;
+                        BackFormWidth = MouseX - thisX;
+                        break;
+                    }
                 }
 
-                Rectangle eRect = new Rectangle(BackFormX, BackFormY, BackFormWidth, BackFormHeight);
+                var eRect = new Rectangle(BackFormX, BackFormY, BackFormWidth, BackFormHeight);
 
                 eRect = SnapBackForm(eRect);
 
@@ -485,8 +483,7 @@ namespace ThreePM
 
                         foreach (Form form in Application.OpenForms)
                         {
-                            BaseForm f = form as BaseForm;
-                            if (f != null)
+                            if (form is BaseForm f)
                             {
                                 if (f != this && f.SnapTo)
                                 {
@@ -539,8 +536,7 @@ namespace ThreePM
             if (ModifierKeys == Keys.Control) return eRect;
             foreach (Form form in Application.OpenForms)
             {
-                BaseForm f = form as BaseForm;
-                if (f != null && f != this && f.SnapTo)
+                if (form is BaseForm f && f != this && f.SnapTo)
                 {
                     int thisLeft = eRect.Left;
                     int thisRight = eRect.Right;
@@ -670,7 +666,7 @@ namespace ThreePM
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            using (SolidBrush backBrush = new SolidBrush(_borderColor))
+            using (var backBrush = new SolidBrush(_borderColor))
             {
                 e.Graphics.FillRectangle(backBrush, 0, 0, this.Width, this.Height);
             }
@@ -685,7 +681,7 @@ namespace ThreePM
             LinearGradientBrush brush = (_activated ? _activeBrush : _inactiveBrush);
             e.Graphics.FillRectangle(brush, _captionRectangle);
 
-            Rectangle captionRect = new Rectangle(_captionRectangle.X - 1, _captionRectangle.Y - 1, _captionRectangle.Width, _captionheight);
+            var captionRect = new Rectangle(_captionRectangle.X - 1, _captionRectangle.Y - 1, _captionRectangle.Width, _captionheight);
 
             TextRenderer.DrawText(e.Graphics, this.Caption, this.Font, captionRect, (_activated ? _captionTextColor : _captionTextColorInactive), TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.NoPrefix);
 
@@ -700,7 +696,7 @@ namespace ThreePM
                 e.Graphics.DrawImage(_minimizeButton, _minimizeRect);
             }
 
-            using (SolidBrush backBrush = new SolidBrush(this.BackColor))
+            using (var backBrush = new SolidBrush(this.BackColor))
             {
                 e.Graphics.FillRectangle(backBrush, this.DisplayRectangle);
             }
@@ -744,9 +740,9 @@ namespace ThreePM
         private GraphicsPath GetRoundedRect()
         {
             float diameter = _roundedRadius * 2.0F;
-            SizeF sizeF = new SizeF(diameter, diameter);
-            RectangleF arc = new RectangleF(new Point(-1, -1), sizeF);
-            GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            var sizeF = new SizeF(diameter, diameter);
+            var arc = new RectangleF(new Point(-1, -1), sizeF);
+            var path = new System.Drawing.Drawing2D.GraphicsPath();
 
             // top left arc 
             path.AddArc(arc, 180, 90);
@@ -849,33 +845,33 @@ namespace ThreePM
             {
                 case HTTOP:
                 case HTBOTTOM:
-                    {
-                        Cursor.Current = Cursors.SizeNS;
-                        break;
-                    }
+                {
+                    Cursor.Current = Cursors.SizeNS;
+                    break;
+                }
                 case HTLEFT:
                 case HTRIGHT:
-                    {
-                        Cursor.Current = Cursors.SizeWE;
-                        break;
-                    }
+                {
+                    Cursor.Current = Cursors.SizeWE;
+                    break;
+                }
                 case HTTOPLEFT:
                 case HTBOTTOMRIGHT:
-                    {
-                        Cursor.Current = Cursors.SizeNWSE;
-                        break;
-                    }
+                {
+                    Cursor.Current = Cursors.SizeNWSE;
+                    break;
+                }
                 case HTTOPRIGHT:
                 case HTBOTTOMLEFT:
-                    {
-                        Cursor.Current = Cursors.SizeNESW;
-                        break;
-                    }
+                {
+                    Cursor.Current = Cursors.SizeNESW;
+                    break;
+                }
                 default:
-                    {
-                        Cursor.Current = Cursors.Default;
-                        break;
-                    }
+                {
+                    Cursor.Current = Cursors.Default;
+                    break;
+                }
             }
 
             if (doActualResize && position > 0)
@@ -902,7 +898,7 @@ namespace ThreePM
             this.Text = "";
             this.ControlBox = true;
             this.BackColor = Color.Black;
-            this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, GraphicsUnit.Point, 0);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
             this._resizePauseTimer.Tick += new EventHandler(tmrResizePause_Tick);
             this._resizePauseTimer.Interval = 500;
@@ -1020,13 +1016,13 @@ namespace ThreePM
                 }
             }
 
-            Rectangle brushRect = new Rectangle(_captionRectangle.X - 1, _captionRectangle.Y - 1, 10, _captionRectangle.Height + 2);
+            var brushRect = new Rectangle(_captionRectangle.X - 1, _captionRectangle.Y - 1, 10, _captionRectangle.Height + 2);
 
             if (_activeBrush != null) _activeBrush.Dispose();
             if (_inactiveBrush != null) _inactiveBrush.Dispose();
 
             _activeBrush = new LinearGradientBrush(brushRect, _captionBottomColor, _captionBottomColor, LinearGradientMode.Vertical);
-            ColorBlend blend = new ColorBlend(4);
+            var blend = new ColorBlend(4);
             blend.Colors[0] = _captionTopColor;
             blend.Positions[0] = 0F;
             blend.Colors[1] = _captionTextBackColor;
@@ -1092,7 +1088,7 @@ namespace ThreePM
                 xmlFile += "Skins\\";
                 xmlFile += Registry.GetValue("BaseForm.Skin", "_no_file_found_");
 
-                XmlDocument doc = new XmlDocument();
+                var doc = new XmlDocument();
                 doc.LoadXml(Properties.Resources.Blank_skin);
                 ApplySkin(doc);
 
@@ -1157,20 +1153,20 @@ namespace ThreePM
                 switch (type.ToLower())
                 {
                     case "picture":
-                        {
-                            control = new PictureBox();
-                            break;
-                        }
+                    {
+                        control = new PictureBox();
+                        break;
+                    }
                     case "label":
-                        {
-                            control = new Label();
-                            break;
-                        }
+                    {
+                        control = new Label();
+                        break;
+                    }
                     case "albumartbox":
-                        {
-                            control = new AlbumArtBox();
-                            break;
-                        }
+                    {
+                        control = new AlbumArtBox();
+                        break;
+                    }
                 }
                 if (control != null)
                 {
@@ -1221,7 +1217,7 @@ namespace ThreePM
             }
         }
 
-        private void ApplyProperties(Object control, XmlNode node)
+        private void ApplyProperties(object control, XmlNode node)
         {
             XmlNodeList props = node.SelectNodes("./property");
             foreach (XmlNode prop in props)
@@ -1242,114 +1238,113 @@ namespace ThreePM
                         switch (propType.ToLower())
                         {
                             case "binding":
+                            {
+                                if (control is Control cont)
                                 {
-                                    Control cont = control as Control;
-                                    if (cont != null)
-                                    {
-                                        cont.DataBindings.Add(propName, this, prop.Attributes["value"].Value);
-                                    }
-                                    break;
+                                    cont.DataBindings.Add(propName, this, prop.Attributes["value"].Value);
                                 }
+                                break;
+                            }
                             case "colour":
                             case "color":
-                                {
-                                    value = new ColorConverter().ConvertFromInvariantString(prop.Attributes["value"].Value);
-                                    break;
-                                }
+                            {
+                                value = new ColorConverter().ConvertFromInvariantString(prop.Attributes["value"].Value);
+                                break;
+                            }
                             case "font":
-                                {
-                                    value = new FontConverter().ConvertFromString(prop.Attributes["value"].Value);
-                                    break;
-                                }
+                            {
+                                value = new FontConverter().ConvertFromString(prop.Attributes["value"].Value);
+                                break;
+                            }
                             case "string":
-                                {
-                                    value = new StringConverter().ConvertFromString(prop.Attributes["value"].Value);
-                                    break;
-                                }
+                            {
+                                value = new StringConverter().ConvertFromString(prop.Attributes["value"].Value);
+                                break;
+                            }
                             case "boolean":
                             case "bool":
-                                {
-                                    value = new BooleanConverter().ConvertFromString(prop.Attributes["value"].Value);
-                                    break;
-                                }
+                            {
+                                value = new BooleanConverter().ConvertFromString(prop.Attributes["value"].Value);
+                                break;
+                            }
                             case "location":
                             case "point":
-                                {
-                                    Point p = (Point)new PointConverter().ConvertFromString(prop.Attributes["value"].Value);
-                                    if (p.X < 0) p.X = this.DisplayRectangle.Right + p.X;
-                                    if (p.Y < 0) p.Y = this.DisplayRectangle.Bottom + p.Y;
-                                    value = p;
-                                    break;
+                            {
+                                var p = (Point)new PointConverter().ConvertFromString(prop.Attributes["value"].Value);
+                                if (p.X < 0) p.X = this.DisplayRectangle.Right + p.X;
+                                if (p.Y < 0) p.Y = this.DisplayRectangle.Bottom + p.Y;
+                                value = p;
+                                break;
 
-                                }
+                            }
                             case "size":
-                                {
-                                    Size s = (Size)new SizeConverter().ConvertFromString(prop.Attributes["value"].Value);
-                                    if (s.Width < 0) s.Width = this.DisplayRectangle.Width + s.Width;
-                                    if (s.Height < 0) s.Height = this.DisplayRectangle.Height + s.Height;
-                                    value = s;
-                                    break;
-                                }
+                            {
+                                var s = (Size)new SizeConverter().ConvertFromString(prop.Attributes["value"].Value);
+                                if (s.Width < 0) s.Width = this.DisplayRectangle.Width + s.Width;
+                                if (s.Height < 0) s.Height = this.DisplayRectangle.Height + s.Height;
+                                value = s;
+                                break;
+                            }
                             case "integer":
                             case "int32":
                             case "int":
-                                {
-                                    value = new Int32Converter().ConvertFromString(prop.Attributes["value"].Value);
-                                    break;
-                                }
+                            {
+                                value = new Int32Converter().ConvertFromString(prop.Attributes["value"].Value);
+                                break;
+                            }
                             case "rect":
                             case "rectangle":
-                                {
-                                    value = new RectangleConverter().ConvertFromString(prop.Attributes["value"].Value);
-                                    break;
-                                }
+                            {
+                                value = new RectangleConverter().ConvertFromString(prop.Attributes["value"].Value);
+                                break;
+                            }
                             case "margin":
                             case "padding":
-                                {
-                                    value = new PaddingConverter().ConvertFromString(prop.Attributes["value"].Value);
-                                    break;
-                                }
+                            {
+                                value = new PaddingConverter().ConvertFromString(prop.Attributes["value"].Value);
+                                break;
+                            }
                             case "dock":
-                                {
-                                    value = new EnumConverter(typeof(DockStyle)).ConvertFromString(prop.Attributes["value"].Value);
-                                    break;
-                                }
+                            {
+                                value = new EnumConverter(typeof(DockStyle)).ConvertFromString(prop.Attributes["value"].Value);
+                                break;
+                            }
                             case "anchor":
-                                {
-                                    value = new EnumConverter(typeof(AnchorStyles)).ConvertFromString(prop.Attributes["value"].Value);
-                                    break;
-                                }
+                            {
+                                value = new EnumConverter(typeof(AnchorStyles)).ConvertFromString(prop.Attributes["value"].Value);
+                                break;
+                            }
                             case "pictureboxsizemode":
                             case "sizemode":
-                                {
-                                    value = new EnumConverter(typeof(PictureBoxSizeMode)).ConvertFromString(prop.Attributes["value"].Value);
-                                    break;
-                                }
+                            {
+                                value = new EnumConverter(typeof(PictureBoxSizeMode)).ConvertFromString(prop.Attributes["value"].Value);
+                                break;
+                            }
                             case "contentalignment":
                             case "textalign":
                             case "align":
                             case "alignment":
-                                {
-                                    value = new EnumConverter(typeof(ContentAlignment)).ConvertFromString(prop.Attributes["value"].Value);
-                                    break;
-                                }
+                            {
+                                value = new EnumConverter(typeof(ContentAlignment)).ConvertFromString(prop.Attributes["value"].Value);
+                                break;
+                            }
                             case "image":
-                                {
-                                    string filename = prop.Attributes["value"].Value;
-                                    filename = filename.Replace("{skindir}", System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "Skins"));
-                                    value = Image.FromFile(filename);
-                                    break;
-                                }
+                            {
+                                string filename = prop.Attributes["value"].Value;
+                                filename = filename.Replace("{skindir}", System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "Skins"));
+                                value = Image.FromFile(filename);
+                                break;
+                            }
                             case "object":
+                            {
+                                // that means this property has properties of its own, so....
+                                object propValue = propInfo.GetValue(control, null);
+                                if (propValue != null)
                                 {
-                                    // that means this property has properties of its own, so....
-                                    object propValue = propInfo.GetValue(control, null);
-                                    if (propValue != null)
-                                    {
-                                        ApplyProperties(propValue, prop);
-                                    }
-                                    break;
+                                    ApplyProperties(propValue, prop);
                                 }
+                                break;
+                            }
                         }
                         if (value != null)
                         {

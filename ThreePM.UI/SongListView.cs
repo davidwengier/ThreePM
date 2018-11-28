@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using ThreePM.MusicPlayer;
 using System.IO;
-using System.Drawing.Drawing2D;
-using System.Threading;
+using System.Windows.Forms;
 using ThreePM.MusicLibrary;
+using ThreePM.MusicPlayer;
 
 namespace ThreePM.UI
 {
@@ -296,11 +292,11 @@ namespace ThreePM.UI
         {
             if (disposing)
             {
-                Player.SongOpened -= new EventHandler<SongEventArgs>(Player_SongOpened);
-                Player.Playlist.PlaylistChanged -= new EventHandler(Playlist_PlaylistChanged);
-                Player.SongForced -= new EventHandler(Player_SongForced);
-                Library.PlayCountUpdated -= new EventHandler<LibraryEntryEventArgs>(Library_LibraryUpdated);
-                Library.LibraryUpdated -= new EventHandler<LibraryEntryEventArgs>(Library_LibraryUpdated);
+                this.Player.SongOpened -= new EventHandler<SongEventArgs>(Player_SongOpened);
+                this.Player.Playlist.PlaylistChanged -= new EventHandler(Playlist_PlaylistChanged);
+                this.Player.SongForced -= new EventHandler(Player_SongForced);
+                this.Library.PlayCountUpdated -= new EventHandler<LibraryEntryEventArgs>(Library_LibraryUpdated);
+                this.Library.LibraryUpdated -= new EventHandler<LibraryEntryEventArgs>(Library_LibraryUpdated);
             }
             base.Dispose(disposing);
         }
@@ -312,7 +308,7 @@ namespace ThreePM.UI
         public override void Refresh()
         {
             base.Refresh();
-            List.MeasureItems();
+            this.List.MeasureItems();
         }
 
         public SongListViewItem GetItemAt(int x, int y)
@@ -357,14 +353,14 @@ namespace ThreePM.UI
                 if (_dragBox != Rectangle.Empty && !_dragBox.Contains(e.X, e.Y))
                 {
                     // Proceed with the drag-and-drop, passing in the list of selected items
-                    System.Collections.Specialized.StringCollection files = new System.Collections.Specialized.StringCollection();
+                    var files = new System.Collections.Specialized.StringCollection();
                     foreach (SongListViewItem item in list.SelectedItems)
                     {
                         files.Add(item.SongInfo.FileName);
                     }
 
-                    DataObject ob = new DataObject();
-                    ob.SetData(SelectedItems.ToArray());
+                    var ob = new DataObject();
+                    ob.SetData(this.SelectedItems.ToArray());
                     ob.SetFileDropList(files);
 
                     list.DoDragDrop(ob, DragDropEffects.Copy | DragDropEffects.Link);
@@ -385,11 +381,11 @@ namespace ThreePM.UI
             SongListViewItem item = list.GetItemAt(p.X - list.AutoScrollPosition.X, p.Y - list.AutoScrollPosition.Y);
             if (item != null)
             {
-                list.m_dragIndex = item.Index;
+                list.DragIndex = item.Index;
             }
             else
             {
-                list.m_dragIndex = -1;
+                list.DragIndex = -1;
             }
             list.Invalidate();
         }
@@ -397,7 +393,7 @@ namespace ThreePM.UI
         private void list_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
-            if (AllowDrop && list.FlatMode)
+            if (this.AllowDrop && list.FlatMode)
             {
                 if (e.Data.GetDataPresent(typeof(SongListViewItem[])))
                 {
@@ -412,7 +408,7 @@ namespace ThreePM.UI
 
         private void list_DragLeave(object sender, EventArgs e)
         {
-            list.m_dragIndex = -1;
+            list.DragIndex = -1;
             list.Invalidate();
         }
 
@@ -422,8 +418,8 @@ namespace ThreePM.UI
             Point p = list.PointToClient(new Point(e.X, e.Y));
             SongListViewItem item = list.GetItemAt(p.X - list.AutoScrollPosition.X, p.Y - list.AutoScrollPosition.Y);
 
-            UseWaitCursor = true;
-            List<SongListViewItem> itemsToAdd = new List<SongListViewItem>();
+            this.UseWaitCursor = true;
+            var itemsToAdd = new List<SongListViewItem>();
             if (e.Data.GetDataPresent(typeof(SongListViewItem[])))
             {
                 foreach (SongListViewItem old in (SongListViewItem[])e.Data.GetData(typeof(SongListViewItem[])))
@@ -436,7 +432,7 @@ namespace ThreePM.UI
                     }
                     else
                     {
-                        SongListViewItem newItem = new SongListViewItem(list);
+                        var newItem = new SongListViewItem(list);
                         newItem.SongInfo = old.SongInfo;
                         newItem.AlbumDisplay = old.AlbumDisplay;
                         itemsToAdd.Add(newItem);
@@ -452,7 +448,7 @@ namespace ThreePM.UI
                 {
                     if (File.Exists(file))
                     {
-                        if (Array.IndexOf(Player.SupportedExtensions, "*" + Path.GetExtension(file)) != -1)
+                        if (Array.IndexOf(this.Player.SupportedExtensions, "*" + Path.GetExtension(file)) != -1)
                         {
                             CreateOrAddItem(itemsToAdd, file);
                         }
@@ -462,7 +458,7 @@ namespace ThreePM.UI
                         string[] files2 = Directory.GetFiles(file, "*", SearchOption.AllDirectories);
                         foreach (string file2 in files2)
                         {
-                            if (Array.IndexOf(Player.SupportedExtensions, "*" + Path.GetExtension(file2)) != -1)
+                            if (Array.IndexOf(this.Player.SupportedExtensions, "*" + Path.GetExtension(file2)) != -1)
                             {
                                 CreateOrAddItem(itemsToAdd, file2);
                             }
@@ -480,13 +476,13 @@ namespace ThreePM.UI
                 list.Items.InsertRange(item.Index, itemsToAdd);
             }
             list.ReCreateAndMeasure();
-            list.m_dragIndex = -1;
+            list.DragIndex = -1;
             list.Invalidate();
             if (ListChanged != null)
             {
                 ListChanged(this, EventArgs.Empty);
             }
-            UseWaitCursor = false;
+            this.UseWaitCursor = false;
         }
 
         private void CreateOrAddItem(List<SongListViewItem> itemsToAdd, string file)
@@ -494,8 +490,8 @@ namespace ThreePM.UI
             SongListViewItem myOld = FindItem(file);
             if (myOld == null)
             {
-                SongListViewItem item = new SongListViewItem(list);
-                SongInfo song = Library.GetSong(file);
+                var item = new SongListViewItem(list);
+                SongInfo song = this.Library.GetSong(file);
                 if (song == null)
                 {
                     song = new LibraryEntry(file);

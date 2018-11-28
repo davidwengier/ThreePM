@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ThreePM.MusicPlayer
+﻿namespace ThreePM.MusicPlayer
 {
     public interface ILibrary
     {

@@ -30,38 +30,38 @@ namespace ThreePM.MusicPlayer
     internal class AudioscrobblerResponse
     {
         // the type of response this is
-        private AudioscrobblerResponseType type;
+        private AudioscrobblerResponseType _type;
 
         // the wait interval for the next response
-        private int interval;
+        private int _interval;
 
         // any other variables associated with this response
-        private IDictionary<string, string> variables;
+        private IDictionary<string, string> _variables;
 
         public AudioscrobblerResponse()
         {
-            variables = new Dictionary<string, string>();
+            _variables = new Dictionary<string, string>();
         }
 
         // any other variables associated with this response
         public IDictionary<string, string> Variables
         {
-            get { return variables; }
-            set { variables = value; }
+            get { return _variables; }
+            set { _variables = value; }
         }
 
         // the wait interval for the next response
         public int Interval
         {
-            get { return interval; }
-            set { interval = value; }
+            get { return _interval; }
+            set { _interval = value; }
         }
 
         // the type of response this is
         public AudioscrobblerResponseType Type
         {
-            get { return type; }
-            set { type = value; }
+            get { return _type; }
+            set { _type = value; }
         }
     }
 }

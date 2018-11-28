@@ -87,7 +87,7 @@ namespace ThreePM.MusicPlayer
             AudioscrobblerResponse aResponse = null;
 
             // create the request
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            var request = (HttpWebRequest)WebRequest.Create(url);
 
             // set the method to POST
             request.Method = "POST";
@@ -100,7 +100,7 @@ namespace ThreePM.MusicPlayer
             {
                 using (Stream dataStream = response.GetResponseStream())
                 {
-                    using (StreamReader reader = new StreamReader(dataStream))
+                    using (var reader = new StreamReader(dataStream))
                     {
                         // parse the response string
                         aResponse = this.ParseResponse(reader.ReadToEnd());
@@ -120,7 +120,7 @@ namespace ThreePM.MusicPlayer
             if (responseString.Length == 0)
                 return null;
 
-            AudioscrobblerResponse response = new AudioscrobblerResponse();
+            var response = new AudioscrobblerResponse();
 
             // figure out the response type and parse it approriately
             if (RequestStartsWith(responseString, "UPTODATE"))
@@ -164,12 +164,12 @@ namespace ThreePM.MusicPlayer
 
         private AudioscrobblerResponse GetResponse_UPTODATE(string responseString)
         {
-            AudioscrobblerResponse response = new AudioscrobblerResponse();
+            var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.UPTODATE;
 
             string regex = @"UPTODATE\n(?<MD5Challenge>[^\n]*)\n(?<UrlToSubmitScript>[^\n]*)\nINTERVAL (?<Interval>[0-9]*)";
             RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
-            Regex reg = new Regex(regex, options);
+            var reg = new Regex(regex, options);
 
             Match match = reg.Match(responseString);
             if (match.Success)
@@ -184,12 +184,12 @@ namespace ThreePM.MusicPlayer
 
         private AudioscrobblerResponse GetResponse_UPDATE(string responseString)
         {
-            AudioscrobblerResponse response = new AudioscrobblerResponse();
+            var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.UPDATE;
 
             string regex = @"UPDATE (?<UpdateUrl>[^\n]*)\n(?<MD5Challenge>[^\n]*)\n(?<UrlToSubmitScript>[^\n]*)\nINTERVAL (?<Interval>[0-9]*)";
             RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
-            Regex reg = new Regex(regex, options);
+            var reg = new Regex(regex, options);
 
             Match match = reg.Match(responseString);
             if (match.Success)
@@ -205,12 +205,12 @@ namespace ThreePM.MusicPlayer
 
         private AudioscrobblerResponse GetResponse_FAILED(string responseString)
         {
-            AudioscrobblerResponse response = new AudioscrobblerResponse();
+            var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.FAILED;
 
             string regex = @"FAILED (?<Reason>[^\n]*)\nINTERVAL (?<Interval>[0-9]*)";
             RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
-            Regex reg = new Regex(regex, options);
+            var reg = new Regex(regex, options);
 
             Match match = reg.Match(responseString);
             if (match.Success)
@@ -224,12 +224,12 @@ namespace ThreePM.MusicPlayer
 
         private AudioscrobblerResponse GetResponse_BADUSER(string responseString)
         {
-            AudioscrobblerResponse response = new AudioscrobblerResponse();
+            var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.BADUSER;
 
             string regex = @"BADUSER\nINTERVAL (?<Interval>[0-9]*)";
             RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
-            Regex reg = new Regex(regex, options);
+            var reg = new Regex(regex, options);
 
             Match match = reg.Match(responseString);
             if (match.Success)
@@ -242,12 +242,12 @@ namespace ThreePM.MusicPlayer
 
         private AudioscrobblerResponse GetResponse_BADAUTH(string responseString)
         {
-            AudioscrobblerResponse response = new AudioscrobblerResponse();
+            var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.BADAUTH;
 
             string regex = @"BADAUTH\nINTERVAL (?<Interval>[0-9]*)";
             RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
-            Regex reg = new Regex(regex, options);
+            var reg = new Regex(regex, options);
 
             Match match = reg.Match(responseString);
             if (match.Success)
@@ -260,12 +260,12 @@ namespace ThreePM.MusicPlayer
 
         private AudioscrobblerResponse GetResponse_OK(string responseString)
         {
-            AudioscrobblerResponse response = new AudioscrobblerResponse();
+            var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.OK;
 
             string regex = @"OK\nINTERVAL (?<Interval>[0-9]*)";
             RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
-            Regex reg = new Regex(regex, options);
+            var reg = new Regex(regex, options);
 
             Match match = reg.Match(responseString);
             if (match.Success)
@@ -278,7 +278,7 @@ namespace ThreePM.MusicPlayer
 
         private AudioscrobblerResponse GetResponse_UNKNOWN(string responseString)
         {
-            AudioscrobblerResponse response = new AudioscrobblerResponse();
+            var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.UNKNOWN;
             return response;
         }
@@ -300,7 +300,7 @@ namespace ThreePM.MusicPlayer
         private string CalculateMD5(string input)
         {
             MD5 md = MD5CryptoServiceProvider.Create();
-            UTF8Encoding enc = new UTF8Encoding();
+            var enc = new UTF8Encoding();
             byte[] buffer = enc.GetBytes(input);
             byte[] hash = md.ComputeHash(buffer);
             string md5 = string.Empty;
@@ -437,7 +437,7 @@ namespace ThreePM.MusicPlayer
                 // defaults to about 3:20, in order to get audioscrobbler to work
                 dur = 200;
             }
-            return string.Format(urlTrack, 0, HttpUtility.UrlEncode(track.Artist), HttpUtility.UrlEncode(track.Title), HttpUtility.UrlEncode(track.Album), "", (int)dur, HttpUtility.UrlEncode(DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss")));
+            return string.Format(urlTrack, 0, HttpUtility.UrlEncode(track.Artist), HttpUtility.UrlEncode(track.Title), HttpUtility.UrlEncode(track.Album), "", dur, HttpUtility.UrlEncode(DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss")));
         }
     }
 }

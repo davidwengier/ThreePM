@@ -118,13 +118,13 @@ namespace ThreePM.UI
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            using (Pen p = new Pen(ForeColor))
+            using (var p = new Pen(this.ForeColor))
             {
-                e.Graphics.DrawLine(p, 0, Height / 2, Width, Height / 2);
-                e.Graphics.DrawLine(p, 0, Height / 2, Width, Height / 2);
+                e.Graphics.DrawLine(p, 0, this.Height / 2, this.Width, this.Height / 2);
+                e.Graphics.DrawLine(p, 0, this.Height / 2, this.Width, this.Height / 2);
                 if (_duration > 0)
                 {
-                    int i = Convert.ToInt32((_position / _duration) * Width);
+                    int i = Convert.ToInt32((_position / _duration) * this.Width);
                     e.Graphics.DrawImage(_bullet, i - (_bullet.Width / 2), 0, _bullet.Width, _bullet.Height);
                 }
             }
@@ -134,7 +134,7 @@ namespace ThreePM.UI
 
         private void SetPosition(int percent, bool raiseEvent)
         {
-            _position = ((float)percent / (float)Width) * _duration;
+            _position = (percent / (float)this.Width) * _duration;
             _position = Math.Max(0, _position);
             _position = Math.Min(_position, _duration);
             if (raiseEvent)

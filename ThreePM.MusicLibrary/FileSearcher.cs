@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Win32.SafeHandles;
-using System.Security;
-using System.Runtime.InteropServices;
-using System.Runtime.ConstrainedExecution;
-using System.Security.Permissions;
-using System.IO;
-using ComTypes = System.Runtime.InteropServices.ComTypes;
 using System.ComponentModel;
+using System.IO;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Security;
+using System.Security.Permissions;
+using Microsoft.Win32.SafeHandles;
+using ComTypes = System.Runtime.InteropServices.ComTypes;
 
 namespace ThreePM.MusicLibrary
 {
@@ -46,6 +45,7 @@ namespace ThreePM.MusicLibrary
         [BestFitMapping(false)]
         private class WIN32_FIND_DATA
         {
+#pragma warning disable IDE1006 // Naming Styles
             public FileAttributes dwFileAttributes;
             public ComTypes.FILETIME ftCreationTime;
             public ComTypes.FILETIME ftLastAccessTime;
@@ -58,6 +58,7 @@ namespace ThreePM.MusicLibrary
             public string cFileName;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
             public string cAlternateFileName;
+#pragma warning restore IDE1006 // Naming Styles
         }
 
         private const int ERROR_FILE_NOT_FOUND = 0x2;
@@ -110,8 +111,8 @@ namespace ThreePM.MusicLibrary
             if (pattern == null) throw new ArgumentNullException("pattern");
 
             // Setup
-            WIN32_FIND_DATA findData = new WIN32_FIND_DATA();
-            Stack<DirectoryInfo> directories = new Stack<DirectoryInfo>();
+            var findData = new WIN32_FIND_DATA();
+            var directories = new Stack<DirectoryInfo>();
             foreach (DirectoryInfo inf in dirs)
             {
                 directories.Push(inf);

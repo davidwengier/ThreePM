@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Tags;
 using Un4seen.Bass.Misc;
-using System.Collections.Specialized;
-using System.Drawing;
 
 namespace ThreePM.MusicPlayer
 {
@@ -63,7 +61,7 @@ namespace ThreePM.MusicPlayer
 
         public static string GetPositionDescription(double pos)
         {
-            TimeSpan t = TimeSpan.FromSeconds(pos);
+            var t = TimeSpan.FromSeconds(pos);
             string result = "";
             if (t.Hours > 0)
             {
@@ -82,7 +80,7 @@ namespace ThreePM.MusicPlayer
 
         private bool _playingStream = false;
 
-        private string m_forceSong = "";
+        private string _forceSong = "";
         private readonly Visuals _visuals = new Visuals();
         private delegate SongInfo GetSongDelegate();
         private readonly Playlist _playlist;
@@ -133,7 +131,7 @@ namespace ThreePM.MusicPlayer
 
         public float GetEqualizerPosition(int freq)
         {
-            BASS_DX8_PARAMEQ par = new BASS_DX8_PARAMEQ();
+            var par = new BASS_DX8_PARAMEQ();
             if (Bass.BASS_FXGetParameters(GetFXHandle(freq), par))
             {
                 return par.fGain;
@@ -143,7 +141,7 @@ namespace ThreePM.MusicPlayer
 
         public void SetEqualizerPosition(int freq, float position)
         {
-            BASS_DX8_PARAMEQ par = new BASS_DX8_PARAMEQ(freq, 5, position);
+            var par = new BASS_DX8_PARAMEQ(freq, 5, position);
             Bass.BASS_FXSetParameters(GetFXHandle(freq), par);
             _lastEqualizerValues[freq] = position;
         }
@@ -225,7 +223,7 @@ namespace ThreePM.MusicPlayer
             set
             {
                 _synchronizingObject = value;
-                Playlist.SynchronizingObject = value;
+                this.Playlist.SynchronizingObject = value;
             }
         }
 
@@ -357,7 +355,7 @@ namespace ThreePM.MusicPlayer
             {
                 if (_currentSong != null)
                 {
-                    double f = Position;
+                    double f = this.Position;
                     string s = _currentSong.FileName;
                     Stop();
                     Bass.BASS_Free();
@@ -365,7 +363,7 @@ namespace ThreePM.MusicPlayer
                     Bass.BASS_SetDevice(value);
                     if (LoadFile(s, false))
                     {
-                        Position = f;
+                        this.Position = f;
                         Play();
                     }
                 }
@@ -405,10 +403,10 @@ namespace ThreePM.MusicPlayer
             EventHandler<FileEventArgs> handler = LoadingSong;
             if (handler != null)
             {
-                FileEventArgs e = new FileEventArgs(status);
+                var e = new FileEventArgs(status);
                 if ((_synchronizingObject != null) && _synchronizingObject.InvokeRequired)
                 {
-                    SynchronizingObject.BeginInvoke(handler, new object[] { this, e });
+                    this.SynchronizingObject.BeginInvoke(handler, new object[] { this, e });
                 }
                 else
                 {
@@ -425,7 +423,7 @@ namespace ThreePM.MusicPlayer
                 EventArgs e = EventArgs.Empty;
                 if ((_synchronizingObject != null) && _synchronizingObject.InvokeRequired)
                 {
-                    SynchronizingObject.BeginInvoke(handler, new object[] { this, e });
+                    this.SynchronizingObject.BeginInvoke(handler, new object[] { this, e });
                 }
                 else
                 {
@@ -506,7 +504,7 @@ namespace ThreePM.MusicPlayer
             EventHandler<SongEventArgs> handler = SongFinished;
             if (handler != null)
             {
-                SongEventArgs e = new SongEventArgs(_currentSong);
+                var e = new SongEventArgs(_currentSong);
                 if ((_synchronizingObject != null) && _synchronizingObject.InvokeRequired)
                 {
                     this.SynchronizingObject.BeginInvoke(handler, new object[] { this, e });
@@ -524,7 +522,7 @@ namespace ThreePM.MusicPlayer
             EventHandler<SongEventArgs> handler = SongOpened;
             if (handler != null)
             {
-                SongEventArgs e = new SongEventArgs(_currentSong);
+                var e = new SongEventArgs(_currentSong);
                 if ((_synchronizingObject != null) && _synchronizingObject.InvokeRequired)
                 {
                     this.SynchronizingObject.BeginInvoke(handler, new object[] { this, e });
@@ -577,10 +575,10 @@ namespace ThreePM.MusicPlayer
 
             if (Bass.BASS_Init(deviceNumber, 44100, BASSInit.BASS_DEVICE_DEFAULT | BASSInit.BASS_DEVICE_LATENCY, IntPtr.Zero, new Guid()))
             {
-                List<string> exts = new List<string>();
+                var exts = new List<string>();
                 _sysInfo = "Player version: " + this.GetType().Assembly.GetName().Version.ToString();
                 _sysInfo += "\nBass Version: " + GetVersion(Bass.BASS_GetVersion());
-                BASS_INFO info = new BASS_INFO();
+                var info = new BASS_INFO();
                 try
                 {
 
@@ -592,7 +590,7 @@ namespace ThreePM.MusicPlayer
                     _sysInfo += "\nError when loading info.";
                 }
                 exts.AddRange(Bass.SupportedStreamExtensions.Split(';'));
-                var h = Bass.BASS_PluginLoadDirectory(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location));
+                Dictionary<int, string> h = Bass.BASS_PluginLoadDirectory(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location));
                 if (h != null)
                 {
                     foreach (int handle in h.Keys)
@@ -678,7 +676,7 @@ namespace ThreePM.MusicPlayer
                             _lib.UpdatePlayCount(_currentSong.FileName);
                             if (AudioscrobblerEnabled)
                             {
-                                AudioscrobblerRequest req = new AudioscrobblerRequest();
+                                var req = new AudioscrobblerRequest();
                                 req.Username = AudioscrobblerUserName;
                                 req.Password = AudioscrobblerPassword;
                                 req.SubmitTrack(_currentSong);
@@ -691,7 +689,7 @@ namespace ThreePM.MusicPlayer
             {
                 if (!_playCountUpdated)
                 {
-                    if (Convert.ToInt32(CurrentSong.Duration) <= SecondsBeforeUpdatePlayCount)
+                    if (Convert.ToInt32(this.CurrentSong.Duration) <= SecondsBeforeUpdatePlayCount)
                     {
                         System.Diagnostics.Debug.WriteLine("Didn't reach " + SecondsBeforeUpdatePlayCount.ToString() + " seconds because song finished, updating play count");
 
@@ -703,7 +701,7 @@ namespace ThreePM.MusicPlayer
                     }
                 }
                 _timer.Stop();
-                State = PlayerState.Stopped;
+                this.State = PlayerState.Stopped;
                 OnSongFinished();
                 if (_autoTrackAdvance)
                 {
@@ -726,7 +724,7 @@ namespace ThreePM.MusicPlayer
 
         public void Next()
         {
-            ThreadStart DoWork = new ThreadStart(delegate
+            var DoWork = new ThreadStart(delegate
             {
                 bool success = false;
                 if (!success)
@@ -758,9 +756,9 @@ namespace ThreePM.MusicPlayer
 
         private SongInfo GetForceSong()
         {
-            if (!string.IsNullOrEmpty(m_forceSong))
+            if (!string.IsNullOrEmpty(_forceSong))
             {
-                SongInfo inf = _lib.GetSong(m_forceSong);
+                SongInfo inf = _lib.GetSong(_forceSong);
                 ForceSong("");
                 if (inf != null)
                 {
@@ -797,20 +795,20 @@ namespace ThreePM.MusicPlayer
 
         public void ForceSong(string filename)
         {
-            if (m_forceSong.Equals(filename))
+            if (_forceSong.Equals(filename))
             {
-                m_forceSong = "";
+                _forceSong = "";
             }
             else
             {
-                m_forceSong = filename;
+                _forceSong = filename;
             }
             OnSongForced();
         }
 
         public bool IsForced(string filename)
         {
-            return m_forceSong.Equals(filename);
+            return _forceSong.Equals(filename);
         }
 
         public bool HasPlayed(string p)
@@ -825,7 +823,7 @@ namespace ThreePM.MusicPlayer
 
         public void PlayFile(string file)
         {
-            ThreadStart DoWork = new ThreadStart(delegate
+            var DoWork = new ThreadStart(delegate
             {
                 if (LoadFile(file))
                 {
@@ -850,7 +848,7 @@ namespace ThreePM.MusicPlayer
             string realURL = url;
             if (url.EndsWith(".m3u", StringComparison.InvariantCultureIgnoreCase))
             {
-                using (System.Net.WebClient client = new System.Net.WebClient())
+                using (var client = new System.Net.WebClient())
                 {
                     realURL = client.DownloadString(url);
                 }
@@ -898,7 +896,7 @@ namespace ThreePM.MusicPlayer
         private void meta_sync(int a, int b, int c, IntPtr d)
         {
             System.Diagnostics.Debug.WriteLine("Meta Sync: " + a + " " + b + " " + c + " " + d.ToInt32());
-            TAG_INFO tgs = new TAG_INFO();
+            var tgs = new TAG_INFO();
             bool result = BassTags.BASS_TAG_GetFromURL(_stream, tgs);
             if (result)
             {
@@ -909,7 +907,7 @@ namespace ThreePM.MusicPlayer
             _playingStream = true;
             if (AudioscrobblerEnabled && !string.IsNullOrEmpty(_currentSong.Title) && !string.IsNullOrEmpty(_currentSong.Artist))
             {
-                AudioscrobblerRequest req = new AudioscrobblerRequest();
+                var req = new AudioscrobblerRequest();
                 req.Username = AudioscrobblerUserName;
                 req.Password = AudioscrobblerPassword;
                 req.SubmitTrack(_currentSong);
@@ -993,7 +991,7 @@ namespace ThreePM.MusicPlayer
 
         public void Previous()
         {
-            ThreadStart DoWork = new ThreadStart(delegate
+            var DoWork = new ThreadStart(delegate
             {
                 if (_history.Count > 0)
                 {
@@ -1014,7 +1012,7 @@ namespace ThreePM.MusicPlayer
 
         public void Play()
         {
-            ThreadStart DoWork = new ThreadStart(delegate
+            var DoWork = new ThreadStart(delegate
             {
                 if (_stream == 0 && _currentSong != null && !string.IsNullOrEmpty(_currentSong.FileName))
                 {
@@ -1042,7 +1040,7 @@ namespace ThreePM.MusicPlayer
                         {
                             _timer.Start();
                         }
-                        State = PlayerState.Playing;
+                        this.State = PlayerState.Playing;
                     }
                     catch (Exception ex)
                     {
@@ -1063,7 +1061,7 @@ namespace ThreePM.MusicPlayer
         public void Pause()
         {
             _timer.Stop();
-            State = PlayerState.Paused;
+            this.State = PlayerState.Paused;
             if (Bass.BASS_ChannelIsActive(_stream) == BASSActive.BASS_ACTIVE_PLAYING)
             {
                 Bass.BASS_ChannelPause(_stream);
@@ -1075,13 +1073,13 @@ namespace ThreePM.MusicPlayer
             System.Diagnostics.Debug.WriteLine("Resetting time played. Was: " + _secondsPlayed.ToString());
             _secondsPlayed = 0;
             _timer.Stop();
-            State = PlayerState.Stopped;
+            this.State = PlayerState.Stopped;
             if (_stream != 0)
             {
                 Bass.BASS_ChannelStop(_stream);
                 Bass.BASS_StreamFree(_stream);
                 _stream = 0;
-                Position = 0;
+                this.Position = 0;
             }
         }
 

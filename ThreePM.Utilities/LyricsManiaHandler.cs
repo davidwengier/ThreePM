@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace ThreePM.Utilities
 {
@@ -23,7 +20,7 @@ namespace ThreePM.Utilities
             {
                 artist = artist.Substring(4) + " (The)";
             }
-            return String.Format(@"http://www.lyricsmania.com/search.php?c=artist&k={0}", System.Web.HttpUtility.UrlEncode(artist));
+            return string.Format(@"http://www.lyricsmania.com/search.php?c=artist&k={0}", System.Web.HttpUtility.UrlEncode(artist));
         }
 
         public bool GetLyrics(string htmlPage, out string lyrics)

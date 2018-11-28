@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -25,9 +24,9 @@ namespace ThreePM.Utilities
             public IHaveAlbumArt IHaveAlbumArt;
         }
 
-        private Queue<AlbumArtWaiter> m_filesToLoad = new Queue<AlbumArtWaiter>();
+        private Queue<AlbumArtWaiter> _filesToLoad = new Queue<AlbumArtWaiter>();
 
-        private Thread albumLoaderThread;
+        private Thread _albumLoaderThread;
 
         public AlbumArtLoader()
         {
@@ -35,17 +34,17 @@ namespace ThreePM.Utilities
 
         ~AlbumArtLoader()
         {
-            if (albumLoaderThread != null && albumLoaderThread.IsAlive)
+            if (_albumLoaderThread != null && _albumLoaderThread.IsAlive)
             {
-                albumLoaderThread.Abort();
-                albumLoaderThread.Join();
-                albumLoaderThread = null;
+                _albumLoaderThread.Abort();
+                _albumLoaderThread.Join();
+                _albumLoaderThread = null;
             }
-            lock (m_filesToLoad)
+            lock (_filesToLoad)
             {
-                m_filesToLoad.Clear();
+                _filesToLoad.Clear();
             }
-            m_filesToLoad = null;
+            _filesToLoad = null;
         }
 
         private void LoadNextAlbum()
@@ -53,22 +52,22 @@ namespace ThreePM.Utilities
             while (true)
             {
                 int i;
-                lock (m_filesToLoad)
+                lock (_filesToLoad)
                 {
-                    i = m_filesToLoad.Count;
+                    i = _filesToLoad.Count;
                 }
                 if (i > 0)
                 {
                     AlbumArtWaiter waiter;
-                    lock (m_filesToLoad)
+                    lock (_filesToLoad)
                     {
-                        waiter = m_filesToLoad.Dequeue();
+                        waiter = _filesToLoad.Dequeue();
                     }
                     waiter.IHaveAlbumArt.AlbumArt = AlbumArtHelper.GetAlbumArt(waiter.Filename, waiter.Width, waiter.Height);
                 }
                 else
                 {
-                    albumLoaderThread = null;
+                    _albumLoaderThread = null;
                     Thread.CurrentThread.Abort();
                 }
             }
@@ -76,36 +75,36 @@ namespace ThreePM.Utilities
 
         public void LoadAlbumArt(IHaveAlbumArt iHaveAlbumArt, string filename, int width, int height)
         {
-            AlbumArtWaiter waiter = new AlbumArtWaiter();
+            var waiter = new AlbumArtWaiter();
             waiter.Filename = filename;
             waiter.Width = width;
             waiter.Height = height;
             waiter.IHaveAlbumArt = iHaveAlbumArt;
             iHaveAlbumArt.AlbumArt = new Bitmap(Properties.Resources.LoadingAlbumArt, new Size(width, height));
-            lock (m_filesToLoad)
+            lock (_filesToLoad)
             {
-                m_filesToLoad.Enqueue(waiter);
+                _filesToLoad.Enqueue(waiter);
             }
-            if (albumLoaderThread == null)
+            if (_albumLoaderThread == null)
             {
-                albumLoaderThread = new Thread(LoadNextAlbum);
-                albumLoaderThread.IsBackground = true;
-                albumLoaderThread.Start();
+                _albumLoaderThread = new Thread(LoadNextAlbum);
+                _albumLoaderThread.IsBackground = true;
+                _albumLoaderThread.Start();
             }
         }
 
 
         public void Clear()
         {
-            if (albumLoaderThread != null && albumLoaderThread.IsAlive)
+            if (_albumLoaderThread != null && _albumLoaderThread.IsAlive)
             {
-                albumLoaderThread.Abort();
-                albumLoaderThread.Join();
-                albumLoaderThread = null;
+                _albumLoaderThread.Abort();
+                _albumLoaderThread.Join();
+                _albumLoaderThread = null;
             }
-            lock (m_filesToLoad)
+            lock (_filesToLoad)
             {
-                m_filesToLoad.Clear();
+                _filesToLoad.Clear();
             }
         }
     }
@@ -141,7 +140,7 @@ namespace ThreePM.Utilities
             if (filename.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase))
                 return null;
 
-            ThreePM.MusicPlayer.SongInfo info = new ThreePM.MusicPlayer.SongInfo(filename);
+            var info = new ThreePM.MusicPlayer.SongInfo(filename);
             if (info.HasFrontCover)
             {
                 return info.GetFrontCover(width, height);
@@ -153,7 +152,7 @@ namespace ThreePM.Utilities
             //}
 
             string imgFile = "";
-            if (!String.IsNullOrEmpty(filename))
+            if (!string.IsNullOrEmpty(filename))
             {
                 string dir = Path.GetDirectoryName(filename);
                 bool found = false;
@@ -185,7 +184,7 @@ namespace ThreePM.Utilities
                     }
                 }
             }
-            if (String.IsNullOrEmpty(imgFile))
+            if (string.IsNullOrEmpty(imgFile))
             {
                 //AddCachedBitmap(filename, null);
                 //return GetCachedBitmap(filename, width, height);
@@ -195,7 +194,7 @@ namespace ThreePM.Utilities
             {
                 using (Stream s = File.OpenRead(imgFile))
                 {
-                    using (Image img = Image.FromStream(s))
+                    using (var img = Image.FromStream(s))
                     {
                         //AddCachedBitmap(filename, new Bitmap(img));
                         //return GetCachedBitmap(filename, width, height);

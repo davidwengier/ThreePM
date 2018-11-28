@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Threading;
-using System.ComponentModel;
 using ThreePM.MusicPlayer;
 
 namespace ThreePM.MusicLibrary
@@ -128,7 +127,7 @@ namespace ThreePM.MusicLibrary
             EventHandler<LibraryEntryEventArgs> handler = PlayCountUpdated;
             if (handler != null)
             {
-                LibraryEntryEventArgs e = new LibraryEntryEventArgs(info);
+                var e = new LibraryEntryEventArgs(info);
                 if ((_synchronizingObject != null) && _synchronizingObject.InvokeRequired)
                 {
                     this.SynchronizingObject.BeginInvoke(handler, new object[] { this, e });
@@ -145,7 +144,7 @@ namespace ThreePM.MusicLibrary
             EventHandler<LibraryEntryEventArgs> handler = LibraryUpdated;
             if (handler != null)
             {
-                LibraryEntryEventArgs e = new LibraryEntryEventArgs(info);
+                var e = new LibraryEntryEventArgs(info);
                 if ((_synchronizingObject != null) && _synchronizingObject.InvokeRequired)
                 {
                     this.SynchronizingObject.BeginInvoke(handler, new object[] { this, e });
@@ -213,7 +212,7 @@ namespace ThreePM.MusicLibrary
             EventHandler<ScanStatusEventArgs> handler = ScanStatus;
             if (handler != null)
             {
-                ScanStatusEventArgs e = new ScanStatusEventArgs(status);
+                var e = new ScanStatusEventArgs(status);
                 if ((_synchronizingObject != null) && _synchronizingObject.InvokeRequired)
                 {
                     this.SynchronizingObject.BeginInvoke(handler, new object[] { this, e });
@@ -355,7 +354,7 @@ namespace ThreePM.MusicLibrary
             if (!Directory.Exists(dir)) return;
             if (!_fileWatchers.ContainsKey(watchFolderID))
             {
-                FileSystemWatcher watcher = new FileSystemWatcher();
+                var watcher = new FileSystemWatcher();
                 watcher.NotifyFilter = NotifyFilters.FileName | NotifyFilters.CreationTime | NotifyFilters.LastWrite;
                 watcher.Path = dir;
                 watcher.IncludeSubdirectories = true;
@@ -375,8 +374,7 @@ namespace ThreePM.MusicLibrary
             {
                 SQLiteHelper.ExecuteNonQuery(_connectionString, sql);
             }
-            LibraryEntry entry = GetSong(e.FullPath) as LibraryEntry;
-            if (entry != null)
+            if (GetSong(e.FullPath) is LibraryEntry entry)
             {
                 OnLibraryUpdated(entry);
             }
@@ -427,7 +425,7 @@ namespace ThreePM.MusicLibrary
                 _supportedExtensions.Add('.' + ext.Substring(ext.IndexOf('.') + 1).ToLower());
             }
 
-            ThreadStart del = new ThreadStart(RefreshLibrary);
+            var del = new ThreadStart(RefreshLibrary);
             del.BeginInvoke(null, null);
         }
 
@@ -531,7 +529,7 @@ namespace ThreePM.MusicLibrary
 
         private void Update(string file)
         {
-            LibraryEntry entry = new LibraryEntry(file);
+            var entry = new LibraryEntry(file);
 
             Update(entry);
         }
@@ -540,7 +538,7 @@ namespace ThreePM.MusicLibrary
         {
             if (entry == null) return;
 
-            SQLiteParameter[] parameters = new SQLiteParameter[] {
+            var parameters = new SQLiteParameter[] {
                 new SQLiteParameter("@pFileName", entry.FileName),
                 new SQLiteParameter("@pArtist", entry.Artist),
                 new SQLiteParameter("@pTitle", entry.Title),
@@ -579,7 +577,7 @@ namespace ThreePM.MusicLibrary
 
         public void AddInternetRadio(string url)
         {
-            SQLiteParameter[] parameters = new SQLiteParameter[1];
+            var parameters = new SQLiteParameter[1];
             parameters[0] = new SQLiteParameter("@pUrl", url);
             lock (_dbSyncObject)
             {
@@ -589,7 +587,7 @@ namespace ThreePM.MusicLibrary
 
         public void UpdateInternetRadio(string url, string title)
         {
-            SQLiteParameter[] parameters = new SQLiteParameter[2];
+            var parameters = new SQLiteParameter[2];
             parameters[0] = new SQLiteParameter("@pUrl", url);
             parameters[1] = new SQLiteParameter("@pTitle", title);
             lock (_dbSyncObject)
@@ -601,7 +599,7 @@ namespace ThreePM.MusicLibrary
 
         public void DeleteInternetRadio(string url)
         {
-            SQLiteParameter[] parameters = new SQLiteParameter[1];
+            var parameters = new SQLiteParameter[1];
             parameters[0] = new SQLiteParameter("@pUrl", url);
             lock (_dbSyncObject)
             {
@@ -615,7 +613,7 @@ namespace ThreePM.MusicLibrary
             _songCount++;
             OnSongCountChanged();
 
-            SQLiteParameter[] parameters = new SQLiteParameter[2];
+            var parameters = new SQLiteParameter[2];
             parameters[0] = new SQLiteParameter("@pFileName", file);
             parameters[1] = new SQLiteParameter("@pWatchFolderID", watchFolderID);
 
@@ -628,7 +626,7 @@ namespace ThreePM.MusicLibrary
 
         private bool Exists(string file)
         {
-            SQLiteParameter[] parameters = new SQLiteParameter[1];
+            var parameters = new SQLiteParameter[1];
             parameters[0] = new SQLiteParameter("@pFileName", file);
             lock (_dbSyncObject)
             {
@@ -638,7 +636,7 @@ namespace ThreePM.MusicLibrary
 
         void ILibrary.UpdatePlayDate(string filename)
         {
-            SQLiteParameter[] parameters = new SQLiteParameter[1];
+            var parameters = new SQLiteParameter[1];
             parameters[0] = new SQLiteParameter("@pFileName", filename);
             lock (_dbSyncObject)
             {
@@ -648,7 +646,7 @@ namespace ThreePM.MusicLibrary
 
         void ILibrary.UpdatePlayCount(string filename)
         {
-            SQLiteParameter[] parameters = new SQLiteParameter[1];
+            var parameters = new SQLiteParameter[1];
             parameters[0] = new SQLiteParameter("@pFileName", filename);
             int i;
             lock (_dbSyncObject)
@@ -670,7 +668,7 @@ namespace ThreePM.MusicLibrary
 
         public void Delete(string filename)
         {
-            SQLiteParameter[] parameters = new SQLiteParameter[1];
+            var parameters = new SQLiteParameter[1];
             parameters[0] = new SQLiteParameter("@pFilename", filename);
             lock (_dbSyncObject)
             {
@@ -682,7 +680,7 @@ namespace ThreePM.MusicLibrary
 
         public void Ignore(string filename)
         {
-            SQLiteParameter[] parameters = new SQLiteParameter[1];
+            var parameters = new SQLiteParameter[1];
             parameters[0] = new SQLiteParameter("@pFilename", filename);
             lock (_dbSyncObject)
             {
@@ -693,7 +691,7 @@ namespace ThreePM.MusicLibrary
 
         public void UnIgnore(string filename)
         {
-            SQLiteParameter[] parameters = new SQLiteParameter[1];
+            var parameters = new SQLiteParameter[1];
             parameters[0] = new SQLiteParameter("@pFilename", filename);
             lock (_dbSyncObject)
             {
@@ -704,7 +702,7 @@ namespace ThreePM.MusicLibrary
 
         private NeedsUpdateResult NeedsUpdate(string file)
         {
-            SQLiteParameter[] parameters = new SQLiteParameter[1];
+            var parameters = new SQLiteParameter[1];
             parameters[0] = new SQLiteParameter("@pFileName", file);
             object o;
             lock (_dbSyncObject)
@@ -713,7 +711,7 @@ namespace ThreePM.MusicLibrary
             }
             if (o != null && o != DBNull.Value)
             {
-                DateTime date = Convert.ToDateTime(o);
+                var date = Convert.ToDateTime(o);
                 DateTime fileDate = File.GetLastWriteTime(file);
                 if (date < fileDate)
                 {
@@ -776,7 +774,7 @@ namespace ThreePM.MusicLibrary
         public LibraryEntry[] GetLibrary(string filter, int limit, bool splitWords, string searchColumn, int startRecord)
         {
             string sql = "SELECT * FROM Library WHERE Deleted = 0 "; // WHERE " + m_watchFolderCriteria;
-            if (!String.IsNullOrEmpty(filter))
+            if (!string.IsNullOrEmpty(filter))
             {
                 string[] filters;
                 if (splitWords)
@@ -936,8 +934,7 @@ namespace ThreePM.MusicLibrary
 
         public int GetPlayCount(SongInfo song)
         {
-            LibraryEntry entry = song as LibraryEntry;
-            if (entry != null)
+            if (song is LibraryEntry entry)
             {
                 return entry.PlayCount;
             }
@@ -949,7 +946,7 @@ namespace ThreePM.MusicLibrary
 
         public int GetPlayCount(string filename)
         {
-            if (String.IsNullOrEmpty(filename)) return 0;
+            if (string.IsNullOrEmpty(filename)) return 0;
 
             string sql = "SELECT PlayCount FROM Library WHERE Filename = '" + filename.Replace("'", "''") + "';";
             object o;
@@ -1014,7 +1011,7 @@ namespace ThreePM.MusicLibrary
             {
                 ds = SQLiteHelper.ExecuteDataSet(_connectionString, sql);
             }
-            LibraryEntry[] result = new LibraryEntry[ds.Tables[0].Rows.Count];
+            var result = new LibraryEntry[ds.Tables[0].Rows.Count];
             for (int i = 0; i < result.Length; i++)
             {
                 DataRow dr = ds.Tables[0].Rows[i];
@@ -1032,7 +1029,7 @@ namespace ThreePM.MusicLibrary
             {
                 ds = SQLiteHelper.ExecuteDataSet(_connectionString, sql);
             }
-            LibraryEntry[] result = new LibraryEntry[ds.Tables[0].Rows.Count];
+            var result = new LibraryEntry[ds.Tables[0].Rows.Count];
             for (int i = 0; i < result.Length; i++)
             {
                 DataRow dr = ds.Tables[0].Rows[i];
@@ -1092,7 +1089,7 @@ namespace ThreePM.MusicLibrary
             {
                 ds = SQLiteHelper.ExecuteDataSet(_connectionString, sql);
             }
-            LibraryEntry[] result = new LibraryEntry[ds.Tables[0].Rows.Count];
+            var result = new LibraryEntry[ds.Tables[0].Rows.Count];
             for (int i = 0; i < result.Length; i++)
             {
                 DataRow dr = ds.Tables[0].Rows[i];
@@ -1148,65 +1145,65 @@ namespace ThreePM.MusicLibrary
                 switch (Convert.ToInt32(o))
                 {
                     case 1:
-                        {
-                            UpgradeToVersion2();
-                            break;
-                        }
+                    {
+                        UpgradeToVersion2();
+                        break;
+                    }
                     case 2:
-                        {
-                            UpgradeToVersion3();
-                            break;
-                        }
+                    {
+                        UpgradeToVersion3();
+                        break;
+                    }
                     case 3:
-                        {
-                            UpgradeToVersion4();
-                            break;
-                        }
+                    {
+                        UpgradeToVersion4();
+                        break;
+                    }
                     case 4:
-                        {
-                            UpgradeToVersion5();
-                            break;
-                        }
+                    {
+                        UpgradeToVersion5();
+                        break;
+                    }
                     case 5:
-                        {
-                            UpgradeToVersion6();
-                            break;
-                        }
+                    {
+                        UpgradeToVersion6();
+                        break;
+                    }
                     case 6:
-                        {
-                            UpgradeToVersion7();
-                            break;
-                        }
+                    {
+                        UpgradeToVersion7();
+                        break;
+                    }
                     case 7:
-                        {
-                            UpgradeToVersion8();
-                            break;
-                        }
+                    {
+                        UpgradeToVersion8();
+                        break;
+                    }
                     case 8:
-                        {
-                            UpgradeToVersion9();
-                            break;
-                        }
+                    {
+                        UpgradeToVersion9();
+                        break;
+                    }
                     case 9:
-                        {
-                            UpgradeToVersion10();
-                            break;
-                        }
+                    {
+                        UpgradeToVersion10();
+                        break;
+                    }
                     case 10:
-                        {
-                            UpgradeToVersion11();
-                            break;
-                        }
+                    {
+                        UpgradeToVersion11();
+                        break;
+                    }
                     case 11:
-                        {
-                            // Do nothing - up to date
-                            upToDate = true;
-                            break;
-                        }
+                    {
+                        // Do nothing - up to date
+                        upToDate = true;
+                        break;
+                    }
                     default:
-                        {
-                            throw new NotSupportedException("Version number " + o.ToString() + " not supported.");
-                        }
+                    {
+                        throw new NotSupportedException("Version number " + o.ToString() + " not supported.");
+                    }
                 }
             }
         }
@@ -1424,7 +1421,7 @@ namespace ThreePM.MusicLibrary
                 //System.Diagnostics.Debugger.Break();
                 return;
             }
-            SQLiteParameter[] parameters = new SQLiteParameter[3];
+            var parameters = new SQLiteParameter[3];
             parameters[0] = new SQLiteParameter("@pTitle", title);
             parameters[1] = new SQLiteParameter("@pArtist", artist);
             parameters[2] = new SQLiteParameter("@pLyrics", lyrics);
@@ -1438,7 +1435,7 @@ namespace ThreePM.MusicLibrary
         public string GetLyrics(string title, string artist)
         {
             string sql = "SELECT Lyrics FROM Library WHERE Title LIKE @pTitle AND Artist LIKE @pArtist AND (Lyrics <> '' AND Lyrics IS NOT NULL) LIMIT 1";
-            SQLiteParameter[] parameters = new SQLiteParameter[2];
+            var parameters = new SQLiteParameter[2];
             parameters[0] = new SQLiteParameter("@pTitle", title);
             parameters[1] = new SQLiteParameter("@pArtist", artist);
             string lyrics;

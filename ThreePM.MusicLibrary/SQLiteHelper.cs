@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Data;
+﻿using System.Data;
 using System.Data.SQLite;
 
 namespace ThreePM.MusicLibrary
@@ -10,15 +7,15 @@ namespace ThreePM.MusicLibrary
     {
         public static DataSet ExecuteDataSet(string connString, string commandText)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(connString))
+            using (var conn = new SQLiteConnection(connString))
             {
                 conn.Open();
 
                 DataSet result;
 
-                SQLiteCommand command = new SQLiteCommand(commandText, conn);
+                var command = new SQLiteCommand(commandText, conn);
                 result = new DataSet();
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
+                var adapter = new SQLiteDataAdapter(command);
                 adapter.Fill(result);
 
                 conn.Close();
@@ -33,13 +30,13 @@ namespace ThreePM.MusicLibrary
 
         public static object ExecuteScalar(string connString, string commandText, SQLiteParameter[] parameters)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(connString))
+            using (var conn = new SQLiteConnection(connString))
             {
                 conn.Open();
 
                 object result = null;
 
-                SQLiteCommand command = new SQLiteCommand(commandText, conn);
+                var command = new SQLiteCommand(commandText, conn);
                 if (parameters != null && parameters.Length > 0)
                 {
                     command.Parameters.AddRange(parameters);
@@ -58,13 +55,13 @@ namespace ThreePM.MusicLibrary
 
         public static int ExecuteNonQuery(string connString, string commandText, SQLiteParameter[] parameters)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(connString))
+            using (var conn = new SQLiteConnection(connString))
             {
                 conn.Open();
 
                 int result;
 
-                SQLiteCommand command = new SQLiteCommand(commandText, conn);
+                var command = new SQLiteCommand(commandText, conn);
                 if (parameters != null && parameters.Length > 0)
                 {
                     command.Parameters.AddRange(parameters);
@@ -78,11 +75,11 @@ namespace ThreePM.MusicLibrary
 
         public static SQLiteDataReader ExecuteReader(string connString, string commandText)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(connString))
+            using (var conn = new SQLiteConnection(connString))
             {
                 conn.Open();
 
-                SQLiteCommand command = new SQLiteCommand(commandText, conn);
+                var command = new SQLiteCommand(commandText, conn);
                 SQLiteDataReader reader = command.ExecuteReader();
                 conn.Close();
                 return reader;

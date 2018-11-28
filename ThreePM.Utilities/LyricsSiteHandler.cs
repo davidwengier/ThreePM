@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ThreePM.Utilities
+﻿namespace ThreePM.Utilities
 {
     internal interface ILyricsSiteHandler
     {

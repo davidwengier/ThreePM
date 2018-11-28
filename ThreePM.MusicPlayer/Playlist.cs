@@ -166,7 +166,7 @@ namespace ThreePM.MusicPlayer
 
         public void MoveDown(int index)
         {
-            if (index == (Count - 1)) return;
+            if (index == (this.Count - 1)) return;
             SongInfo temp = _songs[index];
             _songs[index] = _songs[index + 1];
             _songs[index + 1] = temp;
@@ -273,32 +273,32 @@ namespace ThreePM.MusicPlayer
                 switch (_playListStyle)
                 {
                     case PlaylistStyle.Normal:
-                        {
-                            _index = 0;
-                            remove = true;
-                            break;
-                        }
+                    {
+                        _index = 0;
+                        remove = true;
+                        break;
+                    }
                     case PlaylistStyle.Random:
                     case PlaylistStyle.RandomLooping:
+                    {
+                        if (_random == null)
                         {
-                            if (_random == null)
-                            {
-                                _random = new Random();
-                            }
-                            _index = _random.Next(0, _songs.Count);
-                            remove = (_playListStyle == PlaylistStyle.Random);
-                            break;
+                            _random = new Random();
                         }
+                        _index = _random.Next(0, _songs.Count);
+                        remove = (_playListStyle == PlaylistStyle.Random);
+                        break;
+                    }
                     case PlaylistStyle.Looping:
+                    {
+                        _index++;
+                        if (_index == _songs.Count)
                         {
-                            _index++;
-                            if (_index == _songs.Count)
-                            {
-                                _index = 0;
-                            }
-                            remove = false;
-                            break;
+                            _index = 0;
                         }
+                        remove = false;
+                        break;
+                    }
                 }
                 result = _songs[_index];
                 if (remove)
@@ -349,7 +349,7 @@ namespace ThreePM.MusicPlayer
                     playlist = playlist[0].Split('\n');
                 }
 
-                EventsEnabled = false;
+                this.EventsEnabled = false;
                 Clear();
                 foreach (string s in playlist)
                 {
@@ -365,13 +365,13 @@ namespace ThreePM.MusicPlayer
                         AddToEnd(info);
                     }
                 }
-                EventsEnabled = true;
+                this.EventsEnabled = true;
             }
         }
 
         public void SaveToFile(string file)
         {
-            using (StreamWriter s = new StreamWriter(File.OpenWrite(file)))
+            using (var s = new StreamWriter(File.OpenWrite(file)))
             {
                 s.WriteLine("#EXTM3U");
                 foreach (SongInfo info in this)

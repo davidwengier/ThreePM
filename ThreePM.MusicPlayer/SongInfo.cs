@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Tags;
-using Un4seen.Bass;
 
 namespace ThreePM.MusicPlayer
 {
@@ -113,7 +110,7 @@ namespace ThreePM.MusicPlayer
             try
             {
 
-                TAG_INFO tag = new TAG_INFO(_fileName);
+                var tag = new TAG_INFO(_fileName);
                 int num1 = Un4seen.Bass.Bass.BASS_StreamCreateFile(_fileName, 0, 0, BASSFlag.BASS_STREAM_DECODE);
                 if (num1 != 0)
                 {
@@ -232,19 +229,19 @@ namespace ThreePM.MusicPlayer
             if (_hasTag)
             {
                 _toStringString = Player.SongInfoFormatString;
-                _toStringString = _toStringString.Replace("{Artist}", Artist);
-                _toStringString = _toStringString.Replace("{Title}", Title);
-                _toStringString = _toStringString.Replace("{Album}", Album);
-                _toStringString = _toStringString.Replace("{AlbumArtist}", AlbumArtist);
-                _toStringString = _toStringString.Replace("{Year}", Year.ToString());
-                _toStringString = _toStringString.Replace("{Genre}", Genre);
-                _toStringString = _toStringString.Replace("{TrackNumber}", TrackNumber.ToString());
-                _toStringString = _toStringString.Replace("{Duration}", DurationDescription);
+                _toStringString = _toStringString.Replace("{Artist}", this.Artist);
+                _toStringString = _toStringString.Replace("{Title}", this.Title);
+                _toStringString = _toStringString.Replace("{Album}", this.Album);
+                _toStringString = _toStringString.Replace("{AlbumArtist}", this.AlbumArtist);
+                _toStringString = _toStringString.Replace("{Year}", this.Year.ToString());
+                _toStringString = _toStringString.Replace("{Genre}", this.Genre);
+                _toStringString = _toStringString.Replace("{TrackNumber}", this.TrackNumber.ToString());
+                _toStringString = _toStringString.Replace("{Duration}", this.DurationDescription);
                 _toStringString = _toStringString.Replace("{Ignored}", (_ignored ? "Ignored" : ""));
             }
             else
             {
-                _toStringString = FileName;
+                _toStringString = this.FileName;
             }
         }
 

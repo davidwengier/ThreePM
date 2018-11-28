@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace ThreePM.Utilities
 {
@@ -20,7 +17,7 @@ namespace ThreePM.Utilities
         {
             string artist = song.Artist.Replace(' ', '-').Replace("!", "").ToLower();
 
-            return String.Format(@"http://www.lyricsdepot.com/{0}/", artist);
+            return string.Format(@"http://www.lyricsdepot.com/{0}/", artist);
         }
 
         public bool GetLyrics(string htmlPage, out string lyrics)

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace ThreePM.Utilities
 {
@@ -18,7 +15,7 @@ namespace ThreePM.Utilities
 
         public string GetSearchURL(ThreePM.MusicPlayer.SongInfo song)
         {
-            return String.Format(@"http://www.leoslyrics.com/search.php?sartist=1&search={0}", System.Web.HttpUtility.UrlEncode(song.Artist));
+            return string.Format(@"http://www.leoslyrics.com/search.php?sartist=1&search={0}", System.Web.HttpUtility.UrlEncode(song.Artist));
         }
 
         public bool GetLyrics(string htmlPage, out string lyrics)

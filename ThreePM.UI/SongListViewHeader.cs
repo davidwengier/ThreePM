@@ -1,261 +1,259 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.Drawing;
+﻿using System;
 using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ThreePM.UI
 {
-	internal class SongListViewHeader : Control
-	{
-		private Color m_lineColorLight = Color.White;
-		private Color m_lineColor = Color.Empty;
-		private SongListView m_songListView;
-		private int m_xOffset;
-		private int m_col;
-		private int[] m_colWidths = new int[5];
-		private int m_origX;
+    internal class SongListViewHeader : Control
+    {
+        private Color _lineColorLight = Color.White;
+        private Color _lineColor = Color.Empty;
+        private SongListView _songListView;
+        private int _xOffset;
+        private int _col;
+        private int[] _colWidths = new int[5];
+        private int _origX;
 
-		public Color LineColorLight
-		{
-			get { return m_lineColorLight; }
-			set { m_lineColorLight = value; }
-		}
+        public Color LineColorLight
+        {
+            get { return _lineColorLight; }
+            set { _lineColorLight = value; }
+        }
 
-		public Color LineColor
-		{
-			get { return m_lineColor; }
-			set { m_lineColor = value; }
-		}
+        public Color LineColor
+        {
+            get { return _lineColor; }
+            set { _lineColor = value; }
+        }
 
-		public int XOffset
-		{
-			get { return m_xOffset; }
-			set
-			{
-				m_xOffset = value;
-				Invalidate();
-			}
-		}
+        public int XOffset
+        {
+            get { return _xOffset; }
+            set
+            {
+                _xOffset = value;
+                Invalidate();
+            }
+        }
 
-		public SongListViewHeader()
-		{
-			this.DoubleBuffered = true;
-			this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
-		}
-		
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public SongListView ListView
-		{
-			get { return m_songListView; }
-			internal set
-			{
-				m_songListView = value;
-			}
-		}
+        public SongListViewHeader()
+        {
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+        }
 
-		protected override void OnFontChanged(EventArgs e)
-		{
-			base.OnFontChanged(e);
-			Height = Font.Height+2;
-		}
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public SongListView ListView
+        {
+            get { return _songListView; }
+            internal set
+            {
+                _songListView = value;
+            }
+        }
 
-		protected override void OnForeColorChanged(EventArgs e)
-		{
-			if (m_lineColor == Color.Empty)
-			{
-				m_lineColor = Color.FromArgb(170, ForeColor);
-			}
-			base.OnForeColorChanged(e);
-		}
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            this.Height = this.Font.Height + 2;
+        }
 
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			if (m_songListView == null) return;
-			using (SolidBrush foreColorBrush = new SolidBrush(ForeColor))
-			{
-				using (Pen linePen = new Pen(m_lineColor), linePenLight = new Pen(m_lineColorLight))
-				{
-					RectangleF rect = new RectangleF(XOffset, 0, m_songListView.TitleColumnWidth, Height);
-					if (!m_songListView.FlatMode)
-					{
-						SongListViewItem.DrawColumn(e.Graphics, ref rect, "Album", m_songListView.WidestAlbum, Font, foreColorBrush);
-					}
-					else
-					{
-						rect.X += m_songListView.WidestAlbum;
-					}
-					rect.X += m_songListView.StatusColumnWidth;
-					SongListViewItem.DrawColumn(e.Graphics, ref rect, "#", m_songListView.TrackNumberColumnWidth, Font, foreColorBrush);
-					e.Graphics.DrawLine(linePen, rect.Left-1, 0, rect.Left-1, Height - 3);
-					e.Graphics.DrawLine(linePenLight, rect.Left, 0, rect.Left, Height - 3);
-					
-					m_colWidths[0] = Convert.ToInt32(rect.Left);
-					SongListViewItem.DrawColumn(e.Graphics, ref rect, "Title", m_songListView.TitleColumnWidth, Font, foreColorBrush);
-					e.Graphics.DrawLine(linePen, rect.Left - 1, 0, rect.Left - 1, Height - 3);
-					e.Graphics.DrawLine(linePenLight, rect.Left, 0, rect.Left, Height - 3);
+        protected override void OnForeColorChanged(EventArgs e)
+        {
+            if (_lineColor == Color.Empty)
+            {
+                _lineColor = Color.FromArgb(170, this.ForeColor);
+            }
+            base.OnForeColorChanged(e);
+        }
 
-					m_colWidths[1] = Convert.ToInt32(rect.Left);
-					SongListViewItem.DrawColumn(e.Graphics, ref rect, "Artist", m_songListView.ArtistColumnWidth, Font, foreColorBrush);
-					e.Graphics.DrawLine(linePen, rect.Left - 1, 0, rect.Left - 1, Height - 3);
-					e.Graphics.DrawLine(linePenLight, rect.Left, 0, rect.Left, Height - 3);
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (_songListView == null) return;
+            using (var foreColorBrush = new SolidBrush(this.ForeColor))
+            {
+                using (Pen linePen = new Pen(_lineColor), linePenLight = new Pen(_lineColorLight))
+                {
+                    var rect = new RectangleF(this.XOffset, 0, _songListView.TitleColumnWidth, this.Height);
+                    if (!_songListView.FlatMode)
+                    {
+                        SongListViewItem.DrawColumn(e.Graphics, ref rect, "Album", _songListView.WidestAlbum, this.Font, foreColorBrush);
+                    }
+                    else
+                    {
+                        rect.X += _songListView.WidestAlbum;
+                    }
+                    rect.X += _songListView.StatusColumnWidth;
+                    SongListViewItem.DrawColumn(e.Graphics, ref rect, "#", _songListView.TrackNumberColumnWidth, this.Font, foreColorBrush);
+                    e.Graphics.DrawLine(linePen, rect.Left - 1, 0, rect.Left - 1, this.Height - 3);
+                    e.Graphics.DrawLine(linePenLight, rect.Left, 0, rect.Left, this.Height - 3);
 
-					m_colWidths[2] = Convert.ToInt32(rect.Left);
-					if (m_songListView.FlatMode)
-					{
-						SongListViewItem.DrawColumn(e.Graphics, ref rect, "Album", m_songListView.AlbumColumnWidth, Font, foreColorBrush);
-						e.Graphics.DrawLine(linePen, rect.Left - 1, 0, rect.Left - 1, Height - 3);
-						e.Graphics.DrawLine(linePenLight, rect.Left, 0, rect.Left, Height - 3);
+                    _colWidths[0] = Convert.ToInt32(rect.Left);
+                    SongListViewItem.DrawColumn(e.Graphics, ref rect, "Title", _songListView.TitleColumnWidth, this.Font, foreColorBrush);
+                    e.Graphics.DrawLine(linePen, rect.Left - 1, 0, rect.Left - 1, this.Height - 3);
+                    e.Graphics.DrawLine(linePenLight, rect.Left, 0, rect.Left, this.Height - 3);
 
-						m_colWidths[3] = Convert.ToInt32(rect.Left);
-					}
+                    _colWidths[1] = Convert.ToInt32(rect.Left);
+                    SongListViewItem.DrawColumn(e.Graphics, ref rect, "Artist", _songListView.ArtistColumnWidth, this.Font, foreColorBrush);
+                    e.Graphics.DrawLine(linePen, rect.Left - 1, 0, rect.Left - 1, this.Height - 3);
+                    e.Graphics.DrawLine(linePenLight, rect.Left, 0, rect.Left, this.Height - 3);
 
-					SongListViewItem.DrawColumn(e.Graphics, ref rect, "Duration", m_songListView.DurationColumnWidth, Font, foreColorBrush);
-					e.Graphics.DrawLine(linePen, rect.Left - 1, 0, rect.Left - 1, Height - 3);
-					e.Graphics.DrawLine(linePenLight, rect.Left, 0, rect.Left, Height - 3);
-					m_colWidths[(m_songListView.FlatMode ? 4 : 3)] = Convert.ToInt32(rect.Left);
+                    _colWidths[2] = Convert.ToInt32(rect.Left);
+                    if (_songListView.FlatMode)
+                    {
+                        SongListViewItem.DrawColumn(e.Graphics, ref rect, "Album", _songListView.AlbumColumnWidth, this.Font, foreColorBrush);
+                        e.Graphics.DrawLine(linePen, rect.Left - 1, 0, rect.Left - 1, this.Height - 3);
+                        e.Graphics.DrawLine(linePenLight, rect.Left, 0, rect.Left, this.Height - 3);
 
-					SongListViewItem.DrawColumn(e.Graphics, ref rect, "Play Count", -1, Font, foreColorBrush);
-					e.Graphics.DrawLine(linePen, 0, Height - 2, Width, Height - 2);
+                        _colWidths[3] = Convert.ToInt32(rect.Left);
+                    }
 
-					// Check whether the header text is larger than the auto-size stuff in the columns
-					MaybeSetColumnAutoWidth(0, "#", e.Graphics);
-					MaybeSetColumnAutoWidth(1, "Title", e.Graphics);
-					MaybeSetColumnAutoWidth(2, "Artist", e.Graphics);
-					MaybeSetColumnAutoWidth(3, "Album", e.Graphics);
-					MaybeSetColumnAutoWidth(4, "Duration", e.Graphics);
-					MaybeSetColumnAutoWidth(5, "Play Count", e.Graphics);
-				}
-			}
-		}
+                    SongListViewItem.DrawColumn(e.Graphics, ref rect, "Duration", _songListView.DurationColumnWidth, this.Font, foreColorBrush);
+                    e.Graphics.DrawLine(linePen, rect.Left - 1, 0, rect.Left - 1, this.Height - 3);
+                    e.Graphics.DrawLine(linePenLight, rect.Left, 0, rect.Left, this.Height - 3);
+                    _colWidths[(_songListView.FlatMode ? 4 : 3)] = Convert.ToInt32(rect.Left);
 
-		private void MaybeSetColumnAutoWidth(int index, string text, Graphics g)
-		{
-			int spacer = 1;
-			int width = (int)g.MeasureString(text, this.Font).Width + spacer;
-			if (m_songListView.List.m_colAutoWidths[index] < width)
-			{
-				m_songListView.List.m_colAutoWidths[index] = width;
-			}
-		}
+                    SongListViewItem.DrawColumn(e.Graphics, ref rect, "Play Count", -1, this.Font, foreColorBrush);
+                    e.Graphics.DrawLine(linePen, 0, this.Height - 2, this.Width, this.Height - 2);
 
-		protected override void OnMouseDoubleClick(MouseEventArgs e)
-		{
-			if (this.Cursor == Cursors.VSplit)
-			{
-				// Auto-size the column
-				switch (m_col)
-				{
-					case 0:
-					{
-						m_songListView.TrackNumberColumnWidth = m_songListView.List.m_colAutoWidths[0];
-						break;
-					}
-					case 1:
-					{
-						m_songListView.TitleColumnWidth = m_songListView.List.m_colAutoWidths[1];
-						break;
-					}
-					case 2:
-					{
-						m_songListView.ArtistColumnWidth = m_songListView.List.m_colAutoWidths[2];
-						break;
-					}
-					case 3:
-					{
-						if (m_songListView.FlatMode)
-						{
-							m_songListView.AlbumColumnWidth = m_songListView.List.m_colAutoWidths[3];
-						}
-						else
-						{
-							m_songListView.DurationColumnWidth = m_songListView.List.m_colAutoWidths[4];
-						}
-						break;
-					}
-					case 4:
-					{
-						m_songListView.DurationColumnWidth = m_songListView.List.m_colAutoWidths[4];
-						break;
-					}
-				}
-				m_songListView.List.MeasureItems();
-			}
+                    // Check whether the header text is larger than the auto-size stuff in the columns
+                    MaybeSetColumnAutoWidth(0, "#", e.Graphics);
+                    MaybeSetColumnAutoWidth(1, "Title", e.Graphics);
+                    MaybeSetColumnAutoWidth(2, "Artist", e.Graphics);
+                    MaybeSetColumnAutoWidth(3, "Album", e.Graphics);
+                    MaybeSetColumnAutoWidth(4, "Duration", e.Graphics);
+                    MaybeSetColumnAutoWidth(5, "Play Count", e.Graphics);
+                }
+            }
+        }
 
-			base.OnMouseDoubleClick(e);
-		}
+        private void MaybeSetColumnAutoWidth(int index, string text, Graphics g)
+        {
+            int spacer = 1;
+            int width = (int)g.MeasureString(text, this.Font).Width + spacer;
+            if (_songListView.List.ColAutoWidths[index] < width)
+            {
+                _songListView.List.ColAutoWidths[index] = width;
+            }
+        }
 
-		protected override void OnMouseMove(MouseEventArgs e)
-		{
-			if (Cursor == Cursors.VSplit && e.Button == MouseButtons.Left)
-			{
-				m_songListView.List.m_drawDragLine = true;
-				m_songListView.List.m_dragLineLeft = e.X;
-				m_songListView.List.Invalidate();
-			}
-			else
-			{
-				Cursor = Cursors.Default;
-				for (int i = 0; i < m_colWidths.Length; i++)
-				{
-					if (!m_songListView.FlatMode && i == 4) break;
-					if (Math.Abs(e.X - m_colWidths[i]) < 3)
-					{
-						Cursor = Cursors.VSplit;
-						m_col = i;
-						m_origX = e.X;
-						break;
-					}
-				}
-			}
-			base.OnMouseMove(e);
-		}
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            if (this.Cursor == Cursors.VSplit)
+            {
+                // Auto-size the column
+                switch (_col)
+                {
+                    case 0:
+                    {
+                        _songListView.TrackNumberColumnWidth = _songListView.List.ColAutoWidths[0];
+                        break;
+                    }
+                    case 1:
+                    {
+                        _songListView.TitleColumnWidth = _songListView.List.ColAutoWidths[1];
+                        break;
+                    }
+                    case 2:
+                    {
+                        _songListView.ArtistColumnWidth = _songListView.List.ColAutoWidths[2];
+                        break;
+                    }
+                    case 3:
+                    {
+                        if (_songListView.FlatMode)
+                        {
+                            _songListView.AlbumColumnWidth = _songListView.List.ColAutoWidths[3];
+                        }
+                        else
+                        {
+                            _songListView.DurationColumnWidth = _songListView.List.ColAutoWidths[4];
+                        }
+                        break;
+                    }
+                    case 4:
+                    {
+                        _songListView.DurationColumnWidth = _songListView.List.ColAutoWidths[4];
+                        break;
+                    }
+                }
+                _songListView.List.MeasureItems();
+            }
 
-		protected override void OnMouseUp(MouseEventArgs e)
-		{
-			if (Cursor == Cursors.VSplit)
-			{
-				m_songListView.List.m_drawDragLine = false;
-				switch (m_col)
-				{
-					case 0:
-					{
-						m_songListView.TrackNumberColumnWidth += e.X - m_origX;
-						break;
-					}
-					case 1:
-					{
-						m_songListView.TitleColumnWidth += e.X - m_origX;
-						break;
-					}
-					case 2:
-					{
-						m_songListView.ArtistColumnWidth += e.X - m_origX;
-						break;
-					}
-					case 3:
-					{
-						if (m_songListView.FlatMode)
-						{
-							m_songListView.AlbumColumnWidth += e.X - m_origX;
-						}
-						else
-						{
-							m_songListView.DurationColumnWidth += e.X - m_origX;
-						}
-						break;
-					}
-					case 4:
-					{
-						m_songListView.DurationColumnWidth += e.X - m_origX;
-						break;
-					}
-				}
-				m_songListView.List.MeasureItems();
-			}
-			base.OnMouseUp(e);
-		}
-	}
+            base.OnMouseDoubleClick(e);
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (this.Cursor == Cursors.VSplit && e.Button == MouseButtons.Left)
+            {
+                _songListView.List.DrawDragLine = true;
+                _songListView.List.DragLineLeft = e.X;
+                _songListView.List.Invalidate();
+            }
+            else
+            {
+                this.Cursor = Cursors.Default;
+                for (int i = 0; i < _colWidths.Length; i++)
+                {
+                    if (!_songListView.FlatMode && i == 4) break;
+                    if (Math.Abs(e.X - _colWidths[i]) < 3)
+                    {
+                        this.Cursor = Cursors.VSplit;
+                        _col = i;
+                        _origX = e.X;
+                        break;
+                    }
+                }
+            }
+            base.OnMouseMove(e);
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            if (this.Cursor == Cursors.VSplit)
+            {
+                _songListView.List.DrawDragLine = false;
+                switch (_col)
+                {
+                    case 0:
+                    {
+                        _songListView.TrackNumberColumnWidth += e.X - _origX;
+                        break;
+                    }
+                    case 1:
+                    {
+                        _songListView.TitleColumnWidth += e.X - _origX;
+                        break;
+                    }
+                    case 2:
+                    {
+                        _songListView.ArtistColumnWidth += e.X - _origX;
+                        break;
+                    }
+                    case 3:
+                    {
+                        if (_songListView.FlatMode)
+                        {
+                            _songListView.AlbumColumnWidth += e.X - _origX;
+                        }
+                        else
+                        {
+                            _songListView.DurationColumnWidth += e.X - _origX;
+                        }
+                        break;
+                    }
+                    case 4:
+                    {
+                        _songListView.DurationColumnWidth += e.X - _origX;
+                        break;
+                    }
+                }
+                _songListView.List.MeasureItems();
+            }
+            base.OnMouseUp(e);
+        }
+    }
 }

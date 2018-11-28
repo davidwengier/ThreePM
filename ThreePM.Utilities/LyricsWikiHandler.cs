@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ThreePM.Utilities
@@ -20,7 +18,7 @@ namespace ThreePM.Utilities
         {
             string artist = song.Artist.Replace(' ', '_');
             string title = song.Title.Replace(' ', '_');
-            return String.Format(@"http://www.lyricwiki.org/api.php?action=lyrics&artist={0}&song={1}&fmt=xml", System.Web.HttpUtility.UrlEncode(artist), System.Web.HttpUtility.UrlEncode(title));
+            return string.Format(@"http://www.lyricwiki.org/api.php?action=lyrics&artist={0}&song={1}&fmt=xml", System.Web.HttpUtility.UrlEncode(artist), System.Web.HttpUtility.UrlEncode(title));
         }
 
         public bool GetLyrics(string htmlPage, out string lyrics)

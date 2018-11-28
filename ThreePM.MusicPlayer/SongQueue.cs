@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.Collections;
+using System.Collections.Specialized;
 using System.ComponentModel;
 
 namespace ThreePM.player
@@ -87,7 +87,7 @@ namespace ThreePM.player
 
         public void MoveDown(int index)
         {
-            if (index == (Count - 1)) return;
+            if (index == (this.Count - 1)) return;
             string temp = _songs[index];
             _songs[index] = _songs[index + 1];
             _songs[index + 1] = temp;

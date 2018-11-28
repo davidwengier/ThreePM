@@ -1,4 +1,4 @@
-namespace ThreePM
+﻿namespace ThreePM
 {
     partial class BackForm
     {
@@ -28,21 +28,21 @@ namespace ThreePM
         /// </summary>
         private void InitializeComponent()
         {
-			this.SuspendLayout();
-			// 
-			// BackForm
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.Silver;
-			this.ClientSize = new System.Drawing.Size(292, 271);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			this.Name = "BackForm";
-			this.Opacity = 0.5;
-			this.ShowInTaskbar = false;
-			this.Text = "BackForm";
-			this.TransparencyKey = System.Drawing.Color.Cyan;
-			this.ResumeLayout(false);
+            this.SuspendLayout();
+            // 
+            // BackForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Silver;
+            this.ClientSize = new System.Drawing.Size(292, 271);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "BackForm";
+            this.Opacity = 0.5;
+            this.ShowInTaskbar = false;
+            this.Text = "BackForm";
+            this.TransparencyKey = System.Drawing.Color.Cyan;
+            this.ResumeLayout(false);
 
         }
 

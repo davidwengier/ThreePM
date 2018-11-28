@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -6,39 +6,39 @@ using System.Windows.Forms;
 namespace ThreePM.UI
 {
     public class ProgressCircle : Control
-	{
-		#region Declarations
+    {
+        #region Declarations
 
-		private SolidBrush m_inactiveBrush;
-        private SolidBrush m_activeBrush;
-        private SolidBrush m_transitionBrush;
-        private Color m_inactiveColour;
-        private Color m_activeColour;
-        private Color m_transitionColour;
-        private Region innerBackgroundRegion;
-        private GraphicsPath[] segmentPaths = new GraphicsPath[12];
-        private bool m_behindIsActive = true;
-        private int m_transitionSegment = -1;
-        private System.Timers.Timer timer;
+        private SolidBrush _inactiveBrush;
+        private SolidBrush _activeBrush;
+        private SolidBrush _transitionBrush;
+        private Color _inactiveColour;
+        private Color _activeColour;
+        private Color _transitionColour;
+        private Region _innerBackgroundRegion;
+        private readonly GraphicsPath[] _segmentPaths = new GraphicsPath[12];
+        private bool _behindIsActive = true;
+        private int _transitionSegment = -1;
+        private System.Timers.Timer _timer;
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public Color InactiveSegmentColour
+        public Color InactiveSegmentColour
         {
             get
             {
-                return m_inactiveColour;
+                return _inactiveColour;
             }
             set
             {
-                m_inactiveColour = value;
-                if (m_inactiveBrush != null)
+                _inactiveColour = value;
+                if (_inactiveBrush != null)
                 {
-                    m_inactiveBrush.Dispose();
+                    _inactiveBrush.Dispose();
                 }
-                m_inactiveBrush = new SolidBrush(value);
+                _inactiveBrush = new SolidBrush(value);
                 Invalidate();
             }
         }
@@ -47,16 +47,16 @@ namespace ThreePM.UI
         {
             get
             {
-                return m_activeColour;
+                return _activeColour;
             }
             set
             {
-                m_activeColour = value;
-                if (m_activeBrush != null)
+                _activeColour = value;
+                if (_activeBrush != null)
                 {
-                    m_activeBrush.Dispose();
+                    _activeBrush.Dispose();
                 }
-                m_activeBrush = new SolidBrush(value);
+                _activeBrush = new SolidBrush(value);
                 Invalidate();
             }
         }
@@ -65,16 +65,16 @@ namespace ThreePM.UI
         {
             get
             {
-                return m_transitionColour;
+                return _transitionColour;
             }
             set
             {
-                m_transitionColour = value;
-                if (m_transitionBrush != null)
+                _transitionColour = value;
+                if (_transitionBrush != null)
                 {
-                    m_transitionBrush.Dispose();
+                    _transitionBrush.Dispose();
                 }
-                m_transitionBrush = new SolidBrush(value);
+                _transitionBrush = new SolidBrush(value);
                 Invalidate();
             }
         }
@@ -83,7 +83,7 @@ namespace ThreePM.UI
         {
             get
             {
-                return m_transitionSegment;
+                return _transitionSegment;
             }
             set
             {
@@ -91,167 +91,167 @@ namespace ThreePM.UI
                 {
                     throw new ArgumentException("TransistionSegment must be between -1 and 11");
                 }
-                m_transitionSegment = value;
+                _transitionSegment = value;
                 Invalidate();
             }
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		public ProgressCircle()
+        public ProgressCircle()
         {
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
             this.Size = new System.Drawing.Size(30, 30);
-            InactiveSegmentColour = Color.FromArgb(218, 218, 218);
-            ActiveSegmentColour = Color.FromArgb(35, 146, 33);
-            TransistionSegmentColour = Color.FromArgb(129, 242, 121);
+            this.InactiveSegmentColour = Color.FromArgb(218, 218, 218);
+            this.ActiveSegmentColour = Color.FromArgb(35, 146, 33);
+            this.TransistionSegmentColour = Color.FromArgb(129, 242, 121);
 
             CalculateSegments();
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region Public Methods
+        #region Public Methods
 
-		public void Start()
+        public void Start()
         {
-            timer = new System.Timers.Timer(50);
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
-            timer.Start();
+            _timer = new System.Timers.Timer(50);
+            _timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
+            _timer.Start();
         }
 
         public void Stop()
         {
-            m_behindIsActive = true;
-            Value = -1;
-            timer.Stop();
-            timer.Dispose();
-		}
+            _behindIsActive = true;
+            this.Value = -1;
+            _timer.Stop();
+            _timer.Dispose();
+        }
 
-		public void Increment()
-		{
-			if (m_transitionSegment == 11)
-			{
-				m_transitionSegment = 0;
-				m_behindIsActive = !m_behindIsActive;
-			}
-			else if (m_transitionSegment == -1)
-			{
-				m_transitionSegment = 0;
-			}
-			else
-			{
-				m_transitionSegment += 1;
-			}
-			Invalidate();
-		}
-
-		#endregion
-
-		#region Overridden Methods
-
-		protected override void Dispose(bool disposing)
+        public void Increment()
         {
-            m_activeBrush.Dispose();
-            m_inactiveBrush.Dispose();
-            m_transitionBrush.Dispose();
+            if (_transitionSegment == 11)
+            {
+                _transitionSegment = 0;
+                _behindIsActive = !_behindIsActive;
+            }
+            else if (_transitionSegment == -1)
+            {
+                _transitionSegment = 0;
+            }
+            else
+            {
+                _transitionSegment += 1;
+            }
+            Invalidate();
+        }
+
+        #endregion
+
+        #region Overridden Methods
+
+        protected override void Dispose(bool disposing)
+        {
+            _activeBrush.Dispose();
+            _inactiveBrush.Dispose();
+            _transitionBrush.Dispose();
             base.Dispose(disposing);
-		}
+        }
 
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-			e.Graphics.ExcludeClip(innerBackgroundRegion);
-			for (int intCount = 0; intCount <= 11; intCount++)
-			{
-				if (this.Enabled)
-				{
-					if (intCount == m_transitionSegment)
-					{
-						//If this segment is the transistion segment, colour it differently
-						e.Graphics.FillPath(m_transitionBrush, segmentPaths[intCount]);
-					}
-					else if (intCount < m_transitionSegment)
-					{
-						//This segment is behind the transistion segment
-						if (m_behindIsActive)
-						{
-							//If behind the transistion should be active, 
-							//colour it with the active colour
-							e.Graphics.FillPath(m_activeBrush, segmentPaths[intCount]);
-						}
-						else
-						{
-							//If behind the transistion should be in-active, 
-							//colour it with the in-active colour
-							e.Graphics.FillPath(m_inactiveBrush, segmentPaths[intCount]);
-						}
-					}
-					else
-					{
-						//This segment is ahead of the transistion segment
-						if (m_behindIsActive)
-						{
-							//If behind the the transistion should be active, 
-							//colour it with the in-active colour
-							e.Graphics.FillPath(m_inactiveBrush, segmentPaths[intCount]);
-						}
-						else
-						{
-							//If behind the the transistion should be in-active, 
-							//colour it with the active colour
-							e.Graphics.FillPath(m_activeBrush, segmentPaths[intCount]);
-						}
-					}
-				}
-				else
-				{
-					//Draw all segments in in-active colour if not enabled
-					e.Graphics.FillPath(m_inactiveBrush, segmentPaths[intCount]);
-				}
-			}
-			base.OnPaint(e);
-		}
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.ExcludeClip(_innerBackgroundRegion);
+            for (int intCount = 0; intCount <= 11; intCount++)
+            {
+                if (this.Enabled)
+                {
+                    if (intCount == _transitionSegment)
+                    {
+                        //If this segment is the transistion segment, colour it differently
+                        e.Graphics.FillPath(_transitionBrush, _segmentPaths[intCount]);
+                    }
+                    else if (intCount < _transitionSegment)
+                    {
+                        //This segment is behind the transistion segment
+                        if (_behindIsActive)
+                        {
+                            //If behind the transistion should be active, 
+                            //colour it with the active colour
+                            e.Graphics.FillPath(_activeBrush, _segmentPaths[intCount]);
+                        }
+                        else
+                        {
+                            //If behind the transistion should be in-active, 
+                            //colour it with the in-active colour
+                            e.Graphics.FillPath(_inactiveBrush, _segmentPaths[intCount]);
+                        }
+                    }
+                    else
+                    {
+                        //This segment is ahead of the transistion segment
+                        if (_behindIsActive)
+                        {
+                            //If behind the the transistion should be active, 
+                            //colour it with the in-active colour
+                            e.Graphics.FillPath(_inactiveBrush, _segmentPaths[intCount]);
+                        }
+                        else
+                        {
+                            //If behind the the transistion should be in-active, 
+                            //colour it with the active colour
+                            e.Graphics.FillPath(_activeBrush, _segmentPaths[intCount]);
+                        }
+                    }
+                }
+                else
+                {
+                    //Draw all segments in in-active colour if not enabled
+                    e.Graphics.FillPath(_inactiveBrush, _segmentPaths[intCount]);
+                }
+            }
+            base.OnPaint(e);
+        }
 
-		protected override void OnResize(EventArgs e)
-		{
-			CalculateSegments();
-			base.OnResize(e);
-		}
+        protected override void OnResize(EventArgs e)
+        {
+            CalculateSegments();
+            base.OnResize(e);
+        }
 
-		#endregion
+        #endregion
 
-		#region Control Events
+        #region Control Events
 
-		private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             Increment();
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region Private Methods
+        #region Private Methods
 
-		private void CalculateSegments()
+        private void CalculateSegments()
         {
-            Rectangle rctFull = new Rectangle(0, 0, this.Width, this.Height);
-            RectangleF rctInner = new RectangleF((float)this.Width * (7F / 30F), (float)this.Height * (7F / 30F), (float)this.Width - ((float)this.Width * (7F / 30F) * 2), (float)this.Height - ((float)this.Height * (7F / 30F) * 2));
+            var rctFull = new Rectangle(0, 0, this.Width, this.Height);
+            var rctInner = new RectangleF(this.Width * (7F / 30F), this.Height * (7F / 30F), this.Width - (this.Width * (7F / 30F) * 2), this.Height - (this.Height * (7F / 30F) * 2));
             GraphicsPath pthInnerBackground;
             //Create 12 segment pieces
             for (int intCount = 0; intCount <= 11; intCount++)
             {
-                segmentPaths[intCount] = new GraphicsPath();
+                _segmentPaths[intCount] = new GraphicsPath();
                 //We subtract 90 so that the starting segment is at 12 o'clock
-                segmentPaths[intCount].AddPie(rctFull, (intCount * 30) - 90, 25);
+                _segmentPaths[intCount].AddPie(rctFull, (intCount * 30) - 90, 25);
             }
             //Create the center circle cut-out
             pthInnerBackground = new GraphicsPath();
             pthInnerBackground.AddPie(rctInner.X, rctInner.Y, rctInner.Width, rctInner.Height, 0, 360);
-            innerBackgroundRegion = new Region(pthInnerBackground);
-		}
+            _innerBackgroundRegion = new Region(pthInnerBackground);
+        }
 
-		#endregion
+        #endregion
     }
 }

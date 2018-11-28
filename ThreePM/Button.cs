@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using ThreePM.player;
-using System.ComponentModel;
 
 namespace ThreePM
 {
-	public class Button : Control
+    public class Button : Control
     {
         #region Declarations
 
@@ -19,11 +15,11 @@ namespace ThreePM
             Active
         }
 
-        private State m_state = State.Normal;
-        private bool m_active;
-        private Image m_mouseDownImage;
-        private Image m_normalImage;
-        private Image m_activeButton;
+        private State _state = State.Normal;
+        private bool _active;
+        private Image _mouseDownImage;
+        private Image _normalImage;
+        private Image _activeButton;
 
         #endregion
 
@@ -74,37 +70,41 @@ namespace ThreePM
 
         public bool Active
         {
-            get { return m_active; }
-            set { m_active = value;
-            SetImage();
+            get { return _active; }
+            set
+            {
+                _active = value;
+                SetImage();
             }
         }
 
         public Image ActiveButton
         {
-            get { return m_activeButton; }
+            get { return _activeButton; }
             set
             {
-                m_activeButton = value;
+                _activeButton = value;
                 SetImage();
             }
         }
-        
+
         public Image MouseDownImage
         {
-            get { return m_mouseDownImage; }
+            get { return _mouseDownImage; }
             set
             {
-                m_mouseDownImage = value;
+                _mouseDownImage = value;
                 SetImage();
             }
         }
-        
+
         public Image NormalImage
         {
-            get { return m_normalImage; }
-            set { m_normalImage = value;
-            SetImage();
+            get { return _normalImage; }
+            set
+            {
+                _normalImage = value;
+                SetImage();
             }
         }
 
@@ -113,7 +113,7 @@ namespace ThreePM
         #region Constructor
 
         public Button()
-		{
+        {
             base.SetStyle(ControlStyles.Selectable | ControlStyles.Opaque, false);
             base.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.SupportsTransparentBackColor, true);
             this.TabStop = false;
@@ -127,17 +127,17 @@ namespace ThreePM
 
         private void SetImage()
         {
-            switch (m_state)
+            switch (_state)
             {
                 case State.Normal:
-                base.BackgroundImage = m_normalImage;
-                break;
+                    base.BackgroundImage = _normalImage;
+                    break;
                 case State.Pressed:
-                base.BackgroundImage = m_mouseDownImage;
-                break;
+                    base.BackgroundImage = _mouseDownImage;
+                    break;
                 case State.Active:
-                base.BackgroundImage = m_activeButton;
-                break;
+                    base.BackgroundImage = _activeButton;
+                    break;
             }
         }
 
@@ -147,14 +147,14 @@ namespace ThreePM
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            m_state = State.Pressed;
+            _state = State.Pressed;
             SetImage();
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            m_state = (m_active ? State.Active : State.Normal);
+            _state = (_active ? State.Active : State.Normal);
             SetImage();
             base.OnMouseUp(e);
         }

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Net;
 using System.IO;
+using System.Net;
 
 namespace ThreePM.Utilities
 {
@@ -42,15 +41,15 @@ namespace ThreePM.Utilities
 
         #region Declarations
 
-        private MusicLibrary.Library m_library;
-        private string m_status;
-        private string m_currentURL;
-        private WebClient wc;
-        private string currentStep = "";
-        private int currentLyricsObject;
-        private List<ILyricsSiteHandler> lyricsObjects = new List<ILyricsSiteHandler>();
-        private ThreePM.MusicPlayer.SongInfo m_song;
-        private string m_lastLyrics;
+        private MusicLibrary.Library _library;
+        private string _status;
+        private string _currentURL;
+        private WebClient _wc;
+        private string _currentStep = "";
+        private int _currentLyricsObject;
+        private List<ILyricsSiteHandler> _lyricsObjects = new List<ILyricsSiteHandler>();
+        private MusicPlayer.SongInfo _song;
+        private string _lastLyrics;
 
         public event EventHandler StatusChanged;
         public event EventHandler CurrentURLChanged;
@@ -65,7 +64,7 @@ namespace ThreePM.Utilities
         {
             get
             {
-                return m_status;
+                return _status;
             }
         }
 
@@ -73,7 +72,7 @@ namespace ThreePM.Utilities
         {
             get
             {
-                return m_currentURL;
+                return _currentURL;
             }
         }
 
@@ -81,7 +80,7 @@ namespace ThreePM.Utilities
         {
             get
             {
-                return m_lastLyrics;
+                return _lastLyrics;
             }
         }
 
@@ -89,7 +88,7 @@ namespace ThreePM.Utilities
         {
             get
             {
-                return m_song;
+                return _song;
             }
         }
 
@@ -99,12 +98,12 @@ namespace ThreePM.Utilities
 
         public LyricsHelper(MusicLibrary.Library library)
         {
-            m_library = library;
+            _library = library;
 
-            lyricsObjects.Add(new LyricsWikiHandler());
-            lyricsObjects.Add(new LyricsDepotHandler());
-            lyricsObjects.Add(new LeosLyricsHandler());
-            lyricsObjects.Add(new LyricsManiaHandler());
+            _lyricsObjects.Add(new LyricsWikiHandler());
+            _lyricsObjects.Add(new LyricsDepotHandler());
+            _lyricsObjects.Add(new LeosLyricsHandler());
+            _lyricsObjects.Add(new LyricsManiaHandler());
         }
 
         #endregion
@@ -120,19 +119,19 @@ namespace ThreePM.Utilities
         {
             if (song.FileName.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase) && string.IsNullOrEmpty(song.Title) && string.IsNullOrEmpty(song.Artist))
             {
-                m_lastLyrics = "";
+                _lastLyrics = "";
 
                 if (LyricsFound != null)
                 {
-                    LyricsFoundEventArgs e = new LyricsFoundEventArgs("");
+                    var e = new LyricsFoundEventArgs("");
                     LyricsFound(this, e);
                 }
                 return;
             }
 
-            currentLyricsObject = 0;
+            _currentLyricsObject = 0;
 
-            m_song = song;
+            _song = song;
 
             if (onlyTextFile)
             {
@@ -162,7 +161,7 @@ namespace ThreePM.Utilities
         private bool CheckForLyricsFromDatabase()
         {
             SetStatus("Checking for lyrics from database");
-            string lyrics = m_library.GetLyrics(m_song.Title, m_song.Artist);
+            string lyrics = _library.GetLyrics(_song.Title, _song.Artist);
 
             if (!string.IsNullOrEmpty(lyrics))
             {
@@ -178,7 +177,7 @@ namespace ThreePM.Utilities
         private bool CheckForLyricsTextFile()
         {
             SetStatus("Checking for lyrics text file");
-            string file = m_song.FileName;
+            string file = _song.FileName;
             if (file.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase))
                 return false;
             file = System.IO.Path.ChangeExtension(file, ".lyrics");
@@ -199,13 +198,13 @@ namespace ThreePM.Utilities
         private void FoundLyrics(string lyrics)
         {
             // write out lyrics
-            SaveLyricsFile(m_song, lyrics);
+            SaveLyricsFile(_song, lyrics);
 
-            m_lastLyrics = lyrics;
+            _lastLyrics = lyrics;
 
             if (LyricsFound != null)
             {
-                LyricsFoundEventArgs e = new LyricsFoundEventArgs(lyrics);
+                var e = new LyricsFoundEventArgs(lyrics);
                 LyricsFound(this, e);
             }
         }
@@ -223,7 +222,7 @@ namespace ThreePM.Utilities
 
         private void SearchCurrentLyricsSite()
         {
-            if (currentLyricsObject >= lyricsObjects.Count)
+            if (_currentLyricsObject >= _lyricsObjects.Count)
             {
                 SetStatus("Not Found");
 
@@ -235,14 +234,14 @@ namespace ThreePM.Utilities
                 return;
             }
 
-            string url = lyricsObjects[currentLyricsObject].GetSearchURL(m_song);
-            SetStatus("Checking " + lyricsObjects[currentLyricsObject].SiteName);
+            string url = _lyricsObjects[_currentLyricsObject].GetSearchURL(_song);
+            SetStatus("Checking " + _lyricsObjects[_currentLyricsObject].SiteName);
             LoadURL(url, "search");
         }
 
         private void SetStatus(string status)
         {
-            m_status = status;
+            _status = status;
             if (StatusChanged != null)
             {
                 StatusChanged(this, EventArgs.Empty);
@@ -251,7 +250,7 @@ namespace ThreePM.Utilities
 
         private void SetCurrentURL(string currentURL)
         {
-            m_currentURL = currentURL;
+            _currentURL = currentURL;
             if (CurrentURLChanged != null)
             {
                 CurrentURLChanged(this, EventArgs.Empty);
@@ -260,27 +259,27 @@ namespace ThreePM.Utilities
 
         public void CancelLastRequest()
         {
-            if (wc != null)
+            if (_wc != null)
             {
                 // unhook the event handler as we dont care about this song anymore
-                wc.DownloadStringCompleted -= new DownloadStringCompletedEventHandler(Wc_DownloadStringCompleted);
-                wc.Dispose();
-                wc = null;
+                _wc.DownloadStringCompleted -= new DownloadStringCompletedEventHandler(Wc_DownloadStringCompleted);
+                _wc.Dispose();
+                _wc = null;
             }
         }
 
         private void LoadURL(string url, string param)
         {
-            currentStep = param;
+            _currentStep = param;
             SetCurrentURL(url);
 
             try
             {
                 CancelLastRequest();
-                wc = new WebClient();
-                wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-GB; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5 (.NET CLR 3.5.30729)");
-                wc.DownloadStringCompleted += new DownloadStringCompletedEventHandler(Wc_DownloadStringCompleted);
-                wc.DownloadStringAsync(new Uri(url), wc);
+                _wc = new WebClient();
+                _wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-GB; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5 (.NET CLR 3.5.30729)");
+                _wc.DownloadStringCompleted += new DownloadStringCompletedEventHandler(Wc_DownloadStringCompleted);
+                _wc.DownloadStringAsync(new Uri(url), _wc);
             }
             catch
             {
@@ -292,19 +291,19 @@ namespace ThreePM.Utilities
         {
             try
             {
-                WebClient token = e.UserState as WebClient;
+                var token = e.UserState as WebClient;
 
 
                 if (e.Cancelled)
                     return;
                 if (e.Error != null)
                 {
-                    currentLyricsObject++;
+                    _currentLyricsObject++;
                     SearchCurrentLyricsSite();
                     return;
                 }
-                wc.Dispose();
-                wc = null;
+                _wc.Dispose();
+                _wc = null;
                 HandlePageDownload(e.Result);
             }
             catch { }
@@ -312,44 +311,44 @@ namespace ThreePM.Utilities
 
         private void HandlePageDownload(string page)
         {
-            switch (currentStep)
+            switch (_currentStep)
             {
                 case "search":
+                {
+                    string url;
+                    LyricsSearchResults results = _lyricsObjects[_currentLyricsObject].ProcessSearchResults(_song, page, out url);
+                    if (results == LyricsSearchResults.SearchAgain)
                     {
-                        string url;
-                        LyricsSearchResults results = lyricsObjects[currentLyricsObject].ProcessSearchResults(m_song, page, out url);
-                        if (results == LyricsSearchResults.SearchAgain)
-                        {
-                            LoadURL(url, "search");
-                        }
-                        else if (results == LyricsSearchResults.Found)
-                        {
-                            LoadURL(url, "lyrics");
-                        }
-                        else if (results == LyricsSearchResults.NotFound)
-                        {
-                            currentLyricsObject++;
-                            SearchCurrentLyricsSite();
-                        }
-                        else if (results == LyricsSearchResults.FoundOnThisPage)
-                        {
-                            LoadLyrics(page);
-                        }
-
-                        break;
+                        LoadURL(url, "search");
                     }
-                case "lyrics":
+                    else if (results == LyricsSearchResults.Found)
+                    {
+                        LoadURL(url, "lyrics");
+                    }
+                    else if (results == LyricsSearchResults.NotFound)
+                    {
+                        _currentLyricsObject++;
+                        SearchCurrentLyricsSite();
+                    }
+                    else if (results == LyricsSearchResults.FoundOnThisPage)
                     {
                         LoadLyrics(page);
-                        break;
                     }
+
+                    break;
+                }
+                case "lyrics":
+                {
+                    LoadLyrics(page);
+                    break;
+                }
             }
         }
 
         private void LoadLyrics(string page)
         {
             string lyrics;
-            if (lyricsObjects[currentLyricsObject].GetLyrics(page, out lyrics))
+            if (_lyricsObjects[_currentLyricsObject].GetLyrics(page, out lyrics))
             {
                 lyrics = System.Web.HttpUtility.HtmlDecode(lyrics);
 
@@ -377,7 +376,7 @@ namespace ThreePM.Utilities
             }
             else
             {
-                currentLyricsObject++;
+                _currentLyricsObject++;
                 SearchCurrentLyricsSite();
             }
         }

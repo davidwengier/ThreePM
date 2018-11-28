@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
-using ThreePM.MusicPlayer;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using ThreePM.MusicLibrary;
-using System.Text.RegularExpressions;
+using ThreePM.MusicPlayer;
 //using Windows7.DesktopIntegration.WindowsForms;
 //using Windows7.DesktopIntegration;
 
@@ -46,15 +41,15 @@ namespace ThreePM
         #region Declarations
 
         //private string tempPlayList;
-        private bool m_visualizationFullSpectrum = true;
-        private bool m_visualizationHighQuality = true;
-        private int m_visualizationNumber = 1;
+        private bool _visualizationFullSpectrum = true;
+        private bool _visualizationHighQuality = true;
+        private int _visualizationNumber = 1;
         //private ThreePM.utilities.HttpServer m_server;
-        private bool m_firstSongCountChanged = true;
-        private bool m_showRemaining;
-        private Keys m_ignoreAndNextKey = (Keys.Z | Keys.Control | Keys.Shift);
+        private bool _firstSongCountChanged = true;
+        private bool _showRemaining;
+        private Keys _ignoreAndNextKey = (Keys.Z | Keys.Control | Keys.Shift);
 
-        private ToasterForm m_toasterForm;
+        private ToasterForm _toasterForm;
 
         #endregion
 
@@ -95,7 +90,7 @@ namespace ThreePM
                 RegisterHotKey(Keys.MediaPreviousTrack);
                 RegisterHotKey(Keys.MediaStop);
 
-                RegisterHotKey(m_ignoreAndNextKey);
+                RegisterHotKey(_ignoreAndNextKey);
 
                 this.Library.ScanStarting += new EventHandler(Library_ScanStarting);
                 this.Library.ScanFinished += new EventHandler(lib_ScanFinished);
@@ -110,10 +105,10 @@ namespace ThreePM
                 ThreePM.Engine.Main.Start();
 
                 this.ShowToasterForm = Convert.ToBoolean(Registry.GetValue("MainForm.ShowToasterForm", true));
-                m_showRemaining = Convert.ToBoolean(Registry.GetValue("MainForm.ShowRemaining", false));
-                m_visualizationNumber = Convert.ToInt32(Registry.GetValue("MainForm.VisualizationNumber", 1));
-                m_visualizationHighQuality = Convert.ToBoolean(Registry.GetValue("MainForm.VisualizationHighQuality", true));
-                m_visualizationFullSpectrum = Convert.ToBoolean(Registry.GetValue("MainForm.VisualizationFullSpectrum", true));
+                _showRemaining = Convert.ToBoolean(Registry.GetValue("MainForm.ShowRemaining", false));
+                _visualizationNumber = Convert.ToInt32(Registry.GetValue("MainForm.VisualizationNumber", 1));
+                _visualizationHighQuality = Convert.ToBoolean(Registry.GetValue("MainForm.VisualizationHighQuality", true));
+                _visualizationFullSpectrum = Convert.ToBoolean(Registry.GetValue("MainForm.VisualizationFullSpectrum", true));
                 tmrSpectrum.Interval = Convert.ToInt32(Registry.GetValue("MainForm.VisualizationSpeed", 50));
                 chkOnTop.Checked = Convert.ToBoolean(Registry.GetValue("MainForm.OnTop", true));
                 this.TopMost = chkOnTop.Checked;
@@ -210,22 +205,22 @@ namespace ThreePM
 
         public bool ShowToasterForm
         {
-            get { return m_toasterForm != null; }
+            get { return _toasterForm != null; }
             set
             {
                 Registry.SetValue("MainForm.ShowToasterForm", value);
                 if (value)
                 {
-                    m_toasterForm = new ToasterForm();
-                    m_toasterForm.Player = this.Player;
+                    _toasterForm = new ToasterForm();
+                    _toasterForm.Player = this.Player;
                 }
                 else
                 {
-                    if (m_toasterForm != null)
+                    if (_toasterForm != null)
                     {
-                        m_toasterForm.Close();
-                        m_toasterForm.Dispose();
-                        m_toasterForm = null;
+                        _toasterForm.Close();
+                        _toasterForm.Dispose();
+                        _toasterForm = null;
                     }
                 }
             }
@@ -233,31 +228,31 @@ namespace ThreePM
 
         public bool VisualizationHighQuality
         {
-            get { return m_visualizationHighQuality; }
+            get { return _visualizationHighQuality; }
             set
             {
-                m_visualizationHighQuality = value;
+                _visualizationHighQuality = value;
                 Registry.SetValue("MainForm.VisualizationHighQuality", value);
             }
         }
 
         public bool VisualizationFullSpectrum
         {
-            get { return m_visualizationFullSpectrum; }
+            get { return _visualizationFullSpectrum; }
             set
             {
-                m_visualizationFullSpectrum = value;
+                _visualizationFullSpectrum = value;
                 Registry.SetValue("MainForm.VisualizationFullSpectrum", value);
             }
         }
 
         public int VisualizationNumber
         {
-            get { return m_visualizationNumber; }
+            get { return _visualizationNumber; }
             set
             {
-                m_visualizationNumber = value;
-                Registry.SetValue("MainForm.VisualizationNumber", m_visualizationNumber);
+                _visualizationNumber = value;
+                Registry.SetValue("MainForm.VisualizationNumber", _visualizationNumber);
                 tmrSpectrum.Start();
             }
         }
@@ -290,9 +285,9 @@ namespace ThreePM
         private void Library_SongCountChanged(object sender, EventArgs e)
         {
             lblSongCount.Text = this.Library.SongCount + " songs";
-            if (m_firstSongCountChanged)
+            if (_firstSongCountChanged)
             {
-                m_firstSongCountChanged = false;
+                _firstSongCountChanged = false;
                 this.Player.Play();
             }
         }
@@ -306,25 +301,25 @@ namespace ThreePM
             switch (this.Player.Playlist.PlaylistStyle)
             {
                 case PlaylistStyle.Normal:
-                    {
-                        ShowStatus("Playlist Style: Normal");
-                        break;
-                    }
+                {
+                    ShowStatus("Playlist Style: Normal");
+                    break;
+                }
                 case PlaylistStyle.Random:
-                    {
-                        ShowStatus("Playlist Style: Random");
-                        break;
-                    }
+                {
+                    ShowStatus("Playlist Style: Random");
+                    break;
+                }
                 case PlaylistStyle.Looping:
-                    {
-                        ShowStatus("Playlist Style: Looping");
-                        break;
-                    }
+                {
+                    ShowStatus("Playlist Style: Looping");
+                    break;
+                }
                 case PlaylistStyle.RandomLooping:
-                    {
-                        ShowStatus("Playlist Style: Random Looping");
-                        break;
-                    }
+                {
+                    ShowStatus("Playlist Style: Random Looping");
+                    break;
+                }
             }
             Registry.SetValue("Player.PlaylistStyle", (int)this.Player.Playlist.PlaylistStyle);
         }
@@ -336,7 +331,7 @@ namespace ThreePM
 
         private void player_PositionDescriptionChanged(object sender, EventArgs e)
         {
-            lblPosition.Text = (m_showRemaining ? this.Player.RemainingDescription : this.Player.PositionDescription);
+            lblPosition.Text = (_showRemaining ? this.Player.RemainingDescription : this.Player.PositionDescription);
         }
 
         private void player_SongOpened(object sender, SongEventArgs e)
@@ -347,8 +342,7 @@ namespace ThreePM
             }
             else
             {
-                LibraryEntry entry = this.Library.GetSong(e.Song.FileName) as LibraryEntry;
-                if (entry != null)
+                if (this.Library.GetSong(e.Song.FileName) is LibraryEntry entry)
                 {
                     this.Library.UpdateIfNeeded(e.Song.FileName);
 
@@ -381,7 +375,7 @@ namespace ThreePM
             btnPause.Checked = this.Player.State == PlayerState.Paused;
             btnStop.Checked = this.Player.State == PlayerState.Stopped;
 
-            if (m_visualizationNumber != 0)
+            if (_visualizationNumber != 0)
             {
                 if (this.Player.State == PlayerState.Playing)
                 {
@@ -447,30 +441,30 @@ namespace ThreePM
             UnregisterHotKey(Keys.MediaNextTrack);
             UnregisterHotKey(Keys.MediaPreviousTrack);
             UnregisterHotKey(Keys.MediaStop);
-            UnregisterHotKey(m_ignoreAndNextKey);
+            UnregisterHotKey(_ignoreAndNextKey);
         }
 
         #endregion
 
         #region Key Handling Methods
 
-        private Dictionary<Keys, bool> hotKeySet = new Dictionary<Keys, bool>();
+        private Dictionary<Keys, bool> _hotKeySet = new Dictionary<Keys, bool>();
 
         public void RegisterHotKey(System.Windows.Forms.Keys key)
         {
-            if (hotKeySet.ContainsKey(key) && hotKeySet[key])
+            if (_hotKeySet.ContainsKey(key) && _hotKeySet[key])
             {
                 UnregisterHotKey(key);
             }
 
-            hotKeySet[key] = User32_RegisterHotKey(this.Handle, 1000 + Convert.ToInt32(key), 0, key);
+            _hotKeySet[key] = User32_RegisterHotKey(this.Handle, 1000 + Convert.ToInt32(key), 0, key);
         }
 
         public void UnregisterHotKey(Keys key)
         {
-            if (hotKeySet.ContainsKey(key) && hotKeySet[key])
+            if (_hotKeySet.ContainsKey(key) && _hotKeySet[key])
             {
-                hotKeySet[key] = !User32_UnregisterHotKey(this.Handle, 1000 + Convert.ToInt32(key));
+                _hotKeySet[key] = !User32_UnregisterHotKey(this.Handle, 1000 + Convert.ToInt32(key));
             }
         }
 
@@ -586,7 +580,7 @@ namespace ThreePM
                 JumpToFile();
                 return true;
             }
-            else if (keyData == m_ignoreAndNextKey)
+            else if (keyData == _ignoreAndNextKey)
             {
                 IgnoreAndNext();
                 return true;
@@ -622,45 +616,45 @@ namespace ThreePM
             switch (keyData)
             {
                 case Keys.Space:
+                {
+                    // Pause or unpause
+                    if (this.Player.State == PlayerState.Paused || this.Player.State == PlayerState.Stopped)
                     {
-                        // Pause or unpause
-                        if (this.Player.State == PlayerState.Paused || this.Player.State == PlayerState.Stopped)
-                        {
-                            this.Player.Play();
-                        }
-                        else
-                        {
-                            this.Player.Pause();
-                        }
-
-                        handled = true;
-
-                        break;
+                        this.Player.Play();
                     }
+                    else
+                    {
+                        this.Player.Pause();
+                    }
+
+                    handled = true;
+
+                    break;
+                }
                 case Keys.Left:
-                    {
-                        // Skip backwards 5 seconds
-                        tckPosition.SetPosition(tckPosition.Position - 5);
-                        break;
-                    }
+                {
+                    // Skip backwards 5 seconds
+                    tckPosition.SetPosition(tckPosition.Position - 5);
+                    break;
+                }
                 case Keys.Right:
-                    {
-                        // Skip forwards 5 seconds
-                        tckPosition.SetPosition(tckPosition.Position + 5);
-                        break;
-                    }
+                {
+                    // Skip forwards 5 seconds
+                    tckPosition.SetPosition(tckPosition.Position + 5);
+                    break;
+                }
                 case Keys.Up:
-                    {
-                        // Increase volume by 5
-                        tckVolume.SetPosition(tckVolume.Position + 5);
-                        break;
-                    }
+                {
+                    // Increase volume by 5
+                    tckVolume.SetPosition(tckVolume.Position + 5);
+                    break;
+                }
                 case Keys.Down:
-                    {
-                        // Decrease volume by 5
-                        tckVolume.SetPosition(tckVolume.Position - 5);
-                        break;
-                    }
+                {
+                    // Decrease volume by 5
+                    tckVolume.SetPosition(tckVolume.Position - 5);
+                    break;
+                }
             }
 
             if (!handled)
@@ -811,14 +805,14 @@ namespace ThreePM
 
         private void lblPosition_Click(object sender, System.EventArgs e)
         {
-            m_showRemaining = !m_showRemaining;
+            _showRemaining = !_showRemaining;
 
-            string toolTip = "Time " + (m_showRemaining ? "Remaining" : "Elapsed");
+            string toolTip = "Time " + (_showRemaining ? "Remaining" : "Elapsed");
             toolTip1.SetToolTip(lblPosition, toolTip);
 
-            Registry.SetValue("MainForm.ShowRemaining", m_showRemaining);
+            Registry.SetValue("MainForm.ShowRemaining", _showRemaining);
             player_PositionDescriptionChanged(sender, e);
-            ShowStatus("Show remainging time: " + (m_showRemaining ? "Yes" : "No"));
+            ShowStatus("Show remainging time: " + (_showRemaining ? "Yes" : "No"));
         }
 
         private void btnSearch_Click(object sender, System.EventArgs e)
@@ -1132,68 +1126,68 @@ namespace ThreePM
 
         private void tmrSpectrum_Tick(object sender, EventArgs e)
         {
-            switch (m_visualizationNumber)
+            switch (_visualizationNumber)
             {
                 case 1:
-                    {
-                        pctSpectrum.Image = this.Player.DrawSpectrum(pctSpectrum.Width, pctSpectrum.Height, m_visualizationHighQuality, m_visualizationFullSpectrum);
-                        break;
-                    }
+                {
+                    pctSpectrum.Image = this.Player.DrawSpectrum(pctSpectrum.Width, pctSpectrum.Height, _visualizationHighQuality, _visualizationFullSpectrum);
+                    break;
+                }
                 case 2:
-                    {
-                        pctSpectrum.Image = this.Player.DrawWaveForm(pctSpectrum.Width, pctSpectrum.Height, m_visualizationHighQuality, m_visualizationFullSpectrum);
-                        break;
-                    }
+                {
+                    pctSpectrum.Image = this.Player.DrawWaveForm(pctSpectrum.Width, pctSpectrum.Height, _visualizationHighQuality, _visualizationFullSpectrum);
+                    break;
+                }
                 case 3:
-                    {
-                        pctSpectrum.Image = this.Player.DrawSpectrumWave(pctSpectrum.Width, pctSpectrum.Height, m_visualizationHighQuality, m_visualizationFullSpectrum);
-                        break;
-                    }
+                {
+                    pctSpectrum.Image = this.Player.DrawSpectrumWave(pctSpectrum.Width, pctSpectrum.Height, _visualizationHighQuality, _visualizationFullSpectrum);
+                    break;
+                }
                 case 4:
-                    {
-                        pctSpectrum.Image = this.Player.DrawSpectrumText(pctSpectrum.Width, pctSpectrum.Height, m_visualizationHighQuality, m_visualizationFullSpectrum);
-                        break;
-                    }
+                {
+                    pctSpectrum.Image = this.Player.DrawSpectrumText(pctSpectrum.Width, pctSpectrum.Height, _visualizationHighQuality, _visualizationFullSpectrum);
+                    break;
+                }
                 case 5:
-                    {
-                        pctSpectrum.Image = this.Player.DrawSpectrumSongName(pctSpectrum.Width, pctSpectrum.Height, m_visualizationHighQuality, m_visualizationFullSpectrum);
-                        break;
-                    }
+                {
+                    pctSpectrum.Image = this.Player.DrawSpectrumSongName(pctSpectrum.Width, pctSpectrum.Height, _visualizationHighQuality, _visualizationFullSpectrum);
+                    break;
+                }
                 case 6:
-                    {
-                        pctSpectrum.Image = this.Player.DrawSpectrumLine(pctSpectrum.Width, pctSpectrum.Height, m_visualizationHighQuality, m_visualizationFullSpectrum);
-                        break;
-                    }
+                {
+                    pctSpectrum.Image = this.Player.DrawSpectrumLine(pctSpectrum.Width, pctSpectrum.Height, _visualizationHighQuality, _visualizationFullSpectrum);
+                    break;
+                }
                 case 7:
-                    {
-                        pctSpectrum.Image = this.Player.DrawSpectrumLinePeak(pctSpectrum.Width, pctSpectrum.Height, m_visualizationHighQuality, m_visualizationFullSpectrum);
-                        break;
-                    }
+                {
+                    pctSpectrum.Image = this.Player.DrawSpectrumLinePeak(pctSpectrum.Width, pctSpectrum.Height, _visualizationHighQuality, _visualizationFullSpectrum);
+                    break;
+                }
                 case 8:
-                    {
-                        pctSpectrum.Image = this.Player.DrawSpectrumBean(pctSpectrum.Width, pctSpectrum.Height, m_visualizationHighQuality, m_visualizationFullSpectrum);
-                        break;
-                    }
+                {
+                    pctSpectrum.Image = this.Player.DrawSpectrumBean(pctSpectrum.Width, pctSpectrum.Height, _visualizationHighQuality, _visualizationFullSpectrum);
+                    break;
+                }
                 case 9:
-                    {
-                        // this one is very similar to the above
-                        pctSpectrum.Image = this.Player.DrawSpectrumDot(pctSpectrum.Width, pctSpectrum.Height, m_visualizationHighQuality, m_visualizationFullSpectrum);
-                        break;
-                    }
+                {
+                    // this one is very similar to the above
+                    pctSpectrum.Image = this.Player.DrawSpectrumDot(pctSpectrum.Width, pctSpectrum.Height, _visualizationHighQuality, _visualizationFullSpectrum);
+                    break;
+                }
                 case 10:
-                    {
-                        // this one is stupid
-                        pctSpectrum.Image = this.Player.DrawSpectrumEllipse(pctSpectrum.Width, pctSpectrum.Height, m_visualizationHighQuality, m_visualizationFullSpectrum);
-                        break;
-                    }
+                {
+                    // this one is stupid
+                    pctSpectrum.Image = this.Player.DrawSpectrumEllipse(pctSpectrum.Width, pctSpectrum.Height, _visualizationHighQuality, _visualizationFullSpectrum);
+                    break;
+                }
                 default:
-                    {
-                        tmrSpectrum.Stop();
-                        m_visualizationNumber = 0;
-                        Registry.SetValue("MainForm.VisualizationNumber", m_visualizationNumber);
-                        pctSpectrum.Image = null;
-                        break;
-                    }
+                {
+                    tmrSpectrum.Stop();
+                    _visualizationNumber = 0;
+                    Registry.SetValue("MainForm.VisualizationNumber", _visualizationNumber);
+                    pctSpectrum.Image = null;
+                    break;
+                }
             }
         }
 
