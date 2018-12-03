@@ -1,109 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>ThreePM.UI</RootNamespace>
-    <AssemblyName>ThreePM.UI</AssemblyName>
     <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <!-- <Compile Include="AlbumArtBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="InfoControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="InfoControl.Designer.cs">
-      <DependentUpon>InfoControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PlaylistControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PlaylistControl.Designer.cs">
-      <DependentUpon>PlaylistControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ProgressCircle.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="SearchControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SearchControl.Designer.cs">
-      <DependentUpon>SearchControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SongListView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SongListView.Designer.cs">
-      <DependentUpon>SongListView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SongListViewHeader.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SongListViewItem.cs" />
-    <Compile Include="SongListViewListPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="StatisticsControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="StatisticsControl.Designer.cs">
-      <DependentUpon>StatisticsControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Ticker.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Ticker.Designer.cs">
-      <DependentUpon>Ticker.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Utilities.cs" />-->
-  </ItemGroup> 
-  <ItemGroup>
-    <!-- <EmbeddedResource Include="PlaylistControl.resx">
-      <DependentUpon>PlaylistControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SearchControl.resx">
-      <DependentUpon>SearchControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SongListView.resx">
-      <DependentUpon>SongListView.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="StatisticsControl.resx">
-      <DependentUpon>StatisticsControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Ticker.resx">
-      <DependentUpon>Ticker.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource> -->
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ThreePM.MusicLibrary\ThreePM.MusicLibrary.csproj">
-    </ProjectReference>
-    <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj">
-    </ProjectReference>
-    <ProjectReference Include="..\ThreePM.Utilities\ThreePM.Utilities.csproj">
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <!-- <EmbeddedResource Include="InfoControl.resx">
-      <DependentUpon>InfoControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource> -->
+    <ProjectReference Include="..\ThreePM.MusicLibrary\ThreePM.MusicLibrary.csproj" />
+    <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj" />
+    <ProjectReference Include="..\ThreePM.Utilities\ThreePM.Utilities.csproj" />
   </ItemGroup>
 </Project>

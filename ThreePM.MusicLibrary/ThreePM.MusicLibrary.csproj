@@ -1,20 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>ThreePM.MusicLibrary</RootNamespace>
-    <AssemblyName>ThreePM.MusicLibrary</AssemblyName>
     <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj">
-    </ProjectReference>
+    <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Data.SQLite">
-      <Version>1.0.109.2</Version>
-    </PackageReference>
+    <PackageReference Include="System.Data.SQLite" Version="1.0.109.2" />
   </ItemGroup>
 </Project>

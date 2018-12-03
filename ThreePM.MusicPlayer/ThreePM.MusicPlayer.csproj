@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>ThreePM.MusicPlayer</RootNamespace>
-    <AssemblyName>ThreePM.MusicPlayer</AssemblyName>
     <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
@@ -35,15 +33,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BASS.ASIO">
-      <Version>1.3.1.2</Version>
-    </PackageReference>
-    <PackageReference Include="BASS.Native">
-      <Version>2.4.12.2</Version>
-    </PackageReference>
-    <PackageReference Include="Bass.NetWrapper">
-      <Version>2.4.12.5</Version>
-    </PackageReference>
+    <PackageReference Include="BASS.ASIO" Version="1.3.1.2" />
+    <PackageReference Include="BASS.Native" Version="2.4.12.2" />
+    <PackageReference Include="Bass.NetWrapper" Version="2.4.12.5" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.109.2" />
   </ItemGroup>
   <ItemGroup>

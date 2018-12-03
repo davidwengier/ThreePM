@@ -1,19 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>ThreePM.Engine</RootNamespace>
-    <AssemblyName>ThreePM.Engine</AssemblyName>
     <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ThreePM.MusicLibrary\ThreePM.MusicLibrary.csproj">
-    </ProjectReference>
-    <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj">
-    </ProjectReference>
-    <ProjectReference Include="..\ThreePM.Utilities\ThreePM.Utilities.csproj">
-    </ProjectReference>
+    <ProjectReference Include="..\ThreePM.MusicLibrary\ThreePM.MusicLibrary.csproj" />
+    <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj" />
+    <ProjectReference Include="..\ThreePM.Utilities\ThreePM.Utilities.csproj" />
   </ItemGroup>
 </Project>

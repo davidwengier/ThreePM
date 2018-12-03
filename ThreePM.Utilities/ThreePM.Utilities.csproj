@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>ThreePM.Utilities</RootNamespace>
-    <AssemblyName>ThreePM.Utilities</AssemblyName>
     <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
@@ -12,9 +10,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ThreePM.MusicLibrary\ThreePM.MusicLibrary.csproj">
-    </ProjectReference>
-    <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj">
-    </ProjectReference>
+    <ProjectReference Include="..\ThreePM.MusicLibrary\ThreePM.MusicLibrary.csproj" />
+    <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj" />
   </ItemGroup>
 </Project>
