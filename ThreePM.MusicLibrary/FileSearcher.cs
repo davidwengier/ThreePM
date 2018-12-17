@@ -11,7 +11,7 @@ using ComTypes = System.Runtime.InteropServices.ComTypes;
 
 namespace ThreePM.MusicLibrary
 {
-    public class FileSearcher
+    public static class FileSearcher
     {
         private sealed class SafeFindHandle : SafeHandleZeroOrMinusOneIsInvalid
         {
@@ -107,8 +107,8 @@ namespace ThreePM.MusicLibrary
             new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Demand();
 
             // Validate parameters
-            if (dirs == null) throw new ArgumentNullException("dir");
-            if (pattern == null) throw new ArgumentNullException("pattern");
+            if (dirs == null) throw new ArgumentNullException(nameof(dirs));
+            if (pattern == null) throw new ArgumentNullException(nameof(pattern));
 
             // Setup
             var findData = new WIN32_FIND_DATA();

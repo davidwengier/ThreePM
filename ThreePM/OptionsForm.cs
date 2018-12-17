@@ -9,7 +9,7 @@ namespace ThreePM
         #region Declarations
 
         private bool _initialising = false;
-        private MainForm _frmMain;
+        private readonly MainForm _frmMain;
 
         #endregion
 
@@ -200,7 +200,7 @@ namespace ThreePM
         private void txtVisualizationSpeed_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int.TryParse(txtVisualizationSpeed.Text, out int i);
+            _ = int.TryParse(txtVisualizationSpeed.Text, out int i);
             if (i < 10) i = 10;
             _frmMain.VisualizationSpeed = i;
         }
@@ -244,7 +244,7 @@ namespace ThreePM
         private void txtAlbumArtSize_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int.TryParse(txtAlbumArtSize.Text, out int i);
+            _ = int.TryParse(txtAlbumArtSize.Text, out int i);
             if (i < 10) i = 10;
 
             Registry.SetValue("LibraryForm.AlbumArtSize", i);
@@ -297,7 +297,7 @@ namespace ThreePM
         private void txtToasterStayDelay_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int.TryParse(txtToasterStayDelay.Text, out int i);
+            _ = int.TryParse(txtToasterStayDelay.Text, out int i);
             if (i < 10) i = 10;
             Registry.SetValue("ToasterForm.StayDelay", i);
         }
@@ -305,7 +305,7 @@ namespace ThreePM
         private void txtToasterFadeDelay_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int.TryParse(txtToasterFadeDelay.Text, out int i);
+            _ = int.TryParse(txtToasterFadeDelay.Text, out int i);
             if (i < 10) i = 10;
             Registry.SetValue("ToasterForm.FadeDelay", i);
         }
@@ -344,7 +344,7 @@ namespace ThreePM
         private void txtSecondsBeforeUpdatePlayCount_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int.TryParse(txtSecondsBeforeUpdatePlayCount.Text, out int i);
+            _ = int.TryParse(txtSecondsBeforeUpdatePlayCount.Text, out int i);
             if (i < 1) i = 1;
             Registry.SetValue("Player.SecondsBeforeUpdatePlayCount", i);
             ThreePM.MusicPlayer.Player.SecondsBeforeUpdatePlayCount = i;
@@ -360,7 +360,7 @@ namespace ThreePM
         private void txtNumRecent_TextChanged(object sender, EventArgs e)
         {
             if (_initialising) return;
-            int.TryParse(txtNumRecent.Text, out int i);
+            _ = int.TryParse(txtNumRecent.Text, out int i);
             if (i < 1) i = 1;
             Registry.SetValue("LibraryForm.SongsToShowInRecentLists", i);
 

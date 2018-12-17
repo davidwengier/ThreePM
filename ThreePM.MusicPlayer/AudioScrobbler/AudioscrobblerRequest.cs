@@ -35,9 +35,6 @@ namespace ThreePM.MusicPlayer
     /// </summary>
     public class AudioscrobblerRequest
     {
-        // date of the last track submission
-        private DateTime _lastRequest = DateTime.MinValue;
-
         // interval to wait before next request
         private int _interval = 0;
 
@@ -53,6 +50,10 @@ namespace ThreePM.MusicPlayer
 
         public string Username
         {
+            get
+            {
+                return _username;
+            }
             set
             {
                 _username = value;
@@ -61,10 +62,14 @@ namespace ThreePM.MusicPlayer
 
         public string Password
         {
+            get
+            {
+                return _password;
+            }
             set
             {
                 // has the password before storing it
-                _password = this.CalculateMD5(value);
+                _password = CalculateMD5(value);
             }
         }
 
@@ -81,7 +86,7 @@ namespace ThreePM.MusicPlayer
         /// parse the response into the approriate 
         /// AudioscrobblerReponse type
         /// </summary>
-        private AudioscrobblerResponse Send(string url)
+        private static AudioscrobblerResponse Send(Uri url)
         {
             // the response object to return
             AudioscrobblerResponse aResponse = null;
@@ -103,7 +108,7 @@ namespace ThreePM.MusicPlayer
                     using (var reader = new StreamReader(dataStream))
                     {
                         // parse the response string
-                        aResponse = this.ParseResponse(reader.ReadToEnd());
+                        aResponse = ParseResponse(reader.ReadToEnd());
                     }
                 }
             }
@@ -113,14 +118,14 @@ namespace ThreePM.MusicPlayer
         /// <summary>
         /// Parse the response string into the approriate type
         /// </summary>
-        private AudioscrobblerResponse ParseResponse(string responseString)
+        private static AudioscrobblerResponse ParseResponse(string responseString)
         {
             // if for any reason the response is empty (why would it be?),
             // return null
             if (responseString.Length == 0)
                 return null;
 
-            var response = new AudioscrobblerResponse();
+            AudioscrobblerResponse response;
 
             // figure out the response type and parse it approriately
             if (RequestStartsWith(responseString, "UPTODATE"))
@@ -149,7 +154,7 @@ namespace ThreePM.MusicPlayer
             }
             else
             {
-                response = GetResponse_UNKNOWN(responseString);
+                response = GetResponse_UNKNOWN();
             }
 
             return response;
@@ -162,7 +167,7 @@ namespace ThreePM.MusicPlayer
         // and then user a regular expression to parse out the interval
         // and the variables
 
-        private AudioscrobblerResponse GetResponse_UPTODATE(string responseString)
+        private static AudioscrobblerResponse GetResponse_UPTODATE(string responseString)
         {
             var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.UPTODATE;
@@ -182,7 +187,7 @@ namespace ThreePM.MusicPlayer
             return response;
         }
 
-        private AudioscrobblerResponse GetResponse_UPDATE(string responseString)
+        private static AudioscrobblerResponse GetResponse_UPDATE(string responseString)
         {
             var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.UPDATE;
@@ -203,7 +208,7 @@ namespace ThreePM.MusicPlayer
             return response;
         }
 
-        private AudioscrobblerResponse GetResponse_FAILED(string responseString)
+        private static AudioscrobblerResponse GetResponse_FAILED(string responseString)
         {
             var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.FAILED;
@@ -222,7 +227,7 @@ namespace ThreePM.MusicPlayer
             return response;
         }
 
-        private AudioscrobblerResponse GetResponse_BADUSER(string responseString)
+        private static AudioscrobblerResponse GetResponse_BADUSER(string responseString)
         {
             var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.BADUSER;
@@ -240,7 +245,7 @@ namespace ThreePM.MusicPlayer
             return response;
         }
 
-        private AudioscrobblerResponse GetResponse_BADAUTH(string responseString)
+        private static AudioscrobblerResponse GetResponse_BADAUTH(string responseString)
         {
             var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.BADAUTH;
@@ -258,7 +263,7 @@ namespace ThreePM.MusicPlayer
             return response;
         }
 
-        private AudioscrobblerResponse GetResponse_OK(string responseString)
+        private static AudioscrobblerResponse GetResponse_OK(string responseString)
         {
             var response = new AudioscrobblerResponse();
             response.Type = AudioscrobblerResponseType.OK;
@@ -276,50 +281,41 @@ namespace ThreePM.MusicPlayer
             return response;
         }
 
-        private AudioscrobblerResponse GetResponse_UNKNOWN(string responseString)
+        private static AudioscrobblerResponse GetResponse_UNKNOWN() => new AudioscrobblerResponse
         {
-            var response = new AudioscrobblerResponse();
-            response.Type = AudioscrobblerResponseType.UNKNOWN;
-            return response;
-        }
+            Type = AudioscrobblerResponseType.UNKNOWN
+        };
 
         /// <summary>
         /// Determines the response type by checking to see 
         /// what the http response string begins with
         /// </summary>
-        private bool RequestStartsWith(string line, string requestType)
-        {
-            return line.StartsWith(requestType);
-        }
+        private static bool RequestStartsWith(string line, string requestType) => line.StartsWith(requestType, StringComparison.Ordinal);
 
         #endregion Response parsers
 
         /// <summary>
         /// Calculate the MD5 hash
         /// </summary>
-        private string CalculateMD5(string input)
+        private static string CalculateMD5(string input)
         {
-            MD5 md = MD5CryptoServiceProvider.Create();
-            var enc = new UTF8Encoding();
-            byte[] buffer = enc.GetBytes(input);
-            byte[] hash = md.ComputeHash(buffer);
-            string md5 = string.Empty;
-            for (int i = 0; i < hash.Length; i++)
+            using (var md = MD5.Create())
             {
-                md5 += hash[i].ToString("x2");
+                var enc = new UTF8Encoding();
+                byte[] buffer = enc.GetBytes(input);
+                byte[] hash = md.ComputeHash(buffer);
+                string md5 = string.Empty;
+                for (int i = 0; i < hash.Length; i++)
+                {
+                    md5 += hash[i].ToString("x2");
+                }
+                return md5;
             }
-            return md5;
         }
 
         // establish the connection between the client and audioscrobbler
         private void Handshake()
         {
-            // handshake url
-            // {0} = clientid
-            // {1} = client version
-            // {2} = username
-            string handshakeUrl = "http://post.audioscrobbler.com/?hs=true&p=1.1&c={0}&v={1}&u={2}";
-
             // values for client
             string clientid = "tst";
             string clientversion = "1.0";
@@ -329,10 +325,14 @@ namespace ThreePM.MusicPlayer
             _handshakeSuccessful = false;
 
             // generate the approriate handshake url 
-            handshakeUrl = string.Format(handshakeUrl, clientid, clientversion, _username);
+            // handshake url
+            // {0} = clientid
+            // {1} = client version
+            // {2} = username
+            var handshakeUrl = new Uri(string.Format("http://post.audioscrobbler.com/?hs=true&p=1.1&c={0}&v={1}&u={2}", clientid, clientversion, _username));
 
             // send the response
-            AudioscrobblerResponse response = this.Send(handshakeUrl);
+            AudioscrobblerResponse response = Send(handshakeUrl);
 
             // set the interval value returned by the response
             _interval = response.Interval;
@@ -391,9 +391,7 @@ namespace ThreePM.MusicPlayer
             }
 
             // initialize the url to send requests to
-            string url = _urlPrefix;
-
-            url += ProcessTrack(track);
+            var url = new Uri(_urlPrefix + ProcessTrack(track));
 
             // send the request
             AudioscrobblerResponse response = Send(url);
@@ -414,14 +412,9 @@ namespace ThreePM.MusicPlayer
                 case AudioscrobblerResponseType.OK:
                     break;
             }
-
-            // update the date of the last request
-            // (isn't used now, but could be used in conjunction
-            // with interval to wait before submitting a request)
-            _lastRequest = DateTime.Now;
         }
 
-        private string ProcessTrack(SongInfo track)
+        private static string ProcessTrack(SongInfo track)
         {
             // {0} - track num
             // {1} - artist name
@@ -430,7 +423,7 @@ namespace ThreePM.MusicPlayer
             // {4} - musicbrainz id
             // {5} - track length
             // {6} - date in YYYY-MM-DD mm:hh:ss format
-            string urlTrack = "&a[{0}]={1}&t[{0}]={2}&b[{0}]={3}&m[{0}]={4}&l[{0}]={5}&i[{0}]={6}";
+            const string urlTrack = "&a[{0}]={1}&t[{0}]={2}&b[{0}]={3}&m[{0}]={4}&l[{0}]={5}&i[{0}]={6}";
             int dur = (int)track.Duration;
             if (dur == 0)
             {

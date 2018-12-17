@@ -5,10 +5,7 @@ namespace ThreePM
 {
     public partial class ToasterForm : BaseForm
     {
-        //[DllImport("user32.dll")]
-        //private static extern Boolean ShowWindow(IntPtr hWnd, Int32 nCmdShow);
-
-        private double _targetOpacity = 0.94f;
+        private readonly double _targetOpacity = 0.94f;
 
         public ToasterForm()
         {

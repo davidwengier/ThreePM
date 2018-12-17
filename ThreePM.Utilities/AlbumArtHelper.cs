@@ -137,7 +137,7 @@ namespace ThreePM.Utilities
         public static Bitmap GetAlbumArt(string filename, int width, int height)
         {
             if (width == 0 || height == 0) return null;
-            if (filename.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase))
+            if (filename.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
                 return null;
 
             var info = new ThreePM.MusicPlayer.SongInfo(filename);

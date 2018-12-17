@@ -17,7 +17,7 @@ namespace ThreePM.UI
         private bool _isStartOfNewAlbum;
         private Bitmap _albumArt;
         private Rectangle _albumRectangle;
-        private SongListViewListPanel _songListViewListPanel;
+        private readonly SongListViewListPanel _songListViewListPanel;
         private SongListViewItem _albumItem;
         private SongListViewItem _nextItem;
         private SongListViewItem _previousItem;

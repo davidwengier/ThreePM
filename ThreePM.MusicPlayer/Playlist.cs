@@ -6,7 +6,9 @@ using System.IO;
 
 namespace ThreePM.MusicPlayer
 {
+#pragma warning disable CA1710 // Identifiers should have correct suffix
     public sealed class Playlist : IEnumerable<SongInfo>
+#pragma warning restore CA1710 // Identifiers should have correct suffix
     {
         #region Declarations
 

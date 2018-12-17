@@ -81,7 +81,7 @@ namespace ThreePM.MusicPlayer
 
         public string DurationDescription
         {
-            get { return Player.GetPositionDescription(_duration); }
+            get { return Player.DescribePosition(_duration); }
         }
 
         public bool Ignored
@@ -136,13 +136,13 @@ namespace ThreePM.MusicPlayer
                 int track = 0;
                 if (tag.track.IndexOf('/') != -1)
                 {
-                    int.TryParse(tag.track.Substring(0, tag.track.IndexOf('/')), out track);
+                    _ = int.TryParse(tag.track.Substring(0, tag.track.IndexOf('/')), out track);
                 }
                 else
                 {
-                    int.TryParse(tag.track, out track);
+                    _ = int.TryParse(tag.track, out track);
                 }
-                int.TryParse(tag.year, out int year);
+                _ = int.TryParse(tag.year, out int year);
 
                 _albumArtist = tag.albumartist;
                 if (string.IsNullOrEmpty(_albumArtist))

@@ -9,7 +9,7 @@ using ThreePM.MusicPlayer;
 
 namespace ThreePM.MusicLibrary
 {
-    public class Library : ILibrary, IDisposable
+    public sealed class Library : ILibrary, IDisposable
     {
         #region Declarations
 
@@ -651,7 +651,7 @@ namespace ThreePM.MusicLibrary
             int i;
             lock (_dbSyncObject)
             {
-                if (filename.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase))
+                if (filename.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
                 {
                     i = SQLiteHelper.ExecuteNonQuery(_connectionString, "UPDATE InternetRadio SET PlayCount = PlayCount + 1 WHERE Url = @pFileName", parameters);
                 }
@@ -720,7 +720,7 @@ namespace ThreePM.MusicLibrary
                 else
                 {
                     SongInfo info = GetSong(file);
-                    if (string.IsNullOrEmpty(info.Title) || string.IsNullOrEmpty(info.Artist) || info.Title.Equals(Path.GetFileName(file), StringComparison.InvariantCultureIgnoreCase))
+                    if (string.IsNullOrEmpty(info.Title) || string.IsNullOrEmpty(info.Artist) || info.Title.Equals(Path.GetFileName(file), StringComparison.OrdinalIgnoreCase))
                     {
                         return NeedsUpdateResult.NeedsUpdate;
                     }

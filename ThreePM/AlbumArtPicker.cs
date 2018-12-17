@@ -11,9 +11,8 @@ namespace ThreePM
 {
     public partial class AlbumArtPicker : BaseForm
     {
-        private string _filename;
+        private readonly string _filename;
         private PictureBox _current;
-
 
         protected override Control.ControlCollection DynamicControlsContainer
         {
@@ -53,7 +52,7 @@ namespace ThreePM
             txtSearch.Text = query;
             progressBar1.Style = ProgressBarStyle.Marquee;
             progressBar1.Visible = true;
-            string googleUrl = "http://images.google.com/images?q=" + System.Web.HttpUtility.UrlEncode(query); ;
+            var googleUrl = new Uri("http://images.google.com/images?q=" + System.Web.HttpUtility.UrlEncode(query));
 
             try
             {

@@ -240,7 +240,7 @@ namespace ThreePM
             });
             foreach (string node in nodes)
             {
-                if (!string.IsNullOrEmpty(node) && !node.Equals(lastNode, StringComparison.InvariantCultureIgnoreCase))
+                if (!string.IsNullOrEmpty(node) && !node.Equals(lastNode, StringComparison.OrdinalIgnoreCase))
                 {
                     lastNode = node;
                     TreeNode newNode = null;
@@ -271,7 +271,7 @@ namespace ThreePM
             {
                 foreach (TreeNode node in _artistsAlbumsNode.Nodes)
                 {
-                    if (node.Text.Equals(e.LibraryEntry.AlbumArtist, StringComparison.InvariantCultureIgnoreCase))
+                    if (node.Text.Equals(e.LibraryEntry.AlbumArtist, StringComparison.OrdinalIgnoreCase))
                     {
                         if (node.Nodes.Count > 1 || node.Nodes[0].Text != EmptyNodeText)
                         {
@@ -279,7 +279,7 @@ namespace ThreePM
                             {
                                 foreach (TreeNode node2 in node.Nodes)
                                 {
-                                    if (node2.Text.Equals(e.LibraryEntry.Album, StringComparison.InvariantCultureIgnoreCase))
+                                    if (node2.Text.Equals(e.LibraryEntry.Album, StringComparison.OrdinalIgnoreCase))
                                     {
                                         break;
                                     }
@@ -315,7 +315,7 @@ namespace ThreePM
             {
                 foreach (TreeNode node in _albumsNode.Nodes)
                 {
-                    if (node.Text.Equals(e.LibraryEntry.Album, StringComparison.InvariantCultureIgnoreCase))
+                    if (node.Text.Equals(e.LibraryEntry.Album, StringComparison.OrdinalIgnoreCase))
                     {
                         break;
                     }
@@ -336,7 +336,7 @@ namespace ThreePM
             {
                 foreach (TreeNode node in _contributingArtistsNode.Nodes)
                 {
-                    if (node.Text.Equals(e.LibraryEntry.Artist, StringComparison.InvariantCultureIgnoreCase))
+                    if (node.Text.Equals(e.LibraryEntry.Artist, StringComparison.OrdinalIgnoreCase))
                     {
                         break;
                     }
@@ -357,7 +357,7 @@ namespace ThreePM
             {
                 foreach (TreeNode node in _genresNode.Nodes)
                 {
-                    if (node.Text.Equals(e.LibraryEntry.Genre, StringComparison.InvariantCultureIgnoreCase))
+                    if (node.Text.Equals(e.LibraryEntry.Genre, StringComparison.OrdinalIgnoreCase))
                     {
                         break;
                     }
@@ -408,7 +408,7 @@ namespace ThreePM
 
             if (_autoTrackNowPlayingInTree)
             {
-                if (e.Song.FileName.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase))
+                if (e.Song.FileName.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
                 {
                     if (_internetRadioNode == null)
                         return;
@@ -481,7 +481,7 @@ namespace ThreePM
             if (parentNode == null) return;
             foreach (TreeNode node in parentNode.Nodes)
             {
-                if (node.Text.Equals(toFind, StringComparison.InvariantCultureIgnoreCase))
+                if (node.Text.Equals(toFind, StringComparison.OrdinalIgnoreCase))
                 {
                     if (tvwLibrary.SelectedNode == node)
                     {
@@ -515,7 +515,7 @@ namespace ThreePM
             // Try to find the artist name
             foreach (TreeNode artistNode in parentNode.Nodes)
             {
-                if (artistNode.Text.Equals(artist, StringComparison.InvariantCultureIgnoreCase))
+                if (artistNode.Text.Equals(artist, StringComparison.OrdinalIgnoreCase))
                 {
                     // The artist was found, make sure their albums are loaded
                     EnsureAlbumsAreLoaded(artistNode);
@@ -523,7 +523,7 @@ namespace ThreePM
                     // And try to find the album
                     foreach (TreeNode albumNode in artistNode.Nodes)
                     {
-                        if (albumNode.Text.Equals(album, StringComparison.InvariantCultureIgnoreCase))
+                        if (albumNode.Text.Equals(album, StringComparison.OrdinalIgnoreCase))
                         {
                             if (tvwLibrary.SelectedNode == albumNode)
                             {
@@ -748,7 +748,7 @@ namespace ThreePM
                     }
                     else
                     {
-                        if (!album.Equals(lastNode, StringComparison.InvariantCultureIgnoreCase))
+                        if (!album.Equals(lastNode, StringComparison.OrdinalIgnoreCase))
                         {
                             lastNode = album;
                             artistNode.Nodes.Add(album);
@@ -758,15 +758,15 @@ namespace ThreePM
             }
         }
 
-        private int CompareStringsWithoutTheAndIgnoringCase(string strA, string strB)
+        private static int CompareStringsWithoutTheAndIgnoringCase(string strA, string strB)
         {
             string input = strA;
             string input2 = strB;
-            if (input.StartsWith("The ", StringComparison.InvariantCultureIgnoreCase))
+            if (input.StartsWith("The ", StringComparison.OrdinalIgnoreCase))
             {
                 input = input.Substring(4) + ", The";
             }
-            if (input2.StartsWith("The ", StringComparison.InvariantCultureIgnoreCase))
+            if (input2.StartsWith("The ", StringComparison.OrdinalIgnoreCase))
             {
                 input2 = input2.Substring(4) + ", The";
             }

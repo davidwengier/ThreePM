@@ -33,7 +33,6 @@ namespace ThreePM
         #region Constants
 
         private const int SpaceBetweenAlbums = 3;
-        private const int CenterItemIndex = 4;
         private const int TransitionTime = 300;
         private const int TransitionTimerInterval = 10;
         private const int SmallestAlbumSize = 40;
@@ -45,7 +44,7 @@ namespace ThreePM
 
         #region Declarations
 
-        private AlbumArtLoader _loader = new AlbumArtLoader();
+        private readonly AlbumArtLoader _loader = new AlbumArtLoader();
         private SongInfo[] _dataSource;
         private int _currentIndex = 0;
         private List<SongListViewItem> _items;
@@ -56,9 +55,9 @@ namespace ThreePM
 
         private bool _stopScrollingDammit = false;
         private ScrollDirection _scrollDirection = ScrollDirection.None;
-        private Timer _timer = new Timer();
+        private readonly Timer _timer = new Timer();
 
-        private Timer _updateTimer = new Timer();
+        private readonly Timer _updateTimer = new Timer();
         private int _originalOffset = 0;
         private int _offset = 0;
 
@@ -450,31 +449,6 @@ namespace ThreePM
             e.Graphics.DrawString(item.SongInfo.AlbumArtist, this.Font, textBrush, rect);
         }
 
-        private void PaintCurves(PaintEventArgs e)
-        {
-            // Paint the parabolas that the albums will follow
-            var topPoints = new List<Point>();
-            var bottomPoints = new List<Point>();
-
-            for (int x = 0; x < this.ClientSize.Width; x += 2)
-            {
-                topPoints.Add(new Point(x, TopCurveY(x)));
-                bottomPoints.Add(new Point(x, BottomCurveY(x)));
-            }
-
-            var topPointArray = new Point[topPoints.Count];
-            topPoints.CopyTo(topPointArray);
-
-            var bottomPointArray = new Point[bottomPoints.Count];
-            bottomPoints.CopyTo(bottomPointArray);
-
-            using (var pen = new Pen(this.ForeColor))
-            {
-                e.Graphics.DrawCurve(pen, topPointArray);
-                e.Graphics.DrawCurve(pen, bottomPointArray);
-            }
-        }
-
         private void PaintCurrentAlbumHuuuge(PaintEventArgs e)
         {
             // Draw the current album fricking huge
@@ -729,25 +703,12 @@ namespace ThreePM
             if (_items == null || _items.Count == 0) return;
             foreach (SongListViewItem item in _items)
             {
-                if (item.SongInfo.Album.Equals(album, StringComparison.InvariantCultureIgnoreCase))
+                if (item.SongInfo.Album.Equals(album, StringComparison.OrdinalIgnoreCase))
                 {
                     _ticker.SetPosition(item.Index);
                     break;
                 }
             }
-        }
-
-        private SongListViewItem AlbumAtPoint(Point location)
-        {
-            SongListViewItem result = null;
-
-            int index = AlbumIndexAtPoint(location);
-            if (index != -1)
-            {
-                result = _items[index];
-            }
-
-            return result;
         }
 
         private int AlbumIndexAtPoint(Point location)
@@ -850,7 +811,7 @@ namespace ThreePM
             while (stillHaveAlbumsToGoSoKeepGoing)
             {
                 // Get the size
-                int size = 0;
+                int size;
                 for (size = albumSizes[albumSizes.Count - 1]; size > 0; size--)
                 {
                     int newCenterX = x + (size / 2);
@@ -882,7 +843,7 @@ namespace ThreePM
             stillHaveAlbumsToGoSoKeepGoing = true;
             while (stillHaveAlbumsToGoSoKeepGoing)
             {
-                int size = 0;
+                int size;
                 for (size = albumSizes[0]; size > 0; size--)
                 {
                     int newCenterX = x - Convert.ToInt32(size / 2);

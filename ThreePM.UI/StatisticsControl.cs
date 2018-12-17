@@ -137,7 +137,7 @@ namespace ThreePM.UI
                                 {
                                     if (dr[3].ToString() == "secs")
                                     {
-                                        s += " (" + ThreePM.MusicPlayer.Player.GetPositionDescription(Convert.ToSingle(dr[2])) + " " + dr[3].ToString() + ")";
+                                        s += " (" + ThreePM.MusicPlayer.Player.DescribePosition(Convert.ToSingle(dr[2])) + " " + dr[3].ToString() + ")";
                                     }
                                     else if (dr[3].ToString() == "percent")
                                     {
@@ -159,7 +159,7 @@ namespace ThreePM.UI
                             {
                                 if (dr[3].ToString() == "secs")
                                 {
-                                    s += " (" + ThreePM.MusicPlayer.Player.GetPositionDescription(Convert.ToSingle(dr[2])) + " " + dr[3].ToString() + ")";
+                                    s += " (" + ThreePM.MusicPlayer.Player.DescribePosition(Convert.ToSingle(dr[2])) + " " + dr[3].ToString() + ")";
                                 }
                                 else if (dr[3].ToString() == "percent")
                                 {

@@ -388,9 +388,9 @@ namespace ThreePM.Utilities
         {
             #region Declarations
 
-            private HttpServer _server;
+            private readonly HttpServer _server;
 
-            private Socket _socket;
+            private readonly Socket _socket;
             private NetworkStream _ns;
             private StreamReader _sr;
             private StreamWriter _sw;
@@ -398,7 +398,7 @@ namespace ThreePM.Utilities
             private string _url;
             private string _protocol;
             private readonly Hashtable _headers;
-            private byte[] _bytes = new byte[4096];
+            private readonly byte[] _bytes = new byte[4096];
 
             #endregion
 

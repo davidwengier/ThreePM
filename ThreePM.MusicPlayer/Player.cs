@@ -10,7 +10,7 @@ using Un4seen.Bass.Misc;
 
 namespace ThreePM.MusicPlayer
 {
-    public class Player : IDisposable
+    public sealed class Player : IDisposable
     {
         #region Static Things
 
@@ -59,7 +59,7 @@ namespace ThreePM.MusicPlayer
             return (from info in Bass.BASS_GetDeviceInfos() select info.name).ToArray();
         }
 
-        public static string GetPositionDescription(double pos)
+        public static string DescribePosition(double pos)
         {
             var t = TimeSpan.FromSeconds(pos);
             string result = "";
@@ -327,7 +327,7 @@ namespace ThreePM.MusicPlayer
         {
             get
             {
-                return Player.GetPositionDescription(_position);
+                return Player.DescribePosition(_position);
             }
         }
 
@@ -335,7 +335,7 @@ namespace ThreePM.MusicPlayer
         {
             get
             {
-                return '-' + Player.GetPositionDescription(_currentSong.Duration - _position);
+                return '-' + Player.DescribePosition(_currentSong.Duration - _position);
             }
         }
 
@@ -845,7 +845,7 @@ namespace ThreePM.MusicPlayer
         public bool LoadStream(string url)
         {
             string realURL = url;
-            if (url.EndsWith(".m3u", StringComparison.InvariantCultureIgnoreCase))
+            if (url.EndsWith(".m3u", StringComparison.OrdinalIgnoreCase))
             {
                 using (var client = new System.Net.WebClient())
                 {
@@ -899,7 +899,7 @@ namespace ThreePM.MusicPlayer
 
         public bool LoadFile(string file, bool updatePlayCount)
         {
-            if (file.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase))
+            if (file.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
             {
                 return LoadStream(file);
             }

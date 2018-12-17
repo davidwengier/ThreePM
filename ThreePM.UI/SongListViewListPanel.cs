@@ -21,7 +21,7 @@ namespace ThreePM.UI
         private SongInfo[] _dataSource;
         private int _widestalbum;
         private int _lastClickedIndex = -1;
-        private List<SongListViewItem> _selectedItems = new List<SongListViewItem>();
+        private readonly List<SongListViewItem> _selectedItems = new List<SongListViewItem>();
         private ContextMenuStrip _itemContextMenuStrip;
         private bool _showAlbumArt = true;
         private int _albumArtSize = 100;
@@ -32,7 +32,7 @@ namespace ThreePM.UI
         private bool _flatMode;
         private SongListView _songListView;
 
-        private AlbumArtLoader _albumArtLoader = new AlbumArtLoader();
+        private readonly AlbumArtLoader _albumArtLoader = new AlbumArtLoader();
 
         internal int DragLineLeft;
         internal bool DrawDragLine;

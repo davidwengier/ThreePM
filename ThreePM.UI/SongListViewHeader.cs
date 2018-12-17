@@ -12,7 +12,7 @@ namespace ThreePM.UI
         private SongListView _songListView;
         private int _xOffset;
         private int _col;
-        private int[] _colWidths = new int[5];
+        private readonly int[] _colWidths = new int[5];
         private int _origX;
 
         public Color LineColorLight

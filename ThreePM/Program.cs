@@ -43,7 +43,7 @@ namespace ThreePM
                 {
                     if (MainForm.Commands.ContainsKey(args[0]))
                     {
-                        SendMessage(hWnd, WM_USER, 0, (int)MainForm.Commands[args[0]]);
+                        _ = SendMessage(hWnd, WM_USER, 0, (int)MainForm.Commands[args[0]]);
                     }
                     return;
                 }

@@ -41,13 +41,13 @@ namespace ThreePM.Utilities
 
         #region Declarations
 
-        private MusicLibrary.Library _library;
+        private readonly MusicLibrary.Library _library;
         private string _status;
         private string _currentURL;
         private WebClient _wc;
         private string _currentStep = "";
         private int _currentLyricsObject;
-        private List<ILyricsSiteHandler> _lyricsObjects = new List<ILyricsSiteHandler>();
+        private readonly List<ILyricsSiteHandler> _lyricsObjects = new List<ILyricsSiteHandler>();
         private MusicPlayer.SongInfo _song;
         private string _lastLyrics;
 
@@ -117,7 +117,7 @@ namespace ThreePM.Utilities
 
         public void LoadLyrics(ThreePM.MusicPlayer.SongInfo song, bool skipTextFile, bool onlyTextFile, bool skipOtherSongsInDatabase)
         {
-            if (song.FileName.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase) && string.IsNullOrEmpty(song.Title) && string.IsNullOrEmpty(song.Artist))
+            if (song.FileName.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && string.IsNullOrEmpty(song.Title) && string.IsNullOrEmpty(song.Artist))
             {
                 _lastLyrics = "";
 
@@ -175,7 +175,7 @@ namespace ThreePM.Utilities
         {
             SetStatus("Checking for lyrics text file");
             string file = _song.FileName;
-            if (file.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase))
+            if (file.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
                 return false;
             file = System.IO.Path.ChangeExtension(file, ".lyrics");
             if (File.Exists(file))

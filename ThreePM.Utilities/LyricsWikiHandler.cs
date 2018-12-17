@@ -39,7 +39,7 @@ namespace ThreePM.Utilities
             {
                 return LyricsSearchResults.NotFound;
             }
-            else if (!htmlPage.StartsWith("<!DOCTYPE", StringComparison.InvariantCultureIgnoreCase))
+            else if (!htmlPage.StartsWith("<!DOCTYPE", StringComparison.OrdinalIgnoreCase))
             {
                 nextURL = Regex.Match(htmlPage, "<url>(?<url>.*?)</url>").Groups["url"].Value;
                 return LyricsSearchResults.SearchAgain;

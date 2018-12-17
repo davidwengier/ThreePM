@@ -47,7 +47,7 @@ namespace ThreePM
         //private ThreePM.utilities.HttpServer m_server;
         private bool _firstSongCountChanged = true;
         private bool _showRemaining;
-        private Keys _ignoreAndNextKey = (Keys.Z | Keys.Control | Keys.Shift);
+        private readonly Keys _ignoreAndNextKey = (Keys.Z | Keys.Control | Keys.Shift);
 
         private ToasterForm _toasterForm;
 
@@ -336,7 +336,7 @@ namespace ThreePM
 
         private void player_SongOpened(object sender, SongEventArgs e)
         {
-            if (e.Song.FileName.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase))
+            if (e.Song.FileName.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
             {
                 this.Library.UpdateInternetRadio(e.Song.FileName, e.Song.Album);
             }
@@ -437,7 +437,7 @@ namespace ThreePM
 
         #region Key Handling Methods
 
-        private Dictionary<Keys, bool> _hotKeySet = new Dictionary<Keys, bool>();
+        private readonly Dictionary<Keys, bool> _hotKeySet = new Dictionary<Keys, bool>();
 
         public void RegisterHotKey(System.Windows.Forms.Keys key)
         {
@@ -788,7 +788,7 @@ namespace ThreePM
         {
             double pos = tckPosition.Position;
             double rem = tckPosition.Duration - pos;
-            ShowStatus("Seek: " + Player.GetPositionDescription(pos) + " / -" + Player.GetPositionDescription(rem));
+            ShowStatus("Seek: " + Player.DescribePosition(pos) + " / -" + Player.DescribePosition(rem));
         }
 
         private void lblPosition_Click(object sender, System.EventArgs e)
