@@ -888,9 +888,13 @@ namespace ThreePM
 
         public BaseForm()
         {
-            _closeButton = Properties.Resources.CloseButton;
-            _minimizeButton = Properties.Resources.MinimizeButton;
-            _moveWindowButton = Properties.Resources.Window;
+            try
+            {
+                _closeButton = Properties.Resources.CloseButton;
+                _minimizeButton = Properties.Resources.MinimizeButton;
+                _moveWindowButton = Properties.Resources.Window;
+            }
+            catch { }
 
             _caption = "ThreePM";
             this.DoubleBuffered = true;

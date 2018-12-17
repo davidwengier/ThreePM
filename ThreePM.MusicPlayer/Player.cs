@@ -572,7 +572,7 @@ namespace ThreePM.MusicPlayer
         {
             BassNet.Registration("bass@wengier.com", "2X1132816322322");
 
-            if (Bass.BASS_Init(deviceNumber, 44100, BASSInit.BASS_DEVICE_DEFAULT | BASSInit.BASS_DEVICE_LATENCY, IntPtr.Zero, new Guid()))
+            if (Bass.BASS_Init(deviceNumber, 44100, BASSInit.BASS_DEVICE_DEFAULT | BASSInit.BASS_DEVICE_LATENCY, IntPtr.Zero, Guid.Empty))
             {
                 var exts = new List<string>();
                 _sysInfo = "Player version: " + this.GetType().Assembly.GetName().Version.ToString();
@@ -872,23 +872,6 @@ namespace ThreePM.MusicPlayer
             {
                 HandleBassError(false);
                 return false;
-            }
-        }
-
-        private void DebugTags()
-        {
-            System.Diagnostics.Debug.WriteLine("ICY:");
-            string[] tags = Bass.BASS_ChannelGetTagsICY(_stream);
-            foreach (string tag in tags)
-            {
-                System.Diagnostics.Debug.WriteLine(tag);
-            }
-
-            System.Diagnostics.Debug.WriteLine("META:");
-            tags = Bass.BASS_ChannelGetTagsMETA(_stream);
-            foreach (string tag in tags)
-            {
-                System.Diagnostics.Debug.WriteLine(tag);
             }
         }
 
