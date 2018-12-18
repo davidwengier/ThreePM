@@ -607,6 +607,7 @@
             this.btnSaveLyrics.Size = new System.Drawing.Size(118, 25);
             this.btnSaveLyrics.TabIndex = 26;
             this.btnSaveLyrics.Text = "Save .lyrics files";
+            this.btnSaveLyrics.Tag = "This will make ThreePM save all lyrics.";
             this.btnSaveLyrics.UseVisualStyleBackColor = true;
             this.btnSaveLyrics.Click += new System.EventHandler(this.btnSaveLyrics_Click);
             // 
@@ -617,6 +618,7 @@
             this.btnLyricsFromLyricsFiles.Size = new System.Drawing.Size(185, 25);
             this.btnLyricsFromLyricsFiles.TabIndex = 27;
             this.btnLyricsFromLyricsFiles.Text = "Download .lyrics File Lyrics";
+            this.btnLyricsFromLyricsFiles.Tag = "This will make ThreePM download all lyrics from local .lyrics files.";
             this.btnLyricsFromLyricsFiles.UseVisualStyleBackColor = true;
             this.btnLyricsFromLyricsFiles.Click += new System.EventHandler(this.btnLyricsFromLyricsFiles_Click);
             // 
@@ -627,6 +629,7 @@
             this.btnLyrics.Size = new System.Drawing.Size(118, 25);
             this.btnLyrics.TabIndex = 28;
             this.btnLyrics.Text = "Download all Lyrics";
+            this.btnLyrics.Tag = "This will make ThreePM download all lyrics.";
             this.btnLyrics.UseVisualStyleBackColor = true;
             this.btnLyrics.Click += new System.EventHandler(this.btnLyrics_Click);
             // 
