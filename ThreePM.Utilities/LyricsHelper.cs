@@ -102,7 +102,6 @@ namespace ThreePM.Utilities
 
             _lyricsObjects.Add(new LyricsWikiHandler());
             _lyricsObjects.Add(new LyricsDepotHandler());
-            _lyricsObjects.Add(new LeosLyricsHandler());
             _lyricsObjects.Add(new LyricsManiaHandler());
         }
 
