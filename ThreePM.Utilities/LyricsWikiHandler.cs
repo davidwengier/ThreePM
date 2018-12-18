@@ -27,7 +27,7 @@ namespace ThreePM.Utilities
             lyrics = Regex.Match(htmlPage, "<div class='lyricbox'><div class='rtMatcher'>.*?</div>(?<lyrics1>.*?)<!--").Groups["lyrics1"].Value.Replace("\n", "<BR>");
             if (lyrics == "")
             {
-                lyrics = Regex.Match(htmlPage, "<div class='lyricbox'>(?<lyrics1>.*?)<!--").Groups["lyrics1"].Value.Replace("\n", "<BR>");
+                lyrics = Regex.Match(htmlPage, "<div class='lyricbox'>(?<lyrics1>.*?)<div").Groups["lyrics1"].Value.Replace("\n", "<BR>");
             }
             return true;
         }
@@ -42,6 +42,10 @@ namespace ThreePM.Utilities
             else if (!htmlPage.StartsWith("<!DOCTYPE", StringComparison.OrdinalIgnoreCase))
             {
                 nextURL = Regex.Match(htmlPage, "<url>(?<url>.*?)</url>").Groups["url"].Value;
+                if (nextURL.Equals("http://lyrics.wikia.com"))
+                {
+                    return LyricsSearchResults.NotFound;
+                }
                 return LyricsSearchResults.SearchAgain;
             }
             else
