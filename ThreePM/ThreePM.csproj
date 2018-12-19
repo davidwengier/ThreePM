@@ -17,7 +17,7 @@
     <ProjectReference Include="..\ThreePM.MusicPlayer\ThreePM.MusicPlayer.csproj" />
     <ProjectReference Include="..\ThreePM.UI\ThreePM.UI.csproj" />
     <ProjectReference Include="..\ThreePM.Utilities\ThreePM.Utilities.csproj" />
-    <Content Include="Skins\*.skin.xml">
+    <Content Include="Skins\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Blank.skin.xml">
