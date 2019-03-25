@@ -109,7 +109,6 @@ namespace ThreePM.MusicPlayer
 
             try
             {
-
                 var tag = new TAG_INFO(_fileName);
                 int num1 = Un4seen.Bass.Bass.BASS_StreamCreateFile(_fileName, 0, 0, BASSFlag.BASS_STREAM_DECODE);
                 if (num1 != 0)
@@ -130,8 +129,6 @@ namespace ThreePM.MusicPlayer
                         }
                     }
                 }
-
-
 
                 int track = 0;
                 if (tag.track.IndexOf('/') != -1)
@@ -165,6 +162,7 @@ namespace ThreePM.MusicPlayer
                         _albumArtist = FixString(tag.NativeTag("ENSEMBLE"));
                     }
                 }
+                _albumArtist = string.Intern(_albumArtist);
 
                 _album = FixString(tag.album);
                 if (string.IsNullOrEmpty(_album))
@@ -175,8 +173,9 @@ namespace ThreePM.MusicPlayer
                         _album = FixString(tag.NativeTag("ALBUM1"));
                     }
                 }
+                _album = string.Intern(_album);
 
-                _artist = FixString(tag.artist);
+                _artist = string.Intern(FixString(tag.artist));
                 _title = FixString(tag.title);
                 _trackNumber = track;
                 _year = year;

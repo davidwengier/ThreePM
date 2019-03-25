@@ -162,6 +162,7 @@ namespace ThreePM
             };
             _ticker.PositionChanged += new EventHandler(Ticker_PositionChanged);
             this.Controls.Add(_ticker);
+            System.Diagnostics.Debug.WriteLine($"Ticker '{nameof(_ticker)}' has been initialized.");
             Invalidate(true);
 
             MethodInvoker doWork = delegate

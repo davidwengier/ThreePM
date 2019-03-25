@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ThreePM.MusicPlayer
 {
@@ -317,10 +319,7 @@ namespace ThreePM.MusicPlayer
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            foreach (SongInfo s in _songs)
-            {
-                yield return s;
-            }
+            return GetAllSongs().GetEnumerator();
         }
 
         #endregion
@@ -336,6 +335,17 @@ namespace ThreePM.MusicPlayer
         }
 
         #endregion
+
+        private IEnumerable<SongInfo> GetAllSongs()
+        {
+            foreach (SongInfo s in _songs)
+            {
+                if (s != null)
+                {
+                    yield return s;
+                }
+            }
+        }
 
         public void LoadFromFile(string file)
         {

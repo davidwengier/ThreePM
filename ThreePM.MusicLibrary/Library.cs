@@ -9,14 +9,14 @@ using ThreePM.MusicPlayer;
 
 namespace ThreePM.MusicLibrary
 {
-    public sealed class Library : ILibrary, IDisposable
+    public sealed class Library : LibraryBase, ILibrary, IDisposable
     {
         #region Declarations
 
-        private readonly Random _random = new Random();
+        private Random _random = new Random();
         private ISynchronizeInvoke _synchronizingObject;
         private Dictionary<int, FileSystemWatcher> _fileWatchers = new Dictionary<int, FileSystemWatcher>();
-        private readonly List<string> _supportedExtensions = new List<string>();
+        private List<string> _supportedExtensions = new List<string>();
         private readonly object _dbSyncObject = new object();
         private readonly string _connectionString;
         private Thread _scanningThread;
@@ -473,11 +473,13 @@ namespace ThreePM.MusicLibrary
 
         private void ScanFolder(DataRow directory)
         {
-            string oldDir = "";
             if (!Directory.Exists(directory["Folder"].ToString())) return;
-            foreach (string file in FileSearcher.GetFiles(new DirectoryInfo(directory["Folder"].ToString()), "*", SearchOption.AllDirectories))
+
+            string oldDir = "";
+            foreach (String file in FileSearcher.GetFiles(new DirectoryInfo(directory["Folder"].ToString()), "*", SearchOption.AllDirectories))
             {
-                string dir = Path.GetDirectoryName(file);
+                var dir = Path.GetDirectoryName(file);
+
                 if (!dir.Equals(oldDir))
                 {
                     OnScanStatus(dir);
@@ -773,7 +775,7 @@ namespace ThreePM.MusicLibrary
 
         public LibraryEntry[] GetLibrary(string filter, int limit, bool splitWords, string searchColumn, int startRecord)
         {
-            string sql = "SELECT * FROM Library WHERE Deleted = 0 "; // WHERE " + m_watchFolderCriteria;
+            string sql = "SELECT * FROM Library WHERE Deleted = 0 ";
             if (!string.IsNullOrEmpty(filter))
             {
                 string[] filters;

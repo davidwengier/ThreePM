@@ -137,14 +137,14 @@ namespace ThreePM
             {
                 this.UseWaitCursor = true;
                 // Load the artists
-                string[] albumArtists = this.Library.GetAlbumArtists();
+                var albumArtists = this.Library.GetAlbumArtists();
                 Array.Sort<string>(albumArtists, CompareStringsWithoutTheAndIgnoringCase);
-                string[] albums = this.Library.GetAlbums();
+                var albums = this.Library.GetAlbums();
                 Array.Sort<string>(albums, CompareStringsWithoutTheAndIgnoringCase);
-                string[] artists = this.Library.GetArtists();
+                var artists = this.Library.GetArtists();
                 Array.Sort<string>(artists, CompareStringsWithoutTheAndIgnoringCase);
-                string[] years = this.Library.GetYears();
-                string[] genres = this.Library.GetGenres();
+                var years = this.Library.GetYears();
+                var genres = this.Library.GetGenres();
 
                 tvwLibrary.Invoke((MethodInvoker)delegate
                 {

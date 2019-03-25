@@ -4,10 +4,7 @@
     {
         void SetSupportedExtensions(string[] exts);
 
-        int SongCount
-        {
-            get;
-        }
+        int SongCount { get; }
 
         SongInfo GetSong(int index);
 

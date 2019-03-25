@@ -260,6 +260,7 @@ namespace ThreePM.MusicPlayer
                 {
                     Bass.BASS_SetVolume(value);
                 }
+                NotifyPropertyChanged(nameof(Volume));
             }
         }
 
@@ -566,6 +567,77 @@ namespace ThreePM.MusicPlayer
             _timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
 
             _meta_proc = new SYNCPROC(meta_sync);
+
+            void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+            {
+                BASSActive active = Bass.BASS_ChannelIsActive(_stream);
+                if (active == BASSActive.BASS_ACTIVE_PLAYING)
+                {
+                    _position = Bass.BASS_ChannelBytes2Seconds(_stream, Bass.BASS_ChannelGetPosition(_stream));
+                    PositionChanged(this, EventArgs.Empty);
+
+                    if (Convert.ToInt32(_lastPosition) != Convert.ToInt32(_position))
+                    {
+                        OnPositionDescriptionChanged();
+                        _lastPosition = _position;
+                    }
+
+                    _timerTicks += 100;
+                    if (_timerTicks >= 1000)
+                    {
+                        _timerTicks = 0;
+                        _secondsPlayed++;
+                        if (_secondsPlayed >= SecondsBeforeUpdatePlayCount && !_playCountUpdated)
+                        {
+                            System.Diagnostics.Debug.WriteLine(SecondsBeforeUpdatePlayCount.ToString() + " seconds, updating play count");
+
+                            _playCountUpdated = true;
+                            if (_lib != null)
+                            {
+                                _lib.UpdatePlayCount(_currentSong.FileName);
+                                if (AudioscrobblerEnabled)
+                                {
+                                    var req = new AudioscrobblerRequest();
+                                    req.Username = AudioscrobblerUserName;
+                                    req.Password = AudioscrobblerPassword;
+                                    req.SubmitTrack(_currentSong);
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (active == (int)BASSActive.BASS_ACTIVE_STOPPED)
+                {
+                    if (!_playCountUpdated)
+                    {
+                        if (Convert.ToInt32(this.CurrentSong.Duration) <= SecondsBeforeUpdatePlayCount)
+                        {
+                            System.Diagnostics.Debug.WriteLine("Didn't reach " + SecondsBeforeUpdatePlayCount.ToString() + " seconds because song finished, updating play count");
+
+                            _playCountUpdated = true;
+                            if (_lib != null)
+                            {
+                                _lib.UpdatePlayCount(_currentSong.FileName);
+                            }
+                        }
+                    }
+                    _timer.Stop();
+                    this.State = PlayerState.Stopped;
+                    OnSongFinished();
+                    if (_autoTrackAdvance)
+                    {
+                        if (_repeatCurrentTrack)
+                        {
+                            Stop();
+                            Play();
+                        }
+                        else
+                        {
+                            Next();
+                        }
+                    }
+                }
+            }
         }
 
         private void InitBassLibrary(int deviceNumber)
@@ -644,77 +716,6 @@ namespace ThreePM.MusicPlayer
         {
             // magic!!
             return new Version((num1 >> 0x18) & 0xff, (num1 >> 0x10) & 0xff, (num1 >> 8) & 0xff, num1 & 0xff).ToString();
-        }
-
-        private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            BASSActive active = Bass.BASS_ChannelIsActive(_stream);
-            if (active == BASSActive.BASS_ACTIVE_PLAYING)
-            {
-                _position = Bass.BASS_ChannelBytes2Seconds(_stream, Bass.BASS_ChannelGetPosition(_stream));
-                PositionChanged(this, EventArgs.Empty);
-
-                if (Convert.ToInt32(_lastPosition) != Convert.ToInt32(_position))
-                {
-                    OnPositionDescriptionChanged();
-                    _lastPosition = _position;
-                }
-
-                _timerTicks += 100;
-                if (_timerTicks >= 1000)
-                {
-                    _timerTicks = 0;
-                    _secondsPlayed++;
-                    if (_secondsPlayed >= SecondsBeforeUpdatePlayCount && !_playCountUpdated)
-                    {
-                        System.Diagnostics.Debug.WriteLine(SecondsBeforeUpdatePlayCount.ToString() + " seconds, updating play count");
-
-                        _playCountUpdated = true;
-                        if (_lib != null)
-                        {
-                            _lib.UpdatePlayCount(_currentSong.FileName);
-                            if (AudioscrobblerEnabled)
-                            {
-                                var req = new AudioscrobblerRequest();
-                                req.Username = AudioscrobblerUserName;
-                                req.Password = AudioscrobblerPassword;
-                                req.SubmitTrack(_currentSong);
-                            }
-                        }
-                    }
-                }
-            }
-            else if (active == (int)BASSActive.BASS_ACTIVE_STOPPED)
-            {
-                if (!_playCountUpdated)
-                {
-                    if (Convert.ToInt32(this.CurrentSong.Duration) <= SecondsBeforeUpdatePlayCount)
-                    {
-                        System.Diagnostics.Debug.WriteLine("Didn't reach " + SecondsBeforeUpdatePlayCount.ToString() + " seconds because song finished, updating play count");
-
-                        _playCountUpdated = true;
-                        if (_lib != null)
-                        {
-                            _lib.UpdatePlayCount(_currentSong.FileName);
-                        }
-                    }
-                }
-                _timer.Stop();
-                this.State = PlayerState.Stopped;
-                OnSongFinished();
-                if (_autoTrackAdvance)
-                {
-                    if (_repeatCurrentTrack)
-                    {
-                        Stop();
-                        Play();
-                    }
-                    else
-                    {
-                        Next();
-                    }
-                }
-            }
         }
 
         #endregion
@@ -1069,6 +1070,11 @@ namespace ThreePM.MusicPlayer
 
         #region Visualization Methods
 
+        private static void NotifyPropertyChanged(string v)
+        {
+            throw new NotImplementedException();
+        }
+
         public Bitmap DrawWaveForm(int width, int height, bool highQuality, bool fullSpectrum)
         {
             return _visuals.CreateWaveForm(_stream, width, height, _visColor1, _visColor2, _visBackColor, _visBackColor, 1, fullSpectrum, false, highQuality);
@@ -1122,5 +1128,7 @@ namespace ThreePM.MusicPlayer
         }
 
         #endregion
+
+
     }
 }

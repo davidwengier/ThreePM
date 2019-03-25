@@ -178,22 +178,11 @@ namespace ThreePM
         {
             var urlList = new List<GISResult>();
 
-            var imagesRegex = new Regex(@"dyn\.Img\(\""(?<url>.*?)\"",\""(?<ignore>.*?)\"",\""(?<googleID>.*?)\"",\""(?<img>.*?)\"",\""(?<ignore>.*?)\"",\""(?<ignore>.*?)\"",\""(?<ignore>.*?)\"",\""(?<ignore>.*?)\"",\""(?<ignore>.*?)\"",\""(?<size>.*?)\""");
+            Regex imagesRegex = new Regex(@"dyn\.Img\(\""(?<url>.*?)\"",\""(?<ignore>.*?)\"",\""(?<googleID>.*?)\"",\""(?<img>.*?)\"",\""(?<ignore>.*?)\"",\""(?<ignore>.*?)\"",\""(?<ignore>.*?)\"",\""(?<ignore>.*?)\"",\""(?<ignore>.*?)\"",\""(?<size>.*?)\""");
 
-            //Regex imagesRegex = new Regex(@"(\x3Ca\s+href=/imgres\" +
-            //           @"x3Fimgurl=)(?<imgurl>http" +
-            //           @"[^&>]*)([>&]{1})" +
-            //           @"([^>]*)(>{1})(<img\ssrc\" +
-            //           @"x3D)(""{0,1})(?<images>/images" +
-            //           @"[^""\s>]*)([\s])+(width=)" +
-            //           @"(?<width>[0-9,]*)\s+(height=)" +
-            //           @"(?<height>[0-9,]*)");
-            //Regex dataRegex = new Regex(@"([^>]*)(>)\s{0,1}(<br>){0,1}\s{0,1}" +
-            //         @"(?<width>[0-9,]*)\s+x\s+(?<height>[0-9,]*)" +
-            //         @"\s+pixels\s+-\s+(?<size>[0-9,]*)(k)");
+            string titleRegex = @"([^>]*)(>)\s{0,1}(<br>){0,1}\s{0,1}";
 
             MatchCollection images = imagesRegex.Matches(html);
-            //MatchCollection data = dataRegex.Matches(html);
             int i = 0;
             foreach (Match m in images)
             {
@@ -204,7 +193,7 @@ namespace ThreePM
                 urlList.Add(result);
                 i++;
             }
-
+            titleRegex.ToString();
             return urlList;
         }
 
@@ -212,13 +201,7 @@ namespace ThreePM
         {
             if (_current != null)
             {
-                string path = _filename;
-                path = Path.GetDirectoryName(path);
-                if (!path.EndsWith(Path.DirectorySeparatorChar.ToString()))
-                {
-                    path += Path.DirectorySeparatorChar;
-                }
-                path += "Folder.jpg";
+                var path = GetFolderJpgPath();
                 _current.Image.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
                 File.SetAttributes(path, FileAttributes.System | FileAttributes.Hidden);
 
@@ -236,6 +219,18 @@ namespace ThreePM
 
                 this.Close();
             }
+        }
+
+        private string GetFolderJpgPath()
+        {
+            string path = _filename;
+            path = Path.GetDirectoryName(path);
+            if (!path.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            {
+                path = path + Path.DirectorySeparatorChar;
+            }
+            path = path + "Folder.jpg";
+            return path;
         }
 
         private void downloadFullSizeToolStripMenuItem_Click(object sender, EventArgs e)

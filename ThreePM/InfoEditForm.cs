@@ -10,7 +10,7 @@ namespace ThreePM
         /// A collection of all of the genre string values in which the key of
         /// the genre its integer value for ID3v1 encoding.
         /// </summary>
-        private static string[] s_genres = new string[] { "Blues",         // 0
+        private static readonly string[] s_genres = new string[] { "Blues",         // 0
                                              "Classic Rock",
                                              "Country",
                                              "Dance",
@@ -160,21 +160,22 @@ namespace ThreePM
                                              "Synthpop" };          // 147
         #endregion
 
-
         private LibraryEntry[] _libraryEntries;
 
         public InfoEditForm(LibraryEntry[] libraryEntries) : base()
         {
             InitializeComponent();
 
+            int m = 1;
+
             _libraryEntries = libraryEntries;
 
             string title = _libraryEntries[0].Title;
-            string album = _libraryEntries[0].Album;
-            string artist = _libraryEntries[0].Artist;
+            String album = _libraryEntries[0].Album;
+            String artist = _libraryEntries[0].Artist;
+            var genre = _libraryEntries[0].Genre;
+            var albumArtist = _libraryEntries[0].AlbumArtist;
             int trackNumber = _libraryEntries[0].TrackNumber;
-            string genre = _libraryEntries[0].Genre;
-            string albumArtist = _libraryEntries[0].AlbumArtist;
             int year = _libraryEntries[0].Year;
 
             foreach (string s in s_genres)
