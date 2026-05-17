@@ -100,7 +100,6 @@ namespace ThreePM.Utilities
         {
             _library = library;
 
-            _lyricsObjects.Add(new LyricsWikiHandler());
             _lyricsObjects.Add(new LyricsDepotHandler());
             _lyricsObjects.Add(new LyricsManiaHandler());
         }
