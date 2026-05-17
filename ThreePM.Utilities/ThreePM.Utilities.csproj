@@ -2,12 +2,16 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net462</TargetFramework>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <ItemGroup>
     <None Include="HttpServerTemplate.html" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Resources.Extensions" Version="4.7.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThreePM.MusicLibrary\ThreePM.MusicLibrary.csproj" />
