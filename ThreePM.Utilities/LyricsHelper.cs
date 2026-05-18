@@ -100,8 +100,7 @@ namespace ThreePM.Utilities
         {
             _library = library;
 
-            _lyricsObjects.Add(new LyricsDepotHandler());
-            _lyricsObjects.Add(new LyricsManiaHandler());
+            _lyricsObjects.Add(new LyricsLrcLibHandler());
         }
 
         #endregion
@@ -227,6 +226,13 @@ namespace ThreePM.Utilities
             }
 
             string url = _lyricsObjects[_currentLyricsObject].GetSearchURL(_song);
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                _currentLyricsObject++;
+                SearchCurrentLyricsSite();
+                return;
+            }
+
             SetStatus("Checking " + _lyricsObjects[_currentLyricsObject].SiteName);
             LoadURL(url, "search");
         }
