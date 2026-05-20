@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28309.60
+# Visual Studio Version 18
+VisualStudioVersion = 18.8.11817.35 main
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreePM", "ThreePM\ThreePM.csproj", "{68C3103E-61B7-4D3A-A897-B50A0CF67F01}"
 EndProject
@@ -14,12 +14,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreePM.Utilities", "ThreePM.Utilities\ThreePM.Utilities.csproj", "{21C56029-5715-4254-91FE-9785A6A5560B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreePM.Engine", "ThreePM.Engine\ThreePM.Engine.csproj", "{396DF2A5-DED2-444F-AB18-36EF83216908}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{11B2D81E-EB97-4058-AE69-18EF6B80EEAD}"
-	ProjectSection(SolutionItems) = preProject
-		Directory.Build.props = Directory.Build.props
-		Directory.Build.targets = Directory.Build.targets
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreePM.Web", "ThreemPM.Web\ThreePM.Web.csproj", "{F3CD4673-913F-47BC-863A-3BAD624F56CA}"
 EndProject
