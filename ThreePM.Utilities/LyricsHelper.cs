@@ -7,38 +7,6 @@ namespace ThreePM.Utilities
 {
     public class LyricsHelper
     {
-        #region Static Methods
-
-        public static string GetSongTitleRegex(ThreePM.MusicPlayer.SongInfo song)
-        {
-            /*
-
-
-            I'*m Like A Lawyer With The Way I'*m Always Trying To Get You Off \(Me [\+\&(and)]* You\)
-
-             */
-
-            string regex = song.Title.ToLower();
-            regex = regex.Replace("*", "\\*");
-            regex = regex.Replace("?", "\\?*");
-            regex = regex.Replace("'", "'*");
-            regex = regex.Replace(".", "\\.*");
-            regex = regex.Replace(" + ", " and ");
-            regex = regex.Replace(" & ", " and ");
-            regex = regex.Replace("\"", "\\\"*");
-            regex = regex.Replace("(", "\\(*");
-            regex = regex.Replace(")", "\\)*");
-            regex = regex.Replace("[", "\\[*");
-            regex = regex.Replace("]", "\\]*");
-            regex = regex.Replace("{", "\\{*");
-            regex = regex.Replace("}", "\\}*");
-            regex = regex.Replace("$", "\\$*");
-            regex = regex.Replace(" and ", " [\\+\\&(and)]* ");
-            return regex;
-        }
-
-        #endregion
-
         #region Declarations
 
         private readonly MusicLibrary.Library _library;
