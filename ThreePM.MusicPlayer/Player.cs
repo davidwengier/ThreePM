@@ -734,7 +734,7 @@ namespace ThreePM.MusicPlayer
                 if (!success)
                     success = TryToLoadAndPlay(GetRandomSong);
             });
-            DoWork.BeginInvoke(null, null);
+            System.Threading.Tasks.Task.Run(() => DoWork());
         }
 
         private bool TryToLoadAndPlay(GetSongDelegate getFile)
@@ -835,7 +835,7 @@ namespace ThreePM.MusicPlayer
                 }
             });
 
-            DoWork.BeginInvoke(null, null);
+            System.Threading.Tasks.Task.Run(() => DoWork());
         }
 
         public bool LoadFile(string file)
@@ -990,7 +990,7 @@ namespace ThreePM.MusicPlayer
                     }
                 }
             });
-            DoWork.BeginInvoke(null, null);
+            System.Threading.Tasks.Task.Run(() => DoWork());
         }
 
         public void Play()
@@ -1038,7 +1038,7 @@ namespace ThreePM.MusicPlayer
                     Next();
                 }
             });
-            DoWork.BeginInvoke(null, null);
+            System.Threading.Tasks.Task.Run(() => DoWork());
         }
 
         public void Pause()

@@ -61,11 +61,7 @@ namespace ThreePM.Utilities
             {
                 Socket s = _listener.EndAccept(result);
                 var processor = new HttpProcessor(s, this);
-                var DoWork = new ThreadStart(delegate
-                {
-                    processor.Process();
-                });
-                DoWork.BeginInvoke(null, null);
+                System.Threading.Tasks.Task.Run(() => processor.Process());
             }
             catch { }
             finally
@@ -159,7 +155,7 @@ namespace ThreePM.Utilities
                         if (args.Length > 1)
                         {
                             string query = args[1];
-                            query = System.Web.HttpUtility.UrlDecode(query);
+                            query = WebUtility.UrlDecode(query);
                             int i = Convert.ToInt32(args[2]);
                             if (args.Length == 3)
                             {
@@ -189,7 +185,7 @@ namespace ThreePM.Utilities
                     case "queue":
                     {
                         string query = args[1];
-                        query = System.Web.HttpUtility.UrlDecode(query);
+                        query = WebUtility.UrlDecode(query);
                         int i = Convert.ToInt32(args[2]);
                         if (args.Length == 3)
                         {
@@ -217,8 +213,8 @@ namespace ThreePM.Utilities
                                 foreach (LibraryEntry result in results)
                                 {
                                     searchresults += "<tr" + (i % 2 == 0 ? " class=\"alternate\"" : "") + "><td width=\"100%\">" + result.ToString() + "</td><td nowrap>" +
-                                        "<a href=\"javascript:doSearchResultsAction('play/" + System.Web.HttpUtility.UrlEncode(query) + "/" + i.ToString() + "/lyrics');\">Play</a> " +
-                                        "<a href=\"javascript:doSearchResultsAction('queue/" + System.Web.HttpUtility.UrlEncode(query) + "/" + i.ToString() + "/lyrics');\">Queue</a> " +
+                                        "<a href=\"javascript:doSearchResultsAction('play/" + WebUtility.UrlEncode(query) + "/" + i.ToString() + "/lyrics');\">Play</a> " +
+                                        "<a href=\"javascript:doSearchResultsAction('queue/" + WebUtility.UrlEncode(query) + "/" + i.ToString() + "/lyrics');\">Queue</a> " +
                                         "</td></tr>";
                                     i++;
                                 }
@@ -244,8 +240,8 @@ namespace ThreePM.Utilities
                                 foreach (LibraryEntry result in results)
                                 {
                                     searchresults += "<tr" + (i % 2 == 0 ? " class=\"alternate\"" : "") + "><td width=\"100%\">" + result.ToString() + "</td><td nowrap>" +
-                                        "<a href=\"javascript:doSearchResultsAction('play/" + System.Web.HttpUtility.UrlEncode(query) + "/" + i.ToString() + "');\">Play</a> " +
-                                        "<a href=\"javascript:doSearchResultsAction('queue/" + System.Web.HttpUtility.UrlEncode(query) + "/" + i.ToString() + "');\">Queue</a> " +
+                                        "<a href=\"javascript:doSearchResultsAction('play/" + WebUtility.UrlEncode(query) + "/" + i.ToString() + "');\">Play</a> " +
+                                        "<a href=\"javascript:doSearchResultsAction('queue/" + WebUtility.UrlEncode(query) + "/" + i.ToString() + "');\">Queue</a> " +
                                         "</td></tr>";
                                     i++;
                                 }
@@ -484,7 +480,7 @@ namespace ThreePM.Utilities
                     return false;
                 }
 
-                _url = System.Web.HttpUtility.UrlDecode(_url);
+                _url = WebUtility.UrlDecode(_url);
                 //// Decode all encoded parts of the URL using the built in URI processing class
                 //int i = 0;
                 //while ((i = url.IndexOf("%", i)) != -1)

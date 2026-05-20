@@ -107,7 +107,7 @@ namespace ThreePM.UI
                 _statistics = this.Library.GetDataSet(sql);
                 if (this.Created) Invoke((MethodInvoker)delegate { DisplayData(); });
             };
-            DoWork.BeginInvoke(null, null);
+            System.Threading.Tasks.Task.Run(() => DoWork());
         }
 
         protected override void OnHandleCreated(EventArgs e)

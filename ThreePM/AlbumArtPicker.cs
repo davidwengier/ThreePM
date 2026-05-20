@@ -52,7 +52,7 @@ namespace ThreePM
             txtSearch.Text = query;
             progressBar1.Style = ProgressBarStyle.Marquee;
             progressBar1.Visible = true;
-            var googleUrl = new Uri("http://images.google.com/images?q=" + System.Web.HttpUtility.UrlEncode(query));
+            var googleUrl = new Uri("http://images.google.com/images?q=" + WebUtility.UrlEncode(query));
 
             try
             {

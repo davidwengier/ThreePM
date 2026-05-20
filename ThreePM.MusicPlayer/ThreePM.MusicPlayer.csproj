@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <None Include="bass.dll">
@@ -33,9 +33,7 @@
     </None>  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Bass.NetWrapper" Version="2.4.12.5" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.109.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Web" />
+    <PackageReference Include="System.Drawing.Common" Version="10.0.0" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
   </ItemGroup>
 </Project>

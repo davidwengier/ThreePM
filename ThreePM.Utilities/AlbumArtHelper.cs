@@ -27,6 +27,7 @@ namespace ThreePM.Utilities
         private Queue<AlbumArtWaiter> _filesToLoad = new Queue<AlbumArtWaiter>();
 
         private Thread _albumLoaderThread;
+        private volatile bool _stopRequested;
 
         public AlbumArtLoader()
         {
@@ -34,12 +35,7 @@ namespace ThreePM.Utilities
 
         ~AlbumArtLoader()
         {
-            if (_albumLoaderThread != null && _albumLoaderThread.IsAlive)
-            {
-                _albumLoaderThread.Abort();
-                _albumLoaderThread.Join();
-                _albumLoaderThread = null;
-            }
+            StopLoader();
             lock (_filesToLoad)
             {
                 _filesToLoad.Clear();
@@ -49,7 +45,7 @@ namespace ThreePM.Utilities
 
         private void LoadNextAlbum()
         {
-            while (true)
+            while (!_stopRequested)
             {
                 int i;
                 lock (_filesToLoad)
@@ -68,9 +64,11 @@ namespace ThreePM.Utilities
                 else
                 {
                     _albumLoaderThread = null;
-                    Thread.CurrentThread.Abort();
+                    return;
                 }
             }
+
+            _albumLoaderThread = null;
         }
 
         public void LoadAlbumArt(IHaveAlbumArt iHaveAlbumArt, string filename, int width, int height)
@@ -87,6 +85,7 @@ namespace ThreePM.Utilities
             }
             if (_albumLoaderThread == null)
             {
+                _stopRequested = false;
                 _albumLoaderThread = new Thread(LoadNextAlbum);
                 _albumLoaderThread.IsBackground = true;
                 _albumLoaderThread.Start();
@@ -96,16 +95,33 @@ namespace ThreePM.Utilities
 
         public void Clear()
         {
-            if (_albumLoaderThread != null && _albumLoaderThread.IsAlive)
-            {
-                _albumLoaderThread.Abort();
-                _albumLoaderThread.Join();
-                _albumLoaderThread = null;
-            }
+            StopLoader();
             lock (_filesToLoad)
             {
                 _filesToLoad.Clear();
             }
+        }
+
+        private void StopLoader()
+        {
+            Thread albumLoaderThread = _albumLoaderThread;
+            if (albumLoaderThread == null)
+            {
+                return;
+            }
+
+            _stopRequested = true;
+            if (albumLoaderThread.IsAlive)
+            {
+                albumLoaderThread.Join();
+            }
+
+            if (ReferenceEquals(_albumLoaderThread, albumLoaderThread))
+            {
+                _albumLoaderThread = null;
+            }
+
+            _stopRequested = false;
         }
     }
 

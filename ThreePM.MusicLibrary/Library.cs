@@ -20,6 +20,7 @@ namespace ThreePM.MusicLibrary
         private readonly object _dbSyncObject = new object();
         private readonly string _connectionString;
         private Thread _scanningThread;
+        private volatile bool _cancelScanRequested;
         private List<DataRow> _watchFolders = new List<DataRow>();
         private Dictionary<string, bool> _existingFiles = new Dictionary<string, bool>();
         private int _songCount = -1;
@@ -95,6 +96,8 @@ namespace ThreePM.MusicLibrary
 
         public void Dispose()
         {
+            StopScanningThread();
+
             try
             {
                 foreach (FileSystemWatcher watcher in _fileWatchers.Values)
@@ -102,18 +105,6 @@ namespace ThreePM.MusicLibrary
                     watcher.Dispose();
                 }
                 _fileWatchers = null;
-            }
-            catch { }
-            try
-            {
-                lock (_dbSyncObject)
-                {
-                    if (_scanningThread != null)
-                    {
-                        _scanningThread.Abort();
-                        _scanningThread.Join();
-                    }
-                }
             }
             catch { }
         }
@@ -235,11 +226,7 @@ namespace ThreePM.MusicLibrary
         public void RefreshLibrary()
         {
             //System.Diagnostics.Debug.WriteLine("Refresh Library start");
-            if (_scanningThread != null && _scanningThread.IsAlive)
-            {
-                _scanningThread.Abort();
-                _scanningThread.Join();
-            }
+            StopScanningThread();
 
             DataSet watch;
             lock (_dbSyncObject)
@@ -320,7 +307,7 @@ namespace ThreePM.MusicLibrary
                 }
                 _watchFolders.Add(ds.Tables[0].Rows[0]);
                 StartWatching(Convert.ToInt32(ds.Tables[0].Rows[0]["WatchFolderID"]), dir);
-                if (_scanningThread != null && !_scanningThread.IsAlive)
+                if (_scanningThread == null || !_scanningThread.IsAlive)
                 {
                     ScanFoldersAsync();
                 }
@@ -329,11 +316,7 @@ namespace ThreePM.MusicLibrary
 
         public void RemoveWatchFolder(string dir)
         {
-            if (_scanningThread != null && _scanningThread.IsAlive)
-            {
-                _scanningThread.Abort();
-                _scanningThread.Join();
-            }
+            StopScanningThread();
             lock (_dbSyncObject)
             {
                 int id = Convert.ToInt32(SQLiteHelper.ExecuteScalar(_connectionString, "SELECT WatchFolderID FROM WatchFolders WHERE Folder = '" + dir.Replace("'", "''") + "'"));
@@ -425,8 +408,7 @@ namespace ThreePM.MusicLibrary
                 _supportedExtensions.Add('.' + ext.Substring(ext.IndexOf('.') + 1).ToLower());
             }
 
-            var del = new ThreadStart(RefreshLibrary);
-            del.BeginInvoke(null, null);
+            System.Threading.Tasks.Task.Run(RefreshLibrary);
         }
 
         private void ScanFoldersAsync()
@@ -436,9 +418,32 @@ namespace ThreePM.MusicLibrary
                 throw new ArgumentException("You must set the supported extensions before you can scan for files.");
             }
 
+            _cancelScanRequested = false;
             _scanningThread = new Thread(new ThreadStart(InternalScanFolder));
             _scanningThread.IsBackground = true;
             _scanningThread.Start();
+        }
+
+        private void StopScanningThread()
+        {
+            Thread scanningThread = _scanningThread;
+            if (scanningThread == null)
+            {
+                return;
+            }
+
+            _cancelScanRequested = true;
+            if (scanningThread.IsAlive)
+            {
+                scanningThread.Join();
+            }
+
+            if (ReferenceEquals(_scanningThread, scanningThread))
+            {
+                _scanningThread = null;
+            }
+
+            _cancelScanRequested = false;
         }
 
         private void InternalScanFolder()
@@ -449,12 +454,22 @@ namespace ThreePM.MusicLibrary
             {
                 for (int i = 0; i < _watchFolders.Count; i++)
                 {
+                    if (_cancelScanRequested)
+                    {
+                        break;
+                    }
+
                     ScanFolder(_watchFolders[i]);
                 }
 
                 // remove anything left in existingFiles;
-                foreach (string s in _existingFiles.Keys)
+                foreach (string s in new List<string>(_existingFiles.Keys))
                 {
+                    if (_cancelScanRequested)
+                    {
+                        break;
+                    }
+
                     lock (_dbSyncObject)
                     {
                         SQLiteHelper.ExecuteNonQuery(_connectionString, "DELETE FROM Library WHERE Filename = '" + s.Replace("'", "''") + "'");
@@ -465,19 +480,25 @@ namespace ThreePM.MusicLibrary
             }
             finally
             {
-
                 OnScanFinished();
                 _watchFolders.Clear();
+                _scanningThread = null;
+                _cancelScanRequested = false;
             }
         }
 
         private void ScanFolder(DataRow directory)
         {
-            if (!Directory.Exists(directory["Folder"].ToString())) return;
+            if (_cancelScanRequested || !Directory.Exists(directory["Folder"].ToString())) return;
 
             string oldDir = "";
             foreach (String file in FileSearcher.GetFiles(new DirectoryInfo(directory["Folder"].ToString()), "*", SearchOption.AllDirectories))
             {
+                if (_cancelScanRequested)
+                {
+                    break;
+                }
+
                 var dir = Path.GetDirectoryName(file);
 
                 if (!dir.Equals(oldDir))

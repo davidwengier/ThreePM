@@ -26,7 +26,6 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace ThreePM.MusicPlayer
 {
@@ -430,7 +429,7 @@ namespace ThreePM.MusicPlayer
                 // defaults to about 3:20, in order to get audioscrobbler to work
                 dur = 200;
             }
-            return string.Format(urlTrack, 0, HttpUtility.UrlEncode(track.Artist), HttpUtility.UrlEncode(track.Title), HttpUtility.UrlEncode(track.Album), "", dur, HttpUtility.UrlEncode(DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss")));
+            return string.Format(urlTrack, 0, WebUtility.UrlEncode(track.Artist), WebUtility.UrlEncode(track.Title), WebUtility.UrlEncode(track.Album), "", dur, WebUtility.UrlEncode(DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss")));
         }
     }
 }

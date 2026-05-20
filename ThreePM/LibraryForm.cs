@@ -171,7 +171,7 @@ namespace ThreePM
             };
 
             IntPtr t = tvwLibrary.Handle;
-            DoWork.BeginInvoke(null, null);
+            System.Threading.Tasks.Task.Run(() => DoWork());
         }
 
         private void LoadTopLevelNodes()

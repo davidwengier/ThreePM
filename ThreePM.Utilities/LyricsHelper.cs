@@ -308,7 +308,7 @@ namespace ThreePM.Utilities
         {
             if (_lyricsObjects[_currentLyricsObject].GetLyrics(page, out string lyrics))
             {
-                lyrics = System.Web.HttpUtility.HtmlDecode(lyrics);
+                lyrics = WebUtility.HtmlDecode(lyrics);
 
                 lyrics = lyrics.Replace("â€™", "'");
                 lyrics = lyrics.Replace("’", "'");

@@ -213,7 +213,7 @@ namespace ThreePM
                 this.Invoke((MethodInvoker)delegate { Invalidate(true); });
             };
 
-            doWork.BeginInvoke(null, null);
+            System.Threading.Tasks.Task.Run(() => doWork());
         }
 
         private void DisposeItems()

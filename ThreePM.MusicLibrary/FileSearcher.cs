@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using Microsoft.Win32.SafeHandles;
 using ComTypes = System.Runtime.InteropServices.ComTypes;
 
@@ -15,7 +13,6 @@ namespace ThreePM.MusicLibrary
     {
         private sealed class SafeFindHandle : SafeHandleZeroOrMinusOneIsInvalid
         {
-            [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
             private SafeFindHandle() : base(true) { }
 
             protected override bool ReleaseHandle()
@@ -24,7 +21,6 @@ namespace ThreePM.MusicLibrary
             }
 
             [DllImport("kernel32.dll")]
-            [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
             [SuppressUnmanagedCodeSecurity]
             private static extern bool FindClose(IntPtr handle);
         }
@@ -102,9 +98,6 @@ namespace ThreePM.MusicLibrary
         public static IEnumerable<string> GetFiles(DirectoryInfo[] dirs, string pattern, SearchOption searchOption)
         {
             DirectoryInfo dir;
-
-            // We suppressed this demand for each p/invoke call, so demand it upfront once
-            new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Demand();
 
             // Validate parameters
             if (dirs == null) throw new ArgumentNullException(nameof(dirs));
